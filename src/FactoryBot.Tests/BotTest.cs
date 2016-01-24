@@ -7,6 +7,12 @@ namespace FactoryBot.Tests
     [TestFixture]
     public class BotTest
     {
+        [TearDown]
+        public void Terminate()
+        {
+            Bot.ForgetAll();
+        }
+
         [Test]
         public void BuildAlwaysCreatesNewInstance()
         {
@@ -169,6 +175,7 @@ namespace FactoryBot.Tests
             Bot.Define(x => new TestModel1(x.Numbers.AnyInteger(10, 20), "t1"));
 
             var model = Bot.Build<TestModel1>(x => x.Number = 100, x => x.Text = "tt2");
+
             Assert.That(model.Number, Is.EqualTo(100));
             Assert.That(model.Text, Is.EqualTo("tt2"));
         }
@@ -200,7 +207,7 @@ namespace FactoryBot.Tests
         {
             Bot.Define(x => new TestModel1(x.Numbers.AnyInteger(10, 20), "the text"));
             
-            Assert.Throws<InvalidOperationException>(() => Bot.BuildCustom(x => new TestModel1(5)));
+            Assert.That(() => Bot.BuildCustom(x => new TestModel1(5)), Throws.InvalidOperationException);
         }
 
         [Test]
@@ -217,7 +224,7 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildNotDefinedType()
         {
-            Assert.Fail("TODO");
+            Assert.That(() => Bot.Build<TestModel1>(), Throws.TypeOf<UnknownTypeException>());
         }
 
         private static void GetModelsAndAssertTheSame<TModel>(Action<TModel> assertions)

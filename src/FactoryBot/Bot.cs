@@ -51,9 +51,21 @@ namespace FactoryBot
             throw new NotImplementedException();
         }
 
+        internal static void ForgetAll()
+        {
+            BuildRules.Clear();            
+        }
+
         private static BotConfiguration GetConfiguration<T>()
         {
-            return BuildRules[typeof(T)];
+            var ruleKey = typeof(T);
+            BotConfiguration config;
+            if (!BuildRules.TryGetValue(ruleKey, out config))
+            {
+                throw new UnknownTypeException(ruleKey);    
+            }
+
+            return config;
         }
     }
 }

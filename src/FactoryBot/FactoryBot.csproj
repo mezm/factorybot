@@ -59,6 +59,7 @@
     <Compile Include="Generators\Numbers\IntegerRandomGenerator.cs" />
     <Compile Include="Generators\Strings\StringRandomGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnknownTypeException.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Generators\Dates\" />
