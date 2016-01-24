@@ -54,6 +54,7 @@
     <Compile Include="ExpressionParser\ExpressionParserHelper.cs" />
     <Compile Include="ExpressionParser\FactoryParser.cs" />
     <Compile Include="Generators\ConstantGenerator.cs" />
+    <Compile Include="Generators\GeneratorUsingDecorator.cs" />
     <Compile Include="Generators\IGenerator.cs" />
     <Compile Include="Generators\KeepGenerator.cs" />
     <Compile Include="Generators\Numbers\IntegerRandomGenerator.cs" />

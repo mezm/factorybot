@@ -1,4 +1,6 @@
-﻿namespace FactoryBot.DSL
+﻿using FactoryBot.Generators;
+
+namespace FactoryBot.DSL
 {
     public class BotConfigurationBuilder
     {
@@ -7,5 +9,8 @@
         public StringGenerators Strings { get; } = new StringGenerators();
 
         public DateGenerators Dates { get; } = new DateGenerators();
+
+        [Generator(typeof(GeneratorUsingDecorator<>))]
+        public T Use<T>() => default(T);
     }
 }

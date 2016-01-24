@@ -227,6 +227,19 @@ namespace FactoryBot.Tests
             Assert.That(() => Bot.Build<TestModel1>(), Throws.TypeOf<UnknownTypeException>());
         }
 
+        [Test]
+        public void BuildWithUsingNestedConfigurations()
+        {
+            Bot.Define(x => new TestModel1(x.Numbers.AnyInteger(100, 150), "the test"));
+            Bot.Define(x => new TestModel3 { Number = 7, Nested = x.Use<TestModel1>() });
+
+            var model = Bot.Build<TestModel3>();
+
+            Assert.That(model.Number, Is.EqualTo(7));
+            Assert.That(model.Nested.Number, Is.GreaterThanOrEqualTo(100).And.LessThanOrEqualTo(150));
+            Assert.That(model.Nested.Text, Is.EqualTo("the test"));
+        }
+        
         private static void GetModelsAndAssertTheSame<TModel>(Action<TModel> assertions)
         {
             for (var i = 0; i < 3; i++)
@@ -278,6 +291,13 @@ namespace FactoryBot.Tests
             public int Number { get; }
 
             public DateTime Date { get; set; }
+        }
+
+        private class TestModel3
+        {
+            public int Number { get; set; }
+
+            public TestModel1 Nested { get; set; }
         }
 
         private class OtherClass1

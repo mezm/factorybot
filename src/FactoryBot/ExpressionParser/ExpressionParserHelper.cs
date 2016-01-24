@@ -28,7 +28,9 @@ namespace FactoryBot.ExpressionParser
             if (generatorAttr != null)
             {
                 var generatorParamenters = methodCallExpr.Arguments.Select(EvaluateExpression).ToArray();
-                return generatorAttr.CreateGenerator(generatorParamenters);
+                return !methodCallExpr.Method.IsGenericMethod
+                           ? generatorAttr.CreateGenerator(generatorParamenters)
+                           : generatorAttr.CreateGenericGenerator(methodCallExpr.Method.GetGenericArguments(), generatorParamenters);
             }
 
             return new ConstantGenerator(EvaluateExpression(expr));
