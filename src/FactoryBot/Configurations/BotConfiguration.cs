@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
 using FactoryBot.Generators;
 
@@ -9,20 +7,48 @@ namespace FactoryBot.Configurations
 {
     internal class BotConfiguration
     {
-        public Type ConstructingType { get; set; }
+        public BotConfiguration(Type constructingType, ConstructorGenerator constructor)
+        {
+            ConstructingType = constructingType;
+            Constructor = constructor;
+        }
 
-        public ConstructorInfo Constructor { get; set; }
+        public Type ConstructingType { get; }
 
-        public List<IGenerator> ConstructorArguments { get; } = new List<IGenerator>();
+        public ConstructorGenerator Constructor { get; }
 
         public List<PropertyGenerator> Properties { get; } = new List<PropertyGenerator>();
 
         public object CreateNewObject()
         {
-            var obj = Constructor.Invoke(ConstructorArguments.Select(x => x.Next()).ToArray());
+            return Create(Constructor);
+        }
+
+        public object CreateNewObjectWithModification(ConstructorGenerator modification)
+        {
+            if (Constructor.Constructor != modification.Constructor)
+            {
+                throw new InvalidOperationException(
+                    $"Constructors mismatch. Origin: {Constructor.Constructor}, modification: {modification.Constructor}");
+            }
+
+            var args = new IGenerator[Constructor.Arguments.Count];
+            for (var i = 0; i < args.Length; i++)
+            {
+                var modifiedArg = modification.Arguments[i];
+                args[i] = modifiedArg is KeepGenerator ? Constructor.Arguments[i] : modifiedArg;
+            }
+
+            var patchedConstructor = new ConstructorGenerator(Constructor.Constructor, args);
+            return Create(patchedConstructor);
+        }
+
+        private object Create(ConstructorGenerator constructor)
+        {
+            var obj = constructor.Create();
             foreach (var property in Properties)
             {
-                property.Property.SetValue(obj, property.Generator.Next());
+                property.Apply(obj);
             }
 
             return obj;

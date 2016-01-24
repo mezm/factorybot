@@ -1,6 +1,6 @@
 ﻿namespace FactoryBot.DSL
 {
-    public class BotBuilder
+    public class BotConfigurationBuilder
     {
         public NumberGenerators Numbers { get; } = new NumberGenerators();
 

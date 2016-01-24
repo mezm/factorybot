@@ -41,16 +41,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bot.cs" />
-    <Compile Include="DSL\BotBuilder.cs" />
+    <Compile Include="Configurations\ConstructorGenerator.cs" />
+    <Compile Include="DSL\BotConfigurationBuilder.cs" />
     <Compile Include="Configurations\BotConfiguration.cs" />
     <Compile Include="Configurations\PropertyGenerator.cs" />
+    <Compile Include="DSL\CustomConstructBuilder.cs" />
     <Compile Include="DSL\DateGenerators.cs" />
     <Compile Include="DSL\GeneratorAttribute.cs" />
     <Compile Include="DSL\NumberGenerators.cs" />
     <Compile Include="DSL\StringGenerators.cs" />
+    <Compile Include="ExpressionParser\ConstructorParser.cs" />
+    <Compile Include="ExpressionParser\ExpressionParserHelper.cs" />
     <Compile Include="ExpressionParser\FactoryParser.cs" />
     <Compile Include="Generators\ConstantGenerator.cs" />
     <Compile Include="Generators\IGenerator.cs" />
+    <Compile Include="Generators\KeepGenerator.cs" />
     <Compile Include="Generators\Numbers\IntegerRandomGenerator.cs" />
     <Compile Include="Generators\Strings\StringRandomGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

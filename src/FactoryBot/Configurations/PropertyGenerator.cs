@@ -6,8 +6,19 @@ namespace FactoryBot.Configurations
 {
     internal class PropertyGenerator
     {
-        public PropertyInfo Property { get; set; }
+        public PropertyGenerator(PropertyInfo property, IGenerator generator)
+        {
+            Property = property;
+            Generator = generator;
+        }
 
-        public IGenerator Generator { get; set; }
+        public PropertyInfo Property { get; }
+
+        public IGenerator Generator { get; }
+
+        public void Apply(object obj)
+        {
+            Property.SetValue(obj, Generator.Next());
+        }
     }
 }

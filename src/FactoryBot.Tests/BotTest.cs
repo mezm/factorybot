@@ -19,7 +19,7 @@ namespace FactoryBot.Tests
         }
 
         [Test]
-        public void BuildContructorArgumentsOnly()
+        public void BuildConstructorArgumentsOnly()
         {
             Bot.Define(x => new TestModel1(10, "text"));
 
@@ -45,7 +45,7 @@ namespace FactoryBot.Tests
         }
 
         [Test]
-        public void BuildContructorArgumentAndProperty()
+        public void BuildConstructorArgumentAndProperty()
         {
             Bot.Define(x => new TestModel1(10) { Text = "some text" });
 
@@ -130,7 +130,7 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildWithMethodCall()
         {
-            Bot.Define(x => new TestModel1(GetNubmer()) { Text = GetText() });
+            Bot.Define(x => new TestModel1(GetNumberInternal()) { Text = GetTextInternal() });
 
             GetModelsAndAssertTheSame<TestModel1>(
                 x =>
@@ -154,6 +154,72 @@ namespace FactoryBot.Tests
 
         }
 
+        [Test]
+        public void BuildWithSingleModifier()
+        {
+            Bot.Define(x => new TestModel1(x.Numbers.AnyInteger(10, 20)));
+
+            var model = Bot.Build<TestModel1>(x => x.Number = 100);
+            Assert.That(model.Number, Is.EqualTo(100));
+        }
+
+        [Test]
+        public void BuildWithMultipleModifier()
+        {
+            Bot.Define(x => new TestModel1(x.Numbers.AnyInteger(10, 20), "t1"));
+
+            var model = Bot.Build<TestModel1>(x => x.Number = 100, x => x.Text = "tt2");
+            Assert.That(model.Number, Is.EqualTo(100));
+            Assert.That(model.Text, Is.EqualTo("tt2"));
+        }
+
+        [Test]
+        public void BuildWithConstructorModifier()
+        {
+            Bot.Define(x => new TestModel1(x.Numbers.AnyInteger(10, 20), ""));
+
+            var model = Bot.BuildCustom(x => new TestModel1(5, x.Builder.Strings.Any()));
+
+            Assert.That(model.Number, Is.EqualTo(5));
+            Assert.That(model.Text, Is.Not.Null.And.Not.Empty);
+        }
+
+        [Test]
+        public void BuildWithConstructorModifierWithKeep()
+        {
+            Bot.Define(x => new TestModel1(x.Numbers.AnyInteger(10, 20), "the text"));
+
+            var model = Bot.BuildCustom(x => new TestModel1(5, x.Keep<string>()));
+
+            Assert.That(model.Number, Is.EqualTo(5));
+            Assert.That(model.Text, Is.EqualTo("the text"));
+        }
+
+        [Test]
+        public void BuildWithConstructorModifierArgumentsMismatch()
+        {
+            Bot.Define(x => new TestModel1(x.Numbers.AnyInteger(10, 20), "the text"));
+            
+            Assert.Throws<InvalidOperationException>(() => Bot.BuildCustom(x => new TestModel1(5)));
+        }
+
+        [Test]
+        public void BuildWithConstructorModifierAndPostConstructModifiers()
+        {
+            Bot.Define(x => new TestModel1(x.Numbers.AnyInteger(10, 20)));
+
+            var model = Bot.BuildCustom(x => new TestModel1(5), x => x.Text = "a");
+
+            Assert.That(model.Number, Is.EqualTo(5));
+            Assert.That(model.Text, Is.EqualTo("a"));
+        }
+
+        [Test]
+        public void BuildNotDefinedType()
+        {
+            Assert.Fail("TODO");
+        }
+
         private static void GetModelsAndAssertTheSame<TModel>(Action<TModel> assertions)
         {
             for (var i = 0; i < 3; i++)
@@ -163,12 +229,12 @@ namespace FactoryBot.Tests
             }
         }
 
-        private static int GetNubmer()
+        private static int GetNumberInternal()
         {
             return 111;
         }
 
-        private string GetText()
+        private string GetTextInternal()
         {
             return "a";
         }
