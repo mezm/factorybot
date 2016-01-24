@@ -56,15 +56,21 @@
     <Compile Include="Generators\ConstantGenerator.cs" />
     <Compile Include="Generators\GeneratorUsingDecorator.cs" />
     <Compile Include="Generators\IGenerator.cs" />
+    <Compile Include="Generators\TypedGenerator.cs" />
     <Compile Include="Generators\KeepGenerator.cs" />
     <Compile Include="Generators\Numbers\IntegerRandomGenerator.cs" />
     <Compile Include="Generators\Strings\StringRandomGenerator.cs" />
     <Compile Include="Check.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Generators\SourceNames.cs" />
     <Compile Include="UnknownTypeException.cs" />
+    <Compile Include="Utils\ResourceHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Generators\Dates\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Generators\Resources\RandomTextSource.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
