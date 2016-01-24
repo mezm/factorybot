@@ -12,6 +12,8 @@ namespace FactoryBot.ExpressionParser
     {
         public static ConstructorGenerator CreateConstructorGenerator(NewExpression newExpr)
         {
+            Check.NotNull(newExpr, nameof(newExpr));
+
             return new ConstructorGenerator(
                 newExpr.Constructor,
                 newExpr.Arguments.Select(ParseGeneratorVariable).ToArray());
@@ -19,6 +21,8 @@ namespace FactoryBot.ExpressionParser
 
         public static IGenerator ParseGeneratorVariable(Expression expr)
         {
+            Check.NotNull(expr, nameof(expr));
+
             var methodCallExpr = expr as MethodCallExpression;
             var generatorAttr = methodCallExpr?.Method.GetCustomAttribute<GeneratorAttribute>();
             if (generatorAttr != null)
@@ -32,6 +36,8 @@ namespace FactoryBot.ExpressionParser
 
         public static object EvaluateExpression(Expression expr)
         {
+            Check.NotNull(expr, nameof(expr));
+
             return Expression.Lambda(expr).Compile().DynamicInvoke();
         }
     }

@@ -11,6 +11,9 @@ namespace FactoryBot.Configurations
     {
         public ConstructorGenerator(ConstructorInfo constructor, IReadOnlyList<IGenerator> arguments)
         {
+            Check.NotNull(constructor, nameof(constructor));
+            Check.NotNull(arguments, nameof(arguments));
+
             if (constructor.GetParameters().Length != arguments.Count)
             {
                 throw new ArgumentException("Constructor arguments mismatch.");

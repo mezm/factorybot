@@ -14,6 +14,8 @@ namespace FactoryBot
 
         public static void Define<T>(Expression<Func<BotConfigurationBuilder, T>> factory)
         {
+            Check.NotNull(factory, nameof(factory));
+
             var parser = new FactoryParser();
             var configuration = parser.Parse(factory);
             BuildRules[configuration.ConstructingType] = configuration;
@@ -21,6 +23,8 @@ namespace FactoryBot
 
         public static T Build<T>(params Action<T>[] modifiers)
         {
+            Check.NotNull(modifiers, nameof(modifiers));
+
             var result = (T)GetConfiguration<T>().CreateNewObject();
             foreach (var modifier in modifiers)
             {
@@ -34,6 +38,9 @@ namespace FactoryBot
             Expression<Func<CustomConstructBuilder, T>> constructorModifier,
             params Action<T>[] afterConstructModifiers)
         {
+            Check.NotNull(constructorModifier, nameof(constructorModifier));
+            Check.NotNull(afterConstructModifiers, nameof(afterConstructModifiers));
+
             var parser = new ConstructorParser();
             var constructor = parser.Parse(constructorModifier);
 

@@ -9,6 +9,9 @@ namespace FactoryBot.Configurations
     {
         public BotConfiguration(Type constructingType, ConstructorGenerator constructor)
         {
+            Check.NotNull(constructingType, nameof(constructingType));
+            Check.NotNull(constructor, nameof(constructor));
+
             ConstructingType = constructingType;
             Constructor = constructor;
         }
@@ -26,6 +29,8 @@ namespace FactoryBot.Configurations
 
         public object CreateNewObjectWithModification(ConstructorGenerator modification)
         {
+            Check.NotNull(modification, nameof(modification));
+
             if (Constructor.Constructor != modification.Constructor)
             {
                 throw new InvalidOperationException(

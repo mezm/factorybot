@@ -12,6 +12,8 @@ namespace FactoryBot.ExpressionParser
     {
         public BotConfiguration Parse<T>(Expression<Func<BotConfigurationBuilder, T>> factory)
         {
+            Check.NotNull(factory, nameof(factory));
+
             var memberInitExpr = factory.Body as MemberInitExpression;
             if (memberInitExpr != null)
             {
