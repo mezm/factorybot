@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 
+using FactoryBot.Extensions;
 using FactoryBot.Utils;
 
 namespace FactoryBot.Generators.Strings
@@ -29,20 +30,22 @@ namespace FactoryBot.Generators.Strings
             _sourceLength = (int)ResourceHelper.GetStreamLength(SourceNames.RandomText);
         }
         
-        protected override string NextInternal()
-        {
-            return ResourceHelper.Read(
-                SourceNames.RandomText,
-                (stream, reader) =>
-                {
-                    var from = _random.Next(0, _sourceLength / CharSize - 1) * CharSize;
-                    var size = _random.Next(_minLength, _maxLength);
-                    var buffer = new char[size];
+        protected override string NextInternal() => ResourceHelper.Read(SourceNames.RandomText, Read);
 
-                    stream.Seek(from, SeekOrigin.Begin);
-                    reader.Read(buffer, 0, size);
-                    return new string(buffer);
-                });
+        private string Read(Stream stream, StreamReader reader)
+        {
+            var size = _random.Next(_minLength, _maxLength);
+            var result = "";
+            var buffer = new char[size];
+            while (result.Length < size)
+            {
+                var from = _random.Next(0, _sourceLength / CharSize - 1) * CharSize;
+                stream.Seek(from, SeekOrigin.Begin);
+                var readed = reader.Read(buffer, 0, size);
+                result = new string(buffer, 0, readed).RemoveLineBreaks();
+            }
+            
+            return result;
         }
     }
 }
