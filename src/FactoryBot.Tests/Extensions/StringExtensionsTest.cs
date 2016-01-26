@@ -7,6 +7,20 @@ namespace FactoryBot.Tests.Extensions
     [TestFixture]
     public class StringExtensionsTest
     {
+        public const string MultiLineEmptyInput = @"
+
+
+
+";
+        public const string MultiLineSingleBreakInput = @"wicked workers 
+proceed no further";
+
+        public const string MultiLineFewBreaksInput = @"
+wicked
+workers
+
+proceed no further";
+
         [Test]
         public void GetWordsFromEmptyString()
         {
@@ -39,6 +53,18 @@ namespace FactoryBot.Tests.Extensions
         public void GetWordsNoWords()
         {
             Assert.That(",! #-# ---".Words(), Is.EquivalentTo(new string[0]));
+        }
+
+        [Test]
+        [TestCase("", "")]
+        [TestCase("word", "word")]
+        [TestCase("wicked workers proceed no further", "wicked workers proceed no further")]
+        [TestCase(MultiLineEmptyInput, "")]
+        [TestCase(MultiLineSingleBreakInput, "wicked workers proceed no further")]
+        [TestCase(MultiLineFewBreaksInput, "wicked workers proceed no further")]
+        public void RemoveLineBreaks(string str, string expected)
+        {
+            Assert.That(str.RemoveLineBreaks(), Is.EqualTo(expected));
         }
     }
 }

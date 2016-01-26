@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 
+using FactoryBot.Extensions;
 using FactoryBot.Generators;
 using FactoryBot.Generators.Strings;
 
@@ -19,7 +20,7 @@ namespace FactoryBot.Tests.Generators.Strings
             using (var stream = typeof(Bot).Assembly.GetManifestResourceStream(SourceNames.RandomText))
             using (var reader = new StreamReader(stream))
             {
-                _fileContent = reader.ReadToEnd();
+                _fileContent = reader.ReadToEnd().RemoveLineBreaks();
             }
         }
 
