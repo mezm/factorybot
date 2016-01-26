@@ -1,10 +1,7 @@
-﻿using System;
-
-namespace FactoryBot.Generators.Numbers
+﻿namespace FactoryBot.Generators.Numbers
 {
     public class IntegerRandomGenerator : TypedGenerator<int>
     {
-        private readonly Random _random = new Random();
         private readonly int _from, _to;
 
         public IntegerRandomGenerator()
@@ -20,7 +17,7 @@ namespace FactoryBot.Generators.Numbers
         
         protected override int NextInternal()
         {
-            return _random.Next(_from, _to);
+            return NextRandom(_from, _to);
         }
     }
 }

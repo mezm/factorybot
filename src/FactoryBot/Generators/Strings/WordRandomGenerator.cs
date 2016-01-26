@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -12,7 +11,6 @@ namespace FactoryBot.Generators.Strings
     {
         private const double AvarageWordSize = 5.1;
 
-        private readonly Random _random = new Random();
         private readonly int _approximateWordCountInSource, _minWords, _maxWords;
 
         public WordRandomGenerator()
@@ -38,9 +36,9 @@ namespace FactoryBot.Generators.Strings
 
         private string Read(Stream stream, StreamReader reader)
         {
-            var targetWordCount = _random.Next(_minWords, _maxWords);
+            var targetWordCount = NextRandom(_minWords, _maxWords);
             var buffer = new char[(int)(targetWordCount*AvarageWordSize)];
-            var from = (int)(_random.Next(0, _approximateWordCountInSource - 1) * AvarageWordSize);
+            var from = (int)(NextRandom(0, _approximateWordCountInSource - 1) * AvarageWordSize);
             stream.Seek(from, SeekOrigin.Begin);
             var collectedWords = 0;
             var result = new StringBuilder(targetWordCount);
