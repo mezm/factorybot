@@ -1,19 +1,18 @@
 ﻿using FactoryBot.Extensions;
 using FactoryBot.Generators;
 using FactoryBot.Generators.Strings;
-
 using NUnit.Framework;
 
 namespace FactoryBot.Tests.Generators.Strings
 {
     [TestFixture]
-    public class FirstNameGeneratorTest
+    public class LastNameGeneratorTest
     {
         [Test]
         public void GenerateName()
         {
-            var source = FileUtils.GetResourceContentWithoutLineBreaks(SourceNames.FirstNames);
-            var generator = new FirstNameGenerator();
+            var source = FileUtils.GetResourceContentWithoutLineBreaks(SourceNames.LastNames);
+            var generator = new LastNameGenerator();
 
             var name1 = (string)generator.Next();
             var name2 = (string)generator.Next();

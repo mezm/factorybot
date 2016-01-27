@@ -11,10 +11,11 @@ namespace FactoryBot.Utils
             Check.NotNullOrWhiteSpace(resourceName, nameof(resourceName));
             Check.NotNull(read, nameof(read));
 
-            var stream = Assembly.GetCallingAssembly().GetManifestResourceStream(resourceName);
+            var assembly = Assembly.GetCallingAssembly();
+            var stream = assembly.GetManifestResourceStream(resourceName);
             if (stream == null)
             {
-                throw new IOException($"Resource {resourceName} has not been found.");
+                throw new IOException($"Resource {resourceName} has not been found in assembly {assembly}.");
             }
 
             using (var reader = new StreamReader(stream))

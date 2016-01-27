@@ -47,7 +47,9 @@
     <Compile Include="BotTest.cs" />
     <Compile Include="DSL\GeneratorAttributeTest.cs" />
     <Compile Include="Extensions\StringExtensionsTest.cs" />
+    <Compile Include="FileUtils.cs" />
     <Compile Include="Generators\Strings\FirstNameGeneratorTest.cs" />
+    <Compile Include="Generators\Strings\LastNameGeneratorTest.cs" />
     <Compile Include="Generators\Strings\StringRandomGeneratorTest.cs" />
     <Compile Include="Generators\Strings\WordRandomGeneratorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

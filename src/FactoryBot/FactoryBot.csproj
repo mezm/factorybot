@@ -58,6 +58,8 @@
     <Compile Include="Generators\GeneratorUsingDecorator.cs" />
     <Compile Include="Generators\IGenerator.cs" />
     <Compile Include="Generators\Strings\FirstNameGenerator.cs" />
+    <Compile Include="Generators\Strings\LastNameGenerator.cs" />
+    <Compile Include="Generators\Strings\RandomLineFromFileGenerator.cs" />
     <Compile Include="Generators\Strings\WordRandomGenerator.cs" />
     <Compile Include="Generators\TypedGenerator.cs" />
     <Compile Include="Generators\KeepGenerator.cs" />
@@ -77,6 +79,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Generators\Resources\FirstNameSource.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Generators\Resources\LastNameSource.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
