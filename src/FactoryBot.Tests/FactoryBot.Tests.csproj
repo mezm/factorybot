@@ -49,6 +49,7 @@
     <Compile Include="Extensions\StringExtensionsTest.cs" />
     <Compile Include="FileUtils.cs" />
     <Compile Include="Generators\Strings\FirstNameGeneratorTest.cs" />
+    <Compile Include="Generators\Strings\FullNameGeneratorTest.cs" />
     <Compile Include="Generators\Strings\LastNameGeneratorTest.cs" />
     <Compile Include="Generators\Strings\StringRandomGeneratorTest.cs" />
     <Compile Include="Generators\Strings\WordRandomGeneratorTest.cs" />

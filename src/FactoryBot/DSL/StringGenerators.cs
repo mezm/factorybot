@@ -11,9 +11,21 @@ namespace FactoryBot.DSL
         public string Any(int minLength, int maxLength) => default(string);
 
         [Generator(typeof(WordRandomGenerator))]
-        public string AnyWords() => default(string);
+        public string Words() => default(string);
 
         [Generator(typeof(WordRandomGenerator))]
-        public string AnyWords(int minCount, int maxCount) => default(string);
+        public string Words(int minCount, int maxCount) => default(string);
+
+        [Generator(typeof(FirstNameGenerator))]
+        public string FirstName() => default(string);
+
+        [Generator(typeof(LastNameGenerator))]
+        public string LastName() => default(string);
+
+        [Generator(typeof(FullNameGenerator))]
+        public string FullName() => default(string);
+
+        [Generator(typeof(FullNameGenerator))]
+        public string FullName(FullNameFormat format) => default(string);
     }
 }
