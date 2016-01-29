@@ -32,12 +32,12 @@ namespace FactoryBot.Generators.Strings
 
         private string Read(Stream stream, StreamReader reader)
         {
-            var size = NextRandom(_minLength, _maxLength);
+            var size = NextRandomInteger(_minLength, _maxLength);
             var result = "";
             var buffer = new char[size];
             while (result.Length < size)
             {
-                var from = NextRandom(0, _sourceLength / CharSize - 1) * CharSize;
+                var from = NextRandomInteger(0, _sourceLength / CharSize - 1) * CharSize;
                 stream.Seek(from, SeekOrigin.Begin);
                 var readed = reader.Read(buffer, 0, size);
                 result = new string(buffer, 0, readed).RemoveLineBreaks();

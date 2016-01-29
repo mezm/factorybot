@@ -10,6 +10,7 @@ namespace FactoryBot.Generators.Strings
     public class WordRandomGenerator : TypedGenerator<string>
     {
         private const double AvarageWordSize = 5.1;
+        private const int MinBufferSize = 30;
 
         private readonly int _approximateWordCountInSource, _minWords, _maxWords;
 
@@ -36,12 +37,19 @@ namespace FactoryBot.Generators.Strings
 
         private string Read(Stream stream, StreamReader reader)
         {
-            var targetWordCount = NextRandom(_minWords, _maxWords);
-            var buffer = new char[(int)(targetWordCount*AvarageWordSize)];
-            var from = (int)(NextRandom(0, _approximateWordCountInSource - 1) * AvarageWordSize);
+            var targetWordCount = NextRandomInteger(_minWords, _maxWords);
+            var bufferSize = (int)(targetWordCount * AvarageWordSize);
+            if (bufferSize < MinBufferSize)
+            {
+                bufferSize = MinBufferSize;
+            }
+
+            var buffer = new char[bufferSize];
+            var from = (int)(NextRandomInteger(0, _approximateWordCountInSource - 1) * AvarageWordSize);
             stream.Seek(from, SeekOrigin.Begin);
+
             var collectedWords = 0;
-            var result = new StringBuilder(targetWordCount);
+            var result = new StringBuilder(bufferSize);
             while (collectedWords < targetWordCount)
             {
                 reader.Read(buffer, 0, buffer.Length);
@@ -52,6 +60,11 @@ namespace FactoryBot.Generators.Strings
                 }
 
                 var availableWords = words.Length - 2;
+                if (availableWords < 1)
+                {
+                    continue;
+                }
+
                 var missingWords = targetWordCount - collectedWords;
                 var wordsToTake = missingWords > availableWords ? availableWords : missingWords;
                 foreach (var word in words.Skip(1).Take(wordsToTake))

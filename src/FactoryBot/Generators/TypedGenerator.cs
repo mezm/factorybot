@@ -13,9 +13,14 @@ namespace FactoryBot.Generators
 
         protected abstract T NextInternal();
 
-        protected int NextRandom(int from, int to)
+        protected int NextRandomInteger(int from, int to)
         {
             return _random.Next(from, to);
+        }
+
+        protected bool NextRandomBool()
+        {
+            return _random.Next(0, 1) == 1;
         }
     }
 }

@@ -17,7 +17,7 @@
         
         protected override int NextInternal()
         {
-            return NextRandom(_from, _to);
+            return NextRandomInteger(_from, _to);
         }
     }
 }

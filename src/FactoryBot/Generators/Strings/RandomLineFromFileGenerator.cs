@@ -26,7 +26,7 @@ namespace FactoryBot.Generators.Strings
             string result = null;
             while (result == null)
             {
-                var from = NextRandom(0, _sourceLength);
+                var from = NextRandomInteger(0, _sourceLength);
                 stream.Seek(from, SeekOrigin.Begin);
                 reader.ReadLine(); // skipping first line because it could be incomplete
                 result = reader.ReadLine();
