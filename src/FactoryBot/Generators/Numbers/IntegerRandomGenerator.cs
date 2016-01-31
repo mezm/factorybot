@@ -4,12 +4,7 @@
     {
         private readonly int _from, _to;
 
-        public IntegerRandomGenerator()
-            : this(int.MinValue, int.MaxValue)
-        {
-        }
-
-        public IntegerRandomGenerator(int from, int to)
+        public IntegerRandomGenerator(int from = int.MinValue, int to = int.MaxValue)
         {
             _from = from;
             _to = to;

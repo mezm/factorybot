@@ -11,13 +11,8 @@ namespace FactoryBot.Generators.Strings
 
         private readonly int _sourceLength;
         private readonly int _minLength, _maxLength;
-
-        public StringRandomGenerator()
-            : this(5, 100)
-        {
-        }
-
-        public StringRandomGenerator(int minLength, int maxLength)
+        
+        public StringRandomGenerator(int minLength = 5, int maxLength = 100)
         {
             Check.GreaterThanZero(minLength, nameof(minLength));
             Check.GreaterThanZero(maxLength, nameof(maxLength));

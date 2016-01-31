@@ -5,13 +5,8 @@
         private readonly FullNameFormat _format;
         private readonly IGenerator _firstNameGenerator = new FirstNameGenerator();
         private readonly IGenerator _lastNameGenerator = new LastNameGenerator();
-
-        public FullNameGenerator()
-            : this(FullNameFormat.FirstNameLastName)
-        {
-        }
-
-        public FullNameGenerator(FullNameFormat format)
+        
+        public FullNameGenerator(FullNameFormat format = FullNameFormat.FirstNameLastName)
         {
             _format = format;
         }

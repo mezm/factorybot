@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -27,10 +28,14 @@ namespace FactoryBot.ExpressionParser
             var generatorAttr = methodCallExpr?.Method.GetCustomAttribute<GeneratorAttribute>();
             if (generatorAttr != null)
             {
-                var generatorParamenters = methodCallExpr.Arguments.Select(EvaluateExpression).ToArray();
-                return !methodCallExpr.Method.IsGenericMethod
-                           ? generatorAttr.CreateGenerator(generatorParamenters)
-                           : generatorAttr.CreateGenericGenerator(methodCallExpr.Method.GetGenericArguments(), generatorParamenters);
+                var methodParameters = methodCallExpr.Method.GetParameters();
+                var generatorParamenters = new Dictionary<string, object>(methodParameters.Length);
+                for (var i = 0; i < methodParameters.Length; i++)
+                {
+                    generatorParamenters[methodParameters[i].Name] = EvaluateExpression(methodCallExpr.Arguments[i]);
+                }
+
+                return generatorAttr.CreateGenerator(methodCallExpr.Method, generatorParamenters);
             }
 
             return new ConstantGenerator(EvaluateExpression(expr));

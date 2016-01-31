@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 using FactoryBot.Generators;
 
@@ -21,34 +23,50 @@ namespace FactoryBot.DSL
 
         public Type GeneratorType { get; }
 
-        public IGenerator CreateGenerator(params object[] parameters)
+        public IGenerator CreateGenerator(MethodInfo method, IDictionary<string, object> parameters)
         {
+            Check.NotNull(method, nameof(method));
             Check.NotNull(parameters, nameof(parameters));
 
-            return CreateGenerator(GeneratorType, parameters);
-        }
-
-        public IGenerator CreateGenericGenerator(Type[] genericArguments, params object[] parameters) 
-        {
-            Check.NotNull(genericArguments, nameof(genericArguments));
-            Check.NotNull(parameters, nameof(parameters));
-
-            return !GeneratorType.IsGenericType
-                       ? CreateGenerator(parameters)
-                       : CreateGenerator(GeneratorType.MakeGenericType(genericArguments), parameters);
-        }
-
-        private IGenerator CreateGenerator(Type generatorType, object[] parameters)
-        {
-            var parameterTypes = parameters.Select(x => x.GetType()).ToArray();
-            var constructor = generatorType.GetConstructor(parameterTypes);
-            if (constructor == null)
+            if (!GeneratorType.IsGenericType)
             {
-                var typesString = string.Join(", ", parameterTypes.Select(x => x.Name));
-                throw new MissingMethodException($"Constructor of class {GeneratorType} with parameters {typesString}.");
+                return CreateGenerator(GeneratorType, parameters);
             }
 
-            return (IGenerator)constructor.Invoke(parameters);
+            if (!method.IsGenericMethod)
+            {
+                throw new ArgumentException("Only generic methods are allowed for generic generators.", nameof(method));
+            }
+
+            // TODO: check if generic arguments of both generator and method match 
+
+            return CreateGenerator(GeneratorType.MakeGenericType(method.GetGenericArguments()), parameters); 
+        }
+        
+        private IGenerator CreateGenerator(Type generatorType, IDictionary<string, object> parameters)
+        {
+            var constructor = generatorType.GetConstructors().FirstOrDefault(x => IsSuitableConstructor(x, parameters.Keys));
+            if (constructor == null)
+            {
+                var typesString = string.Join(", ", parameters.Keys);
+                throw new MissingMethodException($"No constructor of class {GeneratorType} with parameters {typesString} has been found.");
+            }
+
+            var constructorParameters = constructor.GetParameters().Select(x => ChooseParameter(x, parameters)).ToArray();
+            return (IGenerator)constructor.Invoke(constructorParameters);
+        }
+
+        private static object ChooseParameter(ParameterInfo parameterInfo, IDictionary<string, object> parameters)
+        {
+            object result;
+            return parameters.TryGetValue(parameterInfo.Name, out result) ? result : parameterInfo.DefaultValue;
+        }
+
+        private static bool IsSuitableConstructor(ConstructorInfo constructor, ICollection<string> parameterNames)
+        {
+            var parameters = constructor.GetParameters();
+            return parameters.Length >= parameterNames.Count 
+                && parameters.All(parameter => parameterNames.Contains(parameter.Name) || parameter.HasDefaultValue);
         }
     }
 }

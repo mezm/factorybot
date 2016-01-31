@@ -13,13 +13,8 @@ namespace FactoryBot.Generators.Strings
         private const int MinBufferSize = 30;
 
         private readonly int _approximateWordCountInSource, _minWords, _maxWords;
-
-        public WordRandomGenerator()
-            : this(2, 7)
-        {
-        }
-
-        public WordRandomGenerator(int minWords, int maxWords)
+        
+        public WordRandomGenerator(int minWords = 2, int maxWords = 7)
         {
             Check.GreaterThanZero(minWords, nameof(minWords));
             Check.GreaterThanZero(maxWords, nameof(maxWords));
