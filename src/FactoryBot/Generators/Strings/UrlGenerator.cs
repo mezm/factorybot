@@ -5,7 +5,9 @@ namespace FactoryBot.Generators.Strings
 {
     public class UrlGenerator : TypedGenerator<string>
     {
-        private readonly string[] _schemas = { Uri.UriSchemeFtp, Uri.UriSchemeHttp, Uri.UriSchemeHttps, Uri.UriSchemeFile };
+        private static readonly string[] Schemas = { Uri.UriSchemeHttp, Uri.UriSchemeHttps };
+        private static readonly string[] Domains = { ".com", ".net", ".org", ".edu", ".gov" };
+
         private readonly IGenerator _wordsGenerator = new WordRandomGenerator(1, 3);
         private readonly IGenerator _singleWordGenerator = new WordRandomGenerator(1, 1);
         private readonly UriKind _uriKind;
@@ -23,12 +25,7 @@ namespace FactoryBot.Generators.Strings
         {
             Check.MinMax(minPathSegments, maxPathSegments, nameof(minPathSegments));
             Check.MinMax(minQueryParams, maxQueryParams, nameof(minQueryParams));
-
-            if (minQueryParams > 0 && string.IsNullOrWhiteSpace(schema))
-            {
-                throw new ArgumentException("Query parameters are supported only with schema.", nameof(minQueryParams));
-            }
-
+            
             _uriKind = uriKind;
             _minPathSegments = minPathSegments;
             _maxPathSegments = maxPathSegments;
@@ -45,18 +42,18 @@ namespace FactoryBot.Generators.Strings
 
             if (generateAbsoluteUrl)
             {
-                var schema = string.IsNullOrWhiteSpace(_schema) ? _schemas[NextRandomInteger(0, _schemas.Length - 1)] : _schema;
-                var host = string.IsNullOrWhiteSpace(_host) ? $"{GetNextRandomUrlPart()}.com" : _host; // TODO: get random
-                result.Append(schema);
+                result.Append(GetSchema());
                 result.Append(Uri.SchemeDelimiter); 
-                result.Append(host);  
-            } 
+                result.Append(GetHost());
+            }
+
+            result.Append("/");
 
             var pathSegments = NextRandomInteger(_minPathSegments, _maxPathSegments);
             for (var i = 0; i < pathSegments; i++)
             {
-                result.Append("/");
                 result.Append(GetNextRandomUrlPart());
+                result.Append("/");
             }
 
             var queryParams = NextRandomInteger(_minQueryParams, _maxQueryParams);
@@ -66,7 +63,23 @@ namespace FactoryBot.Generators.Strings
                 result.AppendFormat($"{GetNextQueryParamPart()}={GetNextQueryParamPart()}");
             }
 
-            return result.ToString();
+            return result.ToString().ToLowerInvariant();
+        }
+
+        private string GetHost()
+        {
+            if (!string.IsNullOrWhiteSpace(_host))
+            {
+                return _host;
+            }
+
+            var domain = Domains[NextRandomInteger(0, Domains.Length - 1)];
+            return GetNextRandomUrlPart() + domain;
+        }
+
+        private string GetSchema()
+        {
+            return string.IsNullOrWhiteSpace(_schema) ? Schemas[NextRandomInteger(0, Schemas.Length - 1)] : _schema;
         }
 
         private string GetNextRandomUrlPart()

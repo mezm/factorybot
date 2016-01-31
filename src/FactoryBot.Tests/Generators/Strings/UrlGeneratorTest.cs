@@ -112,11 +112,8 @@ namespace FactoryBot.Tests.Generators.Strings
                 () => new UrlGenerator(minPathSegments: 10, maxPathSegments: 7),
                 Throws.TypeOf<ArgumentOutOfRangeException>());
             Assert.That(
-                () => new UrlGenerator(schema: Uri.UriSchemeHttps, minQueryParams: 10, maxQueryParams: 5),
+                () => new UrlGenerator(minQueryParams: 10, maxQueryParams: 5),
                 Throws.TypeOf<ArgumentOutOfRangeException>());
-            Assert.That(
-                () => new UrlGenerator(minQueryParams: 1, maxQueryParams: 3),
-                Throws.ArgumentException);
         }
     }
 }
