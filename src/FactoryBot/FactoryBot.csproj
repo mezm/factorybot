@@ -63,6 +63,7 @@
     <Compile Include="Generators\Strings\LastNameGenerator.cs" />
     <Compile Include="Generators\Strings\RandomLineFromFileGenerator.cs" />
     <Compile Include="Generators\Strings\RandomStringFromListGenerator.cs" />
+    <Compile Include="Generators\Strings\SequenceStringFromListGenerator .cs" />
     <Compile Include="Generators\Strings\TelephoneNumberGenerator.cs" />
     <Compile Include="Generators\Strings\UrlGenerator.cs" />
     <Compile Include="Generators\Strings\WordRandomGenerator.cs" />

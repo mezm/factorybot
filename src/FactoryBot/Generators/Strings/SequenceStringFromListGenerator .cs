@@ -2,11 +2,12 @@
 
 namespace FactoryBot.Generators.Strings
 {
-    public class RandomStringFromListGenerator : TypedGenerator<string>
+    public class SequenceStringFromListGenerator : TypedGenerator<string>
     {
         private readonly IReadOnlyList<string> _source;
+        private int _index;
 
-        public RandomStringFromListGenerator(IReadOnlyList<string> source)
+        public SequenceStringFromListGenerator(IReadOnlyList<string> source)
         {
             Check.NotNull(source, nameof(source));
             Check.CollectionNotEmpty(source, nameof(source));
@@ -16,8 +17,12 @@ namespace FactoryBot.Generators.Strings
 
         protected override string NextInternal()
         {
-            var index = NextRandomInteger(0, _source.Count - 1);
-            return _source[index];
+            if (_index >= _source.Count)
+            {
+                _index = 0;
+            }
+
+            return _source[_index++];
         }
     }
 }

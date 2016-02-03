@@ -1,5 +1,4 @@
 ﻿using System;
-
 using FactoryBot.Generators.Strings;
 
 using NUnit.Framework;
@@ -60,7 +59,7 @@ namespace FactoryBot.Tests.Generators.Strings
             Assert.That(Uri.IsWellFormedUriString(url, UriKind.Absolute));
             var path = new Uri(url).PathAndQuery;
             Assert.That(path, Is.Not.Contain("?"));
-            Assert.That(path.Split('/'), Has.Length.InRange(5, 10));
+            Assert.That(path.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries), Has.Length.InRange(5, 10));
         }
 
         [Test]
