@@ -57,6 +57,7 @@
     <Compile Include="Generators\ConstantGenerator.cs" />
     <Compile Include="Generators\GeneratorUsingDecorator.cs" />
     <Compile Include="Generators\IGenerator.cs" />
+    <Compile Include="Generators\Strings\FilepathGenerator.cs" />
     <Compile Include="Generators\Strings\FirstNameGenerator.cs" />
     <Compile Include="Generators\Strings\FullNameFormat.cs" />
     <Compile Include="Generators\Strings\FullNameGenerator.cs" />
