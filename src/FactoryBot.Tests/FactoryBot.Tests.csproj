@@ -52,7 +52,10 @@
     <Compile Include="Generators\Strings\FirstNameGeneratorTest.cs" />
     <Compile Include="Generators\Strings\FullNameGeneratorTest.cs" />
     <Compile Include="Generators\Strings\LastNameGeneratorTest.cs" />
+    <Compile Include="Generators\Strings\RandomStringFromListGeneratorTest.cs" />
+    <Compile Include="Generators\Strings\SequenceStringFromListGeneratorTest.cs" />
     <Compile Include="Generators\Strings\StringRandomGeneratorTest.cs" />
+    <Compile Include="Generators\Strings\TelephoneNumberGeneratorTest.cs" />
     <Compile Include="Generators\Strings\UrlGeneratorTest.cs" />
     <Compile Include="Generators\Strings\WordRandomGeneratorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

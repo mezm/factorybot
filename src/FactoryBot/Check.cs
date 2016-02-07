@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace FactoryBot
@@ -35,6 +36,14 @@ namespace FactoryBot
             if (minParameter > maxParameter)
             {
                 throw new ArgumentOutOfRangeException(minParameterName, "Minimum should not be greater than maximum.");
+            }
+        }
+
+        public static void CollectionNotEmpty<T>(IReadOnlyCollection<T> collection, string parameterName)
+        {
+            if (collection.Count == 0)
+            {
+                throw new ArgumentException("Collection should not be empty.", parameterName);
             }
         }
     }
