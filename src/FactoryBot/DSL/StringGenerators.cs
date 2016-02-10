@@ -16,7 +16,7 @@ namespace FactoryBot.DSL
         public string Words() => default(string);
 
         [Generator(typeof(WordRandomGenerator))]
-        public string Words(int minCount, int maxCount) => default(string);
+        public string Words(int minWords, int maxWords) => default(string);
 
         [Generator(typeof(FirstNameGenerator))]
         public string FirstName() => default(string);

@@ -32,7 +32,12 @@ namespace FactoryBot.ExpressionParser
                 var generatorParamenters = new Dictionary<string, object>(methodParameters.Length);
                 for (var i = 0; i < methodParameters.Length; i++)
                 {
-                    generatorParamenters[methodParameters[i].Name] = EvaluateExpression(methodCallExpr.Arguments[i]);
+                    var parameter = methodParameters[i];
+                    var argumentExpr = methodCallExpr.Arguments[i];
+
+                    generatorParamenters[parameter.Name] = parameter.IsDefined(typeof(ItemGeneratorAttribute))
+                                                               ? ParseGeneratorVariable(argumentExpr)
+                                                               : EvaluateExpression(argumentExpr);
                 }
 
                 return generatorAttr.CreateGenerator(methodCallExpr.Method, generatorParamenters);

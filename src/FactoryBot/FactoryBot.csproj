@@ -48,12 +48,14 @@
     <Compile Include="DSL\CustomConstructBuilder.cs" />
     <Compile Include="DSL\DateGenerators.cs" />
     <Compile Include="DSL\GeneratorAttribute.cs" />
+    <Compile Include="DSL\ItemGeneratorAttribute.cs" />
     <Compile Include="DSL\NumberGenerators.cs" />
     <Compile Include="DSL\StringGenerators.cs" />
     <Compile Include="ExpressionParser\ConstructorParser.cs" />
     <Compile Include="ExpressionParser\ExpressionParserHelper.cs" />
     <Compile Include="ExpressionParser\FactoryParser.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Generators\Collections\ArrayGenerator.cs" />
     <Compile Include="Generators\ConstantGenerator.cs" />
     <Compile Include="Generators\GeneratorUsingDecorator.cs" />
     <Compile Include="Generators\IGenerator.cs" />

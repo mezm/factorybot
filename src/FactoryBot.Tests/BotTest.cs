@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using NUnit.Framework;
 
@@ -239,7 +240,39 @@ namespace FactoryBot.Tests
             Assert.That(model.Nested.Number, Is.GreaterThanOrEqualTo(100).And.LessThanOrEqualTo(150));
             Assert.That(model.Nested.Text, Is.EqualTo("the test"));
         }
-        
+
+        [Test]
+        public void BuildNestedPrimitiveArrayWithGenerator()
+        {
+            Bot.Define(x => new TestModel4 { SimpleArray = x.Array(1, 5, x.Strings.Words(1, 1)) });
+
+            var model = Bot.Build<TestModel4>();
+
+            Assert.That(model.SimpleArray, Is.Not.Null.And.Length.InRange(1, 5).And.All.Match(@"^\w+$"));
+        }
+
+        [Test]
+        public void BuildNestedPrimitiveArrayWithConstant()
+        {
+            Bot.Define(x => new TestModel4 { SimpleArray = x.Array(3, 3, "abc") });
+
+            var model = Bot.Build<TestModel4>();
+
+            Assert.That(model.SimpleArray, Is.Not.Null.And.Length.EqualTo(3).And.All.EqualTo("abc"));
+        }
+
+        [Test]
+        public void BuildNestedComplexArray()
+        {
+            Bot.Define(x => new TestModel1(x.Numbers.AnyInteger(100, 150), "the test"));
+            Bot.Define(x => new TestModel3 { Number = 7, Nested = x.Use<TestModel1>() });
+            Bot.Define(x => new TestModel4 { ComplexArray = x.Array(1, 3, x.Use<TestModel3>()) });
+
+            var model = Bot.Build<TestModel4>();
+
+            Assert.That(model.ComplexArray, Is.Not.Null.And.Length.InRange(1, 3).And.All.Not.Null);
+        }
+
         private static void GetModelsAndAssertTheSame<TModel>(Action<TModel> assertions)
         {
             for (var i = 0; i < 3; i++)
@@ -298,6 +331,17 @@ namespace FactoryBot.Tests
             public int Number { get; set; }
 
             public TestModel1 Nested { get; set; }
+        }
+
+        private class TestModel4
+        {
+            public List<int> SimpleList { get; set; }
+            
+            public string[] SimpleArray { get; set; }
+
+            public List<TestModel1> ComplexList { get; set; }
+            
+            public TestModel3[] ComplexArray { get; set; }
         }
 
         private class OtherClass1

@@ -1,4 +1,5 @@
 ﻿using FactoryBot.Generators;
+using FactoryBot.Generators.Collections;
 
 namespace FactoryBot.DSL
 {
@@ -12,5 +13,8 @@ namespace FactoryBot.DSL
 
         [Generator(typeof(GeneratorUsingDecorator<>))]
         public T Use<T>() => default(T);
+
+        [Generator(typeof(ArrayGenerator<>))]
+        public T[] Array<T>(int minElements, int maxElements, [ItemGenerator] T itemGenerator) => new T[0];
     }
 }
