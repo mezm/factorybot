@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+
+using FactoryBot.Tests.Models;
 
 using NUnit.Framework;
 
@@ -17,10 +18,10 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildAlwaysCreatesNewInstance()
         {
-            Bot.Define(x => new TestModel1(10, "text"));
+            Bot.Define(x => new Model1(10, "text"));
 
-            var model1 = Bot.Build<TestModel1>();
-            var model2 = Bot.Build<TestModel1>();
+            var model1 = Bot.Build<Model1>();
+            var model2 = Bot.Build<Model1>();
             
             Assert.That(model1, Is.Not.EqualTo(model2));
         }
@@ -28,9 +29,9 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildConstructorArgumentsOnly()
         {
-            Bot.Define(x => new TestModel1(10, "text"));
+            Bot.Define(x => new Model1(10, "text"));
 
-            GetModelsAndAssertTheSame<TestModel1>(
+            GetModelsAndAssertTheSame<Model1>(
                 x =>
                 {
                     Assert.That(x.Number, Is.EqualTo(10));
@@ -41,9 +42,9 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildPropertiesOnly()
         {
-            Bot.Define(x => new TestModel1 { Number = 13, Text = "some text" });
+            Bot.Define(x => new Model1 { Number = 13, Text = "some text" });
 
-            GetModelsAndAssertTheSame<TestModel1>(
+            GetModelsAndAssertTheSame<Model1>(
                 x =>
                 {
                     Assert.That(x.Number, Is.EqualTo(13));
@@ -54,9 +55,9 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildConstructorArgumentAndProperty()
         {
-            Bot.Define(x => new TestModel1(10) { Text = "some text" });
+            Bot.Define(x => new Model1(10) { Text = "some text" });
 
-            GetModelsAndAssertTheSame<TestModel1>(
+            GetModelsAndAssertTheSame<Model1>(
                 x =>
                     {
                         Assert.That(x.Number, Is.EqualTo(10));
@@ -67,9 +68,9 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildWithGenerators()
         {
-            Bot.Define(x => new TestModel1(x.Numbers.AnyInteger(10, 25)) { Text = x.Strings.Any() });
+            Bot.Define(x => new Model1(x.Numbers.AnyInteger(10, 25)) { Text = x.Strings.Any() });
 
-            GetModelsAndAssertTheSame<TestModel1>(
+            GetModelsAndAssertTheSame<Model1>(
                 x =>
                 {
                     Assert.That(x.Number, Is.GreaterThanOrEqualTo(10).And.LessThanOrEqualTo(25));
@@ -82,9 +83,9 @@ namespace FactoryBot.Tests
         {
             var number = 889;
             var text = "some t";
-            Bot.Define(x => new TestModel1(number) { Text = text });
+            Bot.Define(x => new Model1(number) { Text = text });
 
-            GetModelsAndAssertTheSame<TestModel1>(
+            GetModelsAndAssertTheSame<Model1>(
                 x =>
                 {
                     Assert.That(x.Number, Is.EqualTo(889));
@@ -96,9 +97,9 @@ namespace FactoryBot.Tests
         public void BuildWithOtherClassProperty()
         {
             var data = new { Number = 101, Text = "abc" };
-            Bot.Define(x => new TestModel1(data.Number, data.Text));
+            Bot.Define(x => new Model1(data.Number, data.Text));
 
-            GetModelsAndAssertTheSame<TestModel1>(
+            GetModelsAndAssertTheSame<Model1>(
                 x =>
                 {
                     Assert.That(x.Number, Is.EqualTo(101));
@@ -109,10 +110,10 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildWithOtherClassMethod()
         {
-            var data = new OtherClass1();
-            Bot.Define(x => new TestModel1(data.GetNumber(), data.GetText()));
+            var data = new DataHolder1();
+            Bot.Define(x => new Model1(data.GetNumber(), data.GetText()));
 
-            GetModelsAndAssertTheSame<TestModel1>(
+            GetModelsAndAssertTheSame<Model1>(
                 x =>
                 {
                     Assert.That(x.Number, Is.EqualTo(912));
@@ -123,10 +124,10 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildWithOtherClassPropertyAndMethod()
         {
-            var data = new OtherClass2();
-            Bot.Define(x => new TestModel1(data.Other.GetNumber(), data.Other.GetText()));
+            var data = new DataHolder2();
+            Bot.Define(x => new Model1(data.Other.GetNumber(), data.Other.GetText()));
 
-            GetModelsAndAssertTheSame<TestModel1>(
+            GetModelsAndAssertTheSame<Model1>(
                 x =>
                 {
                     Assert.That(x.Number, Is.EqualTo(912));
@@ -137,9 +138,9 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildWithMethodCall()
         {
-            Bot.Define(x => new TestModel1(GetNumberInternal()) { Text = GetTextInternal() });
+            Bot.Define(x => new Model1(GetNumberInternal()) { Text = GetTextInternal() });
 
-            GetModelsAndAssertTheSame<TestModel1>(
+            GetModelsAndAssertTheSame<Model1>(
                 x =>
                 {
                     Assert.That(x.Number, Is.EqualTo(111));
@@ -150,9 +151,9 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildWithConstantValueOnlyAndWithNested()
         {
-            Bot.Define(x => new TestModel2(136) { Date = new DateTime(2016, 1, 22) });
+            Bot.Define(x => new Model2(136) { Date = new DateTime(2016, 1, 22) });
 
-            GetModelsAndAssertTheSame<TestModel2>(
+            GetModelsAndAssertTheSame<Model2>(
                 x =>
                     {
                         Assert.That(x.Number, Is.EqualTo(136));
@@ -164,18 +165,18 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildWithSingleModifier()
         {
-            Bot.Define(x => new TestModel1(x.Numbers.AnyInteger(10, 20)));
+            Bot.Define(x => new Model1(x.Numbers.AnyInteger(10, 20)));
 
-            var model = Bot.Build<TestModel1>(x => x.Number = 100);
+            var model = Bot.Build<Model1>(x => x.Number = 100);
             Assert.That(model.Number, Is.EqualTo(100));
         }
 
         [Test]
         public void BuildWithMultipleModifier()
         {
-            Bot.Define(x => new TestModel1(x.Numbers.AnyInteger(10, 20), "t1"));
+            Bot.Define(x => new Model1(x.Numbers.AnyInteger(10, 20), "t1"));
 
-            var model = Bot.Build<TestModel1>(x => x.Number = 100, x => x.Text = "tt2");
+            var model = Bot.Build<Model1>(x => x.Number = 100, x => x.Text = "tt2");
 
             Assert.That(model.Number, Is.EqualTo(100));
             Assert.That(model.Text, Is.EqualTo("tt2"));
@@ -184,9 +185,9 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildWithConstructorModifier()
         {
-            Bot.Define(x => new TestModel1(x.Numbers.AnyInteger(10, 20), ""));
+            Bot.Define(x => new Model1(x.Numbers.AnyInteger(10, 20), ""));
 
-            var model = Bot.BuildCustom(x => new TestModel1(5, x.Builder.Strings.Any()));
+            var model = Bot.BuildCustom(x => new Model1(5, x.Builder.Strings.Any()));
 
             Assert.That(model.Number, Is.EqualTo(5));
             Assert.That(model.Text, Is.Not.Null.And.Not.Empty);
@@ -195,9 +196,9 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildWithConstructorModifierWithKeep()
         {
-            Bot.Define(x => new TestModel1(x.Numbers.AnyInteger(10, 20), "the text"));
+            Bot.Define(x => new Model1(x.Numbers.AnyInteger(10, 20), "the text"));
 
-            var model = Bot.BuildCustom(x => new TestModel1(5, x.Keep<string>()));
+            var model = Bot.BuildCustom(x => new Model1(5, x.Keep<string>()));
 
             Assert.That(model.Number, Is.EqualTo(5));
             Assert.That(model.Text, Is.EqualTo("the text"));
@@ -206,17 +207,17 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildWithConstructorModifierArgumentsMismatch()
         {
-            Bot.Define(x => new TestModel1(x.Numbers.AnyInteger(10, 20), "the text"));
+            Bot.Define(x => new Model1(x.Numbers.AnyInteger(10, 20), "the text"));
             
-            Assert.That(() => Bot.BuildCustom(x => new TestModel1(5)), Throws.InvalidOperationException);
+            Assert.That(() => Bot.BuildCustom(x => new Model1(5)), Throws.InvalidOperationException);
         }
 
         [Test]
         public void BuildWithConstructorModifierAndPostConstructModifiers()
         {
-            Bot.Define(x => new TestModel1(x.Numbers.AnyInteger(10, 20)));
+            Bot.Define(x => new Model1(x.Numbers.AnyInteger(10, 20)));
 
-            var model = Bot.BuildCustom(x => new TestModel1(5), x => x.Text = "a");
+            var model = Bot.BuildCustom(x => new Model1(5), x => x.Text = "a");
 
             Assert.That(model.Number, Is.EqualTo(5));
             Assert.That(model.Text, Is.EqualTo("a"));
@@ -225,16 +226,16 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildNotDefinedType()
         {
-            Assert.That(() => Bot.Build<TestModel1>(), Throws.TypeOf<UnknownTypeException>());
+            Assert.That(() => Bot.Build<Model1>(), Throws.TypeOf<UnknownTypeException>());
         }
 
         [Test]
         public void BuildWithUsingNestedConfigurations()
         {
-            Bot.Define(x => new TestModel1(x.Numbers.AnyInteger(100, 150), "the test"));
-            Bot.Define(x => new TestModel3 { Number = 7, Nested = x.Use<TestModel1>() });
+            Bot.Define(x => new Model1(x.Numbers.AnyInteger(100, 150), "the test"));
+            Bot.Define(x => new Model3 { Number = 7, Nested = x.Use<Model1>() });
 
-            var model = Bot.Build<TestModel3>();
+            var model = Bot.Build<Model3>();
 
             Assert.That(model.Number, Is.EqualTo(7));
             Assert.That(model.Nested.Number, Is.GreaterThanOrEqualTo(100).And.LessThanOrEqualTo(150));
@@ -244,9 +245,9 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildNestedPrimitiveArrayWithGenerator()
         {
-            Bot.Define(x => new TestModel4 { SimpleArray = x.Array(1, 5, x.Strings.Words(1, 1)) });
+            Bot.Define(x => new Model4 { SimpleArray = x.Array(1, 5, x.Strings.Words(1, 1)) });
 
-            var model = Bot.Build<TestModel4>();
+            var model = Bot.Build<Model4>();
 
             Assert.That(model.SimpleArray, Is.Not.Null.And.Length.InRange(1, 5).And.All.Match(@"^\w+$"));
         }
@@ -254,9 +255,9 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildNestedPrimitiveArrayWithConstant()
         {
-            Bot.Define(x => new TestModel4 { SimpleArray = x.Array(3, 3, "abc") });
+            Bot.Define(x => new Model4 { SimpleArray = x.Array(3, 3, "abc") });
 
-            var model = Bot.Build<TestModel4>();
+            var model = Bot.Build<Model4>();
 
             Assert.That(model.SimpleArray, Is.Not.Null.And.Length.EqualTo(3).And.All.EqualTo("abc"));
         }
@@ -264,11 +265,11 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildNestedComplexArray()
         {
-            Bot.Define(x => new TestModel1(x.Numbers.AnyInteger(100, 150), "the test"));
-            Bot.Define(x => new TestModel3 { Number = 7, Nested = x.Use<TestModel1>() });
-            Bot.Define(x => new TestModel4 { ComplexArray = x.Array(1, 3, x.Use<TestModel3>()) });
+            Bot.Define(x => new Model1(x.Numbers.AnyInteger(100, 150), "the test"));
+            Bot.Define(x => new Model3 { Number = 7, Nested = x.Use<Model1>() });
+            Bot.Define(x => new Model4 { ComplexArray = x.Array(1, 3, x.Use<Model3>()) });
 
-            var model = Bot.Build<TestModel4>();
+            var model = Bot.Build<Model4>();
 
             Assert.That(model.ComplexArray, Is.Not.Null.And.Length.InRange(1, 3).And.All.Not.Null);
         }
@@ -290,76 +291,6 @@ namespace FactoryBot.Tests
         private string GetTextInternal()
         {
             return "a";
-        }
-
-        private class TestModel1
-        {
-            public TestModel1()
-            {
-            }
-
-            public TestModel1(int number)
-            {
-                Number = number;
-            }
-
-            public TestModel1(int number, string text)
-            {
-                Number = number;
-                Text = text;
-            }
-
-            public int Number { get; set; }
-
-            public string Text { get; set; }
-        }
-
-        private class TestModel2
-        {
-            public TestModel2(int number)
-            {
-                Number = number;
-            }
-
-            public int Number { get; }
-
-            public DateTime Date { get; set; }
-        }
-
-        private class TestModel3
-        {
-            public int Number { get; set; }
-
-            public TestModel1 Nested { get; set; }
-        }
-
-        private class TestModel4
-        {
-            public List<int> SimpleList { get; set; }
-            
-            public string[] SimpleArray { get; set; }
-
-            public List<TestModel1> ComplexList { get; set; }
-            
-            public TestModel3[] ComplexArray { get; set; }
-        }
-
-        private class OtherClass1
-        {
-            public int GetNumber()
-            {
-                return 912;
-            }
-
-            public string GetText()
-            {
-                return "test";
-            }
-        }
-
-        private class OtherClass2
-        {
-            public OtherClass1 Other { get; } = new OtherClass1();
         }
     }
 }
