@@ -1,38 +1,23 @@
 ﻿using System.IO;
-using FactoryBot.Utils;
 
 namespace FactoryBot.Generators.Strings
 {
-    public abstract class RandomLineFromFileGenerator : TypedGenerator<string>
+    public class RandomLineFromFileGenerator : RandomLineFromStreamGenerator
     {
-        private readonly string _resourceName;
-        private readonly int _sourceLength;
+        private readonly string _filename;
 
-        protected RandomLineFromFileGenerator(string resourceName)
+        public RandomLineFromFileGenerator(string filename)
         {
-            _resourceName = resourceName;
-            Check.NotNullOrWhiteSpace(resourceName, nameof(resourceName));
+            Check.NotNullOrWhiteSpace(filename, nameof(filename));
 
-            _sourceLength = (int)ResourceHelper.GetStreamLength(resourceName);
-        }
-
-        protected override string NextInternal()
-        {
-            return ResourceHelper.Read(_resourceName, Read);
-        }
-
-        private string Read(Stream stream, StreamReader reader)
-        {
-            string result = null;
-            while (result == null)
+            if (!File.Exists(filename))
             {
-                var from = NextRandomInteger(0, _sourceLength);
-                stream.Seek(from, SeekOrigin.Begin);
-                reader.ReadLine(); // skipping first line because it could be incomplete
-                result = reader.ReadLine();
+                throw new IOException($"File '{filename}' doesn't exist.");
             }
 
-            return result;
+            _filename = filename;
         }
+
+        protected override Stream OpenStream() => new FileStream(_filename, FileMode.Open);
     }
 }

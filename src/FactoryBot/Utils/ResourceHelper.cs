@@ -6,10 +6,9 @@ namespace FactoryBot.Utils
 {
     public static class ResourceHelper
     {
-        public static TResult Read<TResult>(string resourceName, Func<Stream, StreamReader, TResult> read)
+        public static Stream OpenStream(string resourceName)
         {
             Check.NotNullOrWhiteSpace(resourceName, nameof(resourceName));
-            Check.NotNull(read, nameof(read));
 
             var assembly = Assembly.GetCallingAssembly();
             var stream = assembly.GetManifestResourceStream(resourceName);
@@ -18,6 +17,15 @@ namespace FactoryBot.Utils
                 throw new IOException($"Resource {resourceName} has not been found in assembly {assembly}.");
             }
 
+            return stream;
+        }
+
+        public static TResult Read<TResult>(string resourceName, Func<Stream, StreamReader, TResult> read)
+        {
+            Check.NotNullOrWhiteSpace(resourceName, nameof(resourceName));
+            Check.NotNull(read, nameof(read));
+
+            var stream = OpenStream(resourceName);
             using (var reader = new StreamReader(stream))
             {
                 return read(stream, reader);
