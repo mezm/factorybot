@@ -54,6 +54,7 @@
     <Compile Include="Generators\Strings\LastNameGeneratorTest.cs" />
     <Compile Include="Generators\Strings\RandomLineFromFileGeneratorTest.cs" />
     <Compile Include="Generators\Strings\RandomStringFromListGeneratorTest.cs" />
+    <Compile Include="Generators\Strings\SequenceStringFromFileGeneratorTest.cs" />
     <Compile Include="Generators\Strings\SequenceStringFromListGeneratorTest.cs" />
     <Compile Include="Generators\Strings\StringRandomGeneratorTest.cs" />
     <Compile Include="Generators\Strings\TelephoneNumberGeneratorTest.cs" />

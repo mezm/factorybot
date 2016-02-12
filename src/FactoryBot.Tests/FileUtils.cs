@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Reflection;
 using FactoryBot.Extensions;
 using FactoryBot.Generators;
@@ -19,6 +20,18 @@ namespace FactoryBot.Tests
             using (var reader = new StreamReader(stream))
             {
                 return reader.ReadToEnd().RemoveLineBreaks();
+            }
+        }
+
+        public static void WithFileDisposal(string filename, Action action)
+        {
+            try
+            {
+                action();
+            }
+            finally
+            {
+                File.Delete(filename);
             }
         }
     }

@@ -25,7 +25,7 @@ namespace FactoryBot.Generators.Strings
         
         protected override string NextInternal() => ResourceHelper.Read(SourceNames.RandomText, Read);
 
-        private string Read(Stream stream, StreamReader reader)
+        private string Read(StreamReader reader)
         {
             var size = NextRandomInteger(_minLength, _maxLength);
             var result = "";
@@ -33,7 +33,7 @@ namespace FactoryBot.Generators.Strings
             while (result.Length < size)
             {
                 var from = NextRandomInteger(0, _sourceLength / CharSize - 1) * CharSize;
-                stream.Seek(from, SeekOrigin.Begin);
+                reader.BaseStream.Seek(from, SeekOrigin.Begin);
                 var readed = reader.Read(buffer, 0, size);
                 result = new string(buffer, 0, readed).RemoveLineBreaks();
             }

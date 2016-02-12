@@ -30,7 +30,7 @@ namespace FactoryBot.Generators.Strings
             return ResourceHelper.Read(SourceNames.RandomText, Read);
         }
 
-        private string Read(Stream stream, StreamReader reader)
+        private string Read(StreamReader reader)
         {
             var targetWordCount = NextRandomInteger(_minWords, _maxWords);
             var bufferSize = (int)(targetWordCount * AvarageWordSize);
@@ -41,7 +41,7 @@ namespace FactoryBot.Generators.Strings
 
             var buffer = new char[bufferSize];
             var from = (int)(NextRandomInteger(0, _approximateWordCountInSource - 1) * AvarageWordSize);
-            stream.Seek(from, SeekOrigin.Begin);
+            reader.BaseStream.Seek(from, SeekOrigin.Begin);
 
             var collectedWords = 0;
             var result = new StringBuilder(bufferSize);

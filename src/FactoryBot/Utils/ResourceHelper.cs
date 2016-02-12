@@ -20,7 +20,7 @@ namespace FactoryBot.Utils
             return stream;
         }
 
-        public static TResult Read<TResult>(string resourceName, Func<Stream, StreamReader, TResult> read)
+        public static TResult Read<TResult>(string resourceName, Func<StreamReader, TResult> read)
         {
             Check.NotNullOrWhiteSpace(resourceName, nameof(resourceName));
             Check.NotNull(read, nameof(read));
@@ -28,7 +28,7 @@ namespace FactoryBot.Utils
             var stream = OpenStream(resourceName);
             using (var reader = new StreamReader(stream))
             {
-                return read(stream, reader);
+                return read(reader);
             }
         }
 
