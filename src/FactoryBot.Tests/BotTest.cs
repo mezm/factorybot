@@ -274,6 +274,37 @@ namespace FactoryBot.Tests
             Assert.That(model.ComplexArray, Is.Not.Null.And.Length.InRange(1, 3).And.All.Not.Null);
         }
 
+        [Test]
+        public void BuildNestedPrimitiveListWithGenerator()
+        {
+            Bot.Define(x => new Model4 { SimpleList = x.List(1, 5, x.Numbers.AnyInteger(100, 200)) });
+
+            var model = Bot.Build<Model4>();
+
+            Assert.That(model.SimpleList, Is.Not.Null.And.Count.InRange(1, 5).And.All.InRange(100, 200));
+        }
+
+        [Test]
+        public void BuildNestedPrimitiveListWithConstant()
+        {
+            Bot.Define(x => new Model4 { SimpleList = x.List(3, 3, 54670) });
+
+            var model = Bot.Build<Model4>();
+
+            Assert.That(model.SimpleList, Is.Not.Null.And.Count.EqualTo(3).And.All.EqualTo(54670));
+        }
+
+        [Test]
+        public void BuildNestedComplexList()
+        {
+            Bot.Define(x => new Model1(x.Numbers.AnyInteger(100, 150), "the test"));
+            Bot.Define(x => new Model4 { ComplexList = x.List(1, 3, x.Use<Model1>()) });
+
+            var model = Bot.Build<Model4>();
+
+            Assert.That(model.ComplexList, Is.Not.Null.And.Count.InRange(1, 3).And.All.Not.Null);
+        }
+
         private static void GetModelsAndAssertTheSame<TModel>(Action<TModel> assertions)
         {
             for (var i = 0; i < 3; i++)

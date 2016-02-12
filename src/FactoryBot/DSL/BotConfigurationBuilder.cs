@@ -1,4 +1,6 @@
-﻿using FactoryBot.Generators;
+﻿using System.Collections.Generic;
+
+using FactoryBot.Generators;
 using FactoryBot.Generators.Collections;
 
 namespace FactoryBot.DSL
@@ -16,5 +18,8 @@ namespace FactoryBot.DSL
 
         [Generator(typeof(ArrayGenerator<>))]
         public T[] Array<T>(int minElements, int maxElements, [ItemGenerator] T itemGenerator) => new T[0];
+
+        [Generator(typeof(ListGenerator<>))]
+        public List<T> List<T>(int minElements, int maxElements, [ItemGenerator] T itemGenerator) => new List<T>();
     }
 }

@@ -23,7 +23,7 @@ namespace FactoryBot.Generators
             return _random.Next(0, 1) == 1;
         }
 
-        protected T NextRandomFromArray<T>(T[] array)
+        protected TItem NextRandomFromArray<TItem>(TItem[] array)
         {
             return array[NextRandomInteger(0, array.Length)];
         }
