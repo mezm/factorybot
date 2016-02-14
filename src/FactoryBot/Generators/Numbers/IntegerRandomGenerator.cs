@@ -6,6 +6,8 @@
 
         public IntegerRandomGenerator(int from = int.MinValue, int to = int.MaxValue)
         {
+            Check.MinMax(from, to, nameof(from));
+
             _from = from;
             _to = to;
         }
