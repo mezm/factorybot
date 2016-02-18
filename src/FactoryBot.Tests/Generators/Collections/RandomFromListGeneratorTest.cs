@@ -1,16 +1,17 @@
-﻿using FactoryBot.Generators.Strings;
+﻿using FactoryBot.Generators.Collections;
+
 using NUnit.Framework;
 
-namespace FactoryBot.Tests.Generators.Strings
+namespace FactoryBot.Tests.Generators.Collections
 {
     [TestFixture]
-    public class RandomStringFromListGeneratorTest
+    public class RandomFromListGeneratorTest
     {
         [Test]
         public void Generate()
         {
             var list = new[] {"a", "ab", "bc", "def"};
-            var generator = new RandomStringFromListGenerator(list);
+            var generator = new RandomFromListGenerator<string>(list);
             var str = (string) generator.Next();
             Assert.That(list, Does.Contain(str));
         }
@@ -18,7 +19,7 @@ namespace FactoryBot.Tests.Generators.Strings
         [Test]
         public void CreateWithEmptyList()
         {
-            Assert.That(() => new RandomStringFromListGenerator(new string[0]), Throws.ArgumentException);
+            Assert.That(() => new RandomFromListGenerator<decimal>(new decimal[0]), Throws.ArgumentException);
         }
     }
 }

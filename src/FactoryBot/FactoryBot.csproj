@@ -71,9 +71,9 @@
     <Compile Include="Generators\Strings\RandomLineFromFileGenerator.cs" />
     <Compile Include="Generators\Strings\RandomLineFromResourceGenerator.cs" />
     <Compile Include="Generators\Strings\RandomLineFromStreamGenerator.cs" />
-    <Compile Include="Generators\Strings\RandomStringFromListGenerator.cs" />
+    <Compile Include="Generators\Collections\RandomFromListGenerator.cs" />
     <Compile Include="Generators\Strings\SequenceStringFromFileGenerator.cs" />
-    <Compile Include="Generators\Strings\SequenceStringFromListGenerator .cs" />
+    <Compile Include="Generators\Collections\SequenceFromListGenerator.cs" />
     <Compile Include="Generators\Strings\TelephoneNumberGenerator.cs" />
     <Compile Include="Generators\Strings\UrlGenerator.cs" />
     <Compile Include="Generators\Strings\WordRandomGenerator.cs" />

@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 
-namespace FactoryBot.Generators.Strings
+namespace FactoryBot.Generators.Collections
 {
-    public class SequenceStringFromListGenerator : TypedGenerator<string>
+    public class SequenceFromListGenerator<T> : TypedGenerator<T>
     {
-        private readonly IReadOnlyList<string> _source;
+        private readonly IReadOnlyList<T> _source;
         private int _index;
 
-        public SequenceStringFromListGenerator(IReadOnlyList<string> source)
+        public SequenceFromListGenerator(IReadOnlyList<T> source)
         {
             Check.NotNull(source, nameof(source));
             Check.CollectionNotEmpty(source, nameof(source));
@@ -15,7 +15,7 @@ namespace FactoryBot.Generators.Strings
             _source = source;
         }
 
-        protected override string NextInternal()
+        protected override T NextInternal()
         {
             if (_index >= _source.Count)
             {
