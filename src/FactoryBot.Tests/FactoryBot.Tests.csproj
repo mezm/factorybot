@@ -48,6 +48,7 @@
     <Compile Include="DSL\GeneratorAttributeTest.cs" />
     <Compile Include="Extensions\StringExtensionsTest.cs" />
     <Compile Include="FileUtils.cs" />
+    <Compile Include="Generators\Dates\RandomDateTimeGeneratorTest.cs" />
     <Compile Include="Generators\Numbers\DecimalRandomGeneratorTest.cs" />
     <Compile Include="Generators\Numbers\IntegerRandomGeneratorTest.cs" />
     <Compile Include="Generators\Numbers\DoubleRandomGeneratorTest.cs" />
