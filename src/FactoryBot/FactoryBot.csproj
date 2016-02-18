@@ -61,6 +61,7 @@
     <Compile Include="Generators\ConstantGenerator.cs" />
     <Compile Include="Generators\GeneratorUsingDecorator.cs" />
     <Compile Include="Generators\IGenerator.cs" />
+    <Compile Include="Generators\Numbers\DecimalRandomGenerator.cs" />
     <Compile Include="Generators\Numbers\DoubleRandomGenerator.cs" />
     <Compile Include="Generators\Strings\FilepathGenerator.cs" />
     <Compile Include="Generators\Strings\FirstNameGenerator.cs" />
