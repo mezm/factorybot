@@ -18,6 +18,11 @@ namespace FactoryBot.Generators
             return _random.Next(from, to);
         }
 
+        protected double NextRandomDouble()
+        {
+            return _random.NextDouble();
+        }
+
         protected bool NextRandomBool()
         {
             return _random.Next(0, 1) == 1;

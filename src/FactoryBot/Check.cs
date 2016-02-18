@@ -31,9 +31,9 @@ namespace FactoryBot
             }
         }
 
-        public static void MinMax(int minParameter, int maxParameter, string minParameterName)
+        public static void MinMax<T>(T minParameter, T maxParameter, string minParameterName) where T : IComparable<T>
         {
-            if (minParameter > maxParameter)
+            if (minParameter.CompareTo(maxParameter) > 0)
             {
                 throw new ArgumentOutOfRangeException(minParameterName, "Minimum should not be greater than maximum.");
             }
