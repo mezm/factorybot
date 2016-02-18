@@ -10,6 +10,8 @@ namespace FactoryBot
 {
     public class Bot
     {
+        public const int SequenceMaxLength = 100;
+
         private static readonly Dictionary<Type, BotConfiguration> BuildRules = new Dictionary<Type, BotConfiguration>(); 
 
         public static void Define<T>(Expression<Func<BotConfigurationBuilder, T>> factory)
@@ -53,9 +55,23 @@ namespace FactoryBot
             return result;
         }
 
-        public static IEnumerable<T> BuildSequence<T>()
+        public static IEnumerable<T> BuildSequence<T>(bool infinite = false)
         {
-            throw new NotImplementedException();
+            if (infinite)
+            {
+                while (true)
+                {
+                    yield return Build<T>();
+                }
+            }
+
+            for (var i = 0; i < SequenceMaxLength; i++)
+            {
+                yield return Build<T>();
+            }
+
+            throw new InvalidOperationException(
+                "BuildSequence generates infinite sequence and should not be used in a foreach look. If it's not the case set infinite parameter to true.");
         }
 
         internal static void ForgetAll()
