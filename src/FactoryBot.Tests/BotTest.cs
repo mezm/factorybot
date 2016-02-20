@@ -244,6 +244,13 @@ namespace FactoryBot.Tests
         }
 
         [Test]
+        public void DefineConfigurationWithUnknownNested()
+        {
+            Assert.That(() => Bot.Define(x => new Model3 { Number = 7, Nested = x.Use<Model1>() }),
+                Throws.InstanceOf<UnknownTypeException>());
+        }
+
+        [Test]
         public void BuildNestedPrimitiveArrayWithGenerator()
         {
             Bot.Define(x => new Model4 { SimpleArray = x.Array(1, 5, x.Strings.Words(1, 1)) });
@@ -337,7 +344,7 @@ namespace FactoryBot.Tests
 
             Assert.That(models, Has.Length.EqualTo(Bot.SequenceMaxLength + 10));
         }
-        
+
         private static void GetModelsAndAssertTheSame<TModel>(Action<TModel> assertions)
         {
             for (var i = 0; i < 3; i++)

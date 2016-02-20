@@ -54,6 +54,7 @@
     <Compile Include="ExpressionParser\ConstructorParser.cs" />
     <Compile Include="ExpressionParser\ExpressionParserHelper.cs" />
     <Compile Include="ExpressionParser\FactoryParser.cs" />
+    <Compile Include="Extensions\GeneratorExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Generators\Collections\ArrayGenerator.cs" />
     <Compile Include="Generators\Collections\BaseCollectionGenerator.cs" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
+using FactoryBot.Extensions;
 using FactoryBot.Generators;
 
 namespace FactoryBot.Configurations
@@ -46,6 +47,15 @@ namespace FactoryBot.Configurations
 
             var patchedConstructor = new ConstructorGenerator(Constructor.Constructor, args);
             return Create(patchedConstructor);
+        }
+
+        public Type[] GetNestedDependencies()
+        {
+            return Constructor.Arguments.Where(x => x.IsUsingDecorator())
+                .Concat(Properties.Where(x => x.Generator.IsUsingDecorator()).Select(x => x.Generator))
+                .Select(x => x.GetDependencyType())
+                .Distinct()
+                .ToArray();
         }
 
         private object Create(ConstructorGenerator constructor)

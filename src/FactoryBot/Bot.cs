@@ -20,6 +20,8 @@ namespace FactoryBot
 
             var parser = new FactoryParser();
             var configuration = parser.Parse(factory);
+            CheckNestedDependencies(configuration);
+
             BuildRules[configuration.ConstructingType] = configuration;
         }
 
@@ -27,7 +29,7 @@ namespace FactoryBot
         {
             Check.NotNull(modifiers, nameof(modifiers));
 
-            var result = (T)GetConfiguration<T>().CreateNewObject();
+            var result = (T)GetConfiguration(typeof(T)).CreateNewObject();
             foreach (var modifier in modifiers)
             {
                 modifier(result);
@@ -46,7 +48,7 @@ namespace FactoryBot
             var parser = new ConstructorParser();
             var constructor = parser.Parse(constructorModifier);
 
-            var result = (T)GetConfiguration<T>().CreateNewObjectWithModification(constructor);
+            var result = (T)GetConfiguration(typeof(T)).CreateNewObjectWithModification(constructor);
             foreach (var modifier in afterConstructModifiers)
             {
                 modifier(result);
@@ -79,16 +81,23 @@ namespace FactoryBot
             BuildRules.Clear();            
         }
 
-        private static BotConfiguration GetConfiguration<T>()
+        private static BotConfiguration GetConfiguration(Type ruleKey)
         {
-            var ruleKey = typeof(T);
             BotConfiguration config;
             if (!BuildRules.TryGetValue(ruleKey, out config))
             {
-                throw new UnknownTypeException(ruleKey);    
+                throw new UnknownTypeException(ruleKey);
             }
 
             return config;
+        }
+
+        private static void CheckNestedDependencies(BotConfiguration configuration)
+        {
+            foreach (var dependency in configuration.GetNestedDependencies())
+            {
+                GetConfiguration(dependency);
+            }
         }
     }
 }
