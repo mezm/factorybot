@@ -7,6 +7,7 @@ using System.Reflection;
 using FactoryBot.Configurations;
 using FactoryBot.DSL;
 using FactoryBot.Generators;
+using FactoryBot.Generators.Collections;
 
 namespace FactoryBot.ExpressionParser
 {
@@ -85,15 +86,49 @@ namespace FactoryBot.ExpressionParser
 
         public static PropertyDefinition ParseMemberBinding(MemberBinding binding)
         {
-            if (binding.BindingType == MemberBindingType.Assignment)
+            var property = (PropertyInfo)binding.Member;
+            switch (binding.BindingType)
             {
-                var assignmentBinding = (MemberAssignment)binding;
-                return new PropertyDefinition(
-                    (PropertyInfo)binding.Member,
-                    ParseGeneratorVariable(assignmentBinding.Expression));
+                case MemberBindingType.Assignment:
+                    return ParseMemberAssignment(property, (MemberAssignment)binding);
+                case MemberBindingType.MemberBinding:
+                    return ParseMemberMemberBinding(property, (MemberMemberBinding)binding);
+                case MemberBindingType.ListBinding:
+                    return ParseListBinding(property, (MemberListBinding)binding);
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
+        }
 
-            throw new NotSupportedException();
+        private static PropertyDefinition ParseMemberAssignment(PropertyInfo property, MemberAssignment assignmentBinding)
+        {
+            return new PropertyDefinition(property, ParseGeneratorVariable(assignmentBinding.Expression));
+        }
+
+        private static PropertyDefinition ParseMemberMemberBinding(
+            PropertyInfo property, 
+            MemberMemberBinding memberMemberBinding)
+        {
+            var defaultConstructor = property.PropertyType.GetConstructor(new Type[0]);
+            var constructor = new ConstructorDefinition(defaultConstructor, new IGenerator[0]);
+            var botConfiguration = new BotConfiguration(property.PropertyType, constructor);
+            foreach (var nestedBinding in memberMemberBinding.Bindings)
+            {
+                botConfiguration.Properties.Add(ParseMemberBinding(nestedBinding));
+            }
+            return new PropertyDefinition(property, botConfiguration);
+        }
+
+        private static PropertyDefinition ParseListBinding(PropertyInfo property, MemberListBinding listBinding)
+        {
+            var itemType = property.PropertyType.IsGenericType
+                               ? property.PropertyType.GetGenericArguments()[0]
+                               : typeof(object);
+            return new PropertyDefinition(
+                property,
+                new ListOfGenerators(
+                    itemType,
+                    listBinding.Initializers.Select(x => ParseGeneratorVariable(x.Arguments[0])).ToArray()));
         }
     }
 }

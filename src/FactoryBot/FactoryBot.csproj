@@ -59,6 +59,7 @@
     <Compile Include="Generators\Collections\ArrayGenerator.cs" />
     <Compile Include="Generators\Collections\BaseCollectionGenerator.cs" />
     <Compile Include="Generators\Collections\ListGenerator.cs" />
+    <Compile Include="Generators\Collections\ListOfGenerators.cs" />
     <Compile Include="Generators\ConstantGenerator.cs" />
     <Compile Include="Generators\Dates\RandomDateTimeGenerator.cs" />
     <Compile Include="Generators\UsingGenerator.cs" />

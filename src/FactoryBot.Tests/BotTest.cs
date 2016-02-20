@@ -52,7 +52,7 @@ namespace FactoryBot.Tests
                     Assert.That(x.Text, Is.EqualTo("some text"));
                 });
         }
-
+        
         [Test]
         public void BuildConstructorArgumentAndProperty()
         {
@@ -262,6 +262,24 @@ namespace FactoryBot.Tests
         }
 
         [Test]
+        public void BuildWithNestedComplexObjectWithMemberInit()
+        {
+            Bot.Define(
+                x =>
+                new Model3
+                    {
+                        Number = 10,
+                        Nested = { Number = x.Numbers.AnyInteger(10, 150), Text = x.Strings.Words() }
+                    });
+
+            var model = Bot.Build<Model3>();
+
+            Assert.That(model.Number, Is.EqualTo(10));
+            Assert.That(model.Nested.Number, Is.InRange(10, 150));
+            Assert.That(model.Nested.Text, Is.Not.Empty);
+        }
+
+        [Test]
         public void DefineConfigurationWithUnknownNested()
         {
             Assert.That(() => Bot.Define(x => new Model3 { Number = 7, Nested = x.Use<Model1>() }),
@@ -279,7 +297,17 @@ namespace FactoryBot.Tests
         }
 
         [Test]
-        public void BuildNestedPrimitiveArrayWithConstant()
+        public void BuildNestedPrimitiveConstantArray()
+        {
+            Bot.Define(x => new Model4 { SimpleArray = new[] { "a", "b", "c" } });
+
+            var model = Bot.Build<Model4>();
+
+            Assert.That(model.SimpleArray, Is.Not.Null.And.EquivalentTo(new[] { "a", "b", "c" }));
+        }
+
+        [Test]
+        public void BuildNestedPrimitiveArrayOfConstants()
         {
             Bot.Define(x => new Model4 { SimpleArray = x.Array(3, 3, "abc") });
 
@@ -344,7 +372,17 @@ namespace FactoryBot.Tests
         }
 
         [Test]
-        public void BuildNestedPrimitiveListWithConstant()
+        public void BuildNestedPrimitiveConstantList()
+        {
+            Bot.Define(x => new Model4 { SimpleList = { 1, 2, 100, -12 } });
+
+            var model = Bot.Build<Model4>();
+
+            Assert.That(model.SimpleList, Is.Not.Null.And.EquivalentTo(new[] { 1, 2, 100, -12 }));
+        }
+
+        [Test]
+        public void BuildNestedPrimitiveListOfConstant()
         {
             Bot.Define(x => new Model4 { SimpleList = x.List(3, 3, 54670) });
 
