@@ -4,9 +4,9 @@ using FactoryBot.Generators;
 
 namespace FactoryBot.Configurations
 {
-    internal class PropertyGenerator
+    internal class PropertyDefinition
     {
-        public PropertyGenerator(PropertyInfo property, IGenerator generator)
+        public PropertyDefinition(PropertyInfo property, IGenerator generator)
         {
             Check.NotNull(property, nameof(property));
             Check.NotNull(generator, nameof(generator));

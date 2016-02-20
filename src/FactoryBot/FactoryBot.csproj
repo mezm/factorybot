@@ -41,10 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bot.cs" />
-    <Compile Include="Configurations\ConstructorGenerator.cs" />
+    <Compile Include="Configurations\ConstructorDefinition.cs" />
     <Compile Include="DSL\BotConfigurationBuilder.cs" />
     <Compile Include="Configurations\BotConfiguration.cs" />
-    <Compile Include="Configurations\PropertyGenerator.cs" />
+    <Compile Include="Configurations\PropertyDefinition.cs" />
     <Compile Include="DSL\CustomConstructBuilder.cs" />
     <Compile Include="DSL\DateGenerators.cs" />
     <Compile Include="DSL\GeneratorAttribute.cs" />
@@ -61,7 +61,7 @@
     <Compile Include="Generators\Collections\ListGenerator.cs" />
     <Compile Include="Generators\ConstantGenerator.cs" />
     <Compile Include="Generators\Dates\RandomDateTimeGenerator.cs" />
-    <Compile Include="Generators\GeneratorUsingDecorator.cs" />
+    <Compile Include="Generators\UsingGenerator.cs" />
     <Compile Include="Generators\IGenerator.cs" />
     <Compile Include="Generators\Numbers\DecimalRandomGenerator.cs" />
     <Compile Include="Generators\Numbers\DoubleRandomGenerator.cs" />

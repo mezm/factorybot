@@ -1,6 +1,6 @@
 ﻿namespace FactoryBot.Generators
 {
-    public class GeneratorUsingDecorator<T> : IGenerator
+    internal class UsingGenerator<T> : IGenerator
     {
         public object Next()
         {

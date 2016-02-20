@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -11,11 +12,11 @@ namespace FactoryBot.ExpressionParser
 {
     internal static class ExpressionParserHelper
     {
-        public static ConstructorGenerator CreateConstructorGenerator(NewExpression newExpr)
+        public static ConstructorDefinition CreateConstructorGenerator(NewExpression newExpr)
         {
             Check.NotNull(newExpr, nameof(newExpr));
 
-            return new ConstructorGenerator(
+            return new ConstructorDefinition(
                 newExpr.Constructor,
                 newExpr.Arguments.Select(ParseGeneratorVariable).ToArray());
         }
@@ -43,6 +44,18 @@ namespace FactoryBot.ExpressionParser
                 return generatorAttr.CreateGenerator(methodCallExpr.Method, generatorParamenters);
             }
 
+            var memberInitExpr = expr as MemberInitExpression;
+            if (memberInitExpr != null)
+            {
+                return ParseMemberInit(memberInitExpr);
+            }
+
+            var constructorExpr = expr as NewExpression;
+            if (constructorExpr != null)
+            {
+                return ParseConstructor(constructorExpr);
+            }
+
             return new ConstantGenerator(EvaluateExpression(expr));
         }
 
@@ -51,6 +64,36 @@ namespace FactoryBot.ExpressionParser
             Check.NotNull(expr, nameof(expr));
 
             return Expression.Lambda(expr).Compile().DynamicInvoke();
+        }
+
+        public static BotConfiguration ParseConstructor(NewExpression newExpr)
+        {
+            var constructorGenerator = CreateConstructorGenerator(newExpr);
+            return new BotConfiguration(newExpr.Type, constructorGenerator);
+        }
+
+        public static BotConfiguration ParseMemberInit(MemberInitExpression memberInitExpr)
+        {
+            var config = ParseConstructor(memberInitExpr.NewExpression);
+            foreach (var binding in memberInitExpr.Bindings)
+            {
+                config.Properties.Add(ParseMemberBinding(binding));
+            }
+
+            return config;
+        }
+
+        public static PropertyDefinition ParseMemberBinding(MemberBinding binding)
+        {
+            if (binding.BindingType == MemberBindingType.Assignment)
+            {
+                var assignmentBinding = (MemberAssignment)binding;
+                return new PropertyDefinition(
+                    (PropertyInfo)binding.Member,
+                    ParseGeneratorVariable(assignmentBinding.Expression));
+            }
+
+            throw new NotSupportedException();
         }
     }
 }

@@ -7,9 +7,9 @@ using FactoryBot.Generators;
 
 namespace FactoryBot.Configurations
 {
-    internal class ConstructorGenerator
+    internal class ConstructorDefinition
     {
-        public ConstructorGenerator(ConstructorInfo constructor, IReadOnlyList<IGenerator> arguments)
+        public ConstructorDefinition(ConstructorInfo constructor, IReadOnlyList<IGenerator> arguments)
         {
             Check.NotNull(constructor, nameof(constructor));
             Check.NotNull(arguments, nameof(arguments));

@@ -8,7 +8,7 @@ namespace FactoryBot.ExpressionParser
 {
     internal class ConstructorParser
     {
-        public ConstructorGenerator Parse<T>(Expression<Func<CustomConstructBuilder, T>> constructor)
+        public ConstructorDefinition Parse<T>(Expression<Func<CustomConstructBuilder, T>> constructor)
         {
             Check.NotNull(constructor, nameof(constructor));
 

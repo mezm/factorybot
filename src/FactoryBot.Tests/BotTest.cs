@@ -244,6 +244,24 @@ namespace FactoryBot.Tests
         }
 
         [Test]
+        public void BuildWithNestedComplexObject()
+        {
+            Bot.Define(
+                x =>
+                new Model3
+                    {
+                        Number = 10,
+                        Nested = new Model1(x.Numbers.AnyInteger(10, 150)) { Text = x.Strings.Words() }
+                    });
+
+            var model = Bot.Build<Model3>();
+
+            Assert.That(model.Number, Is.EqualTo(10));
+            Assert.That(model.Nested.Number, Is.InRange(10, 150));
+            Assert.That(model.Nested.Text, Is.Not.Empty);
+        }
+
+        [Test]
         public void DefineConfigurationWithUnknownNested()
         {
             Assert.That(() => Bot.Define(x => new Model3 { Number = 7, Nested = x.Use<Model1>() }),
@@ -271,7 +289,7 @@ namespace FactoryBot.Tests
         }
 
         [Test]
-        public void BuildNestedComplexArray()
+        public void BuildNestedComplexArrayUsingKnownConfig()
         {
             Bot.Define(x => new Model1(x.Numbers.AnyInteger(100, 150), "the test"));
             Bot.Define(x => new Model3 { Number = 7, Nested = x.Use<Model1>() });
@@ -279,7 +297,40 @@ namespace FactoryBot.Tests
 
             var model = Bot.Build<Model4>();
 
-            Assert.That(model.ComplexArray, Is.Not.Null.And.Length.InRange(1, 3).And.All.Not.Null);
+            Assert.That(
+                model.ComplexArray,
+                Is.Not.Null
+                    .And.Length.InRange(1, 3)
+                    .And.All.Not.Null
+                    .And.All.Property("Nested").Property("Number").InRange(100, 150));
+        }
+
+        [Test]
+        public void BuildNestedComplexArrayUsingNestedConfig()
+        {
+            Bot.Define(
+                x =>
+                new Model4
+                    {
+                        ComplexArray =
+                            x.Array(
+                                1,
+                                3,
+                                new Model3
+                                    {
+                                        Number = 7,
+                                        Nested = new Model1(x.Numbers.AnyInteger(100, 150), "the test")
+                                    })
+                    });
+
+            var model = Bot.Build<Model4>();
+
+            Assert.That(
+                model.ComplexArray,
+                Is.Not.Null
+                    .And.Length.InRange(1, 3)
+                    .And.All.Not.Null
+                    .And.All.Property("Nested").Property("Number").InRange(100, 150));
         }
 
         [Test]
@@ -303,14 +354,35 @@ namespace FactoryBot.Tests
         }
 
         [Test]
-        public void BuildNestedComplexList()
+        public void BuildNestedComplexListUsingKnownConfig()
         {
             Bot.Define(x => new Model1(x.Numbers.AnyInteger(100, 150), "the test"));
             Bot.Define(x => new Model4 { ComplexList = x.List(1, 3, x.Use<Model1>()) });
 
             var model = Bot.Build<Model4>();
 
-            Assert.That(model.ComplexList, Is.Not.Null.And.Count.InRange(1, 3).And.All.Not.Null);
+            Assert.That(
+                model.ComplexList,
+                Is.Not.Null
+                    .And.Count.InRange(1, 3)
+                    .And.All.Not.Null
+                    .And.All.Property("Number").InRange(100, 150));
+        }
+
+        [Test]
+        public void BuildNestedComplexListUsingNestedConfig()
+        {
+            Bot.Define(
+                x => new Model4 { ComplexList = x.List(1, 3, new Model1(x.Numbers.AnyInteger(100, 150), "the test")) });
+
+            var model = Bot.Build<Model4>();
+
+            Assert.That(
+                model.ComplexList,
+                Is.Not.Null
+                    .And.Count.InRange(1, 3)
+                    .And.All.Not.Null
+                    .And.All.Property("Number").InRange(100, 150));
         }
 
         [Test]

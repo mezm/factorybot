@@ -6,9 +6,9 @@ using FactoryBot.Generators;
 
 namespace FactoryBot.Configurations
 {
-    internal class BotConfiguration
+    internal class BotConfiguration : IGenerator
     {
-        public BotConfiguration(Type constructingType, ConstructorGenerator constructor)
+        public BotConfiguration(Type constructingType, ConstructorDefinition constructor)
         {
             Check.NotNull(constructingType, nameof(constructingType));
             Check.NotNull(constructor, nameof(constructor));
@@ -19,16 +19,16 @@ namespace FactoryBot.Configurations
 
         public Type ConstructingType { get; }
 
-        public ConstructorGenerator Constructor { get; }
+        public ConstructorDefinition Constructor { get; }
 
-        public List<PropertyGenerator> Properties { get; } = new List<PropertyGenerator>();
+        public List<PropertyDefinition> Properties { get; } = new List<PropertyDefinition>();
 
         public object CreateNewObject()
         {
             return Create(Constructor);
         }
 
-        public object CreateNewObjectWithModification(ConstructorGenerator modification)
+        public object CreateNewObjectWithModification(ConstructorDefinition modification)
         {
             Check.NotNull(modification, nameof(modification));
 
@@ -45,7 +45,7 @@ namespace FactoryBot.Configurations
                 args[i] = modifiedArg is KeepGenerator ? Constructor.Arguments[i] : modifiedArg;
             }
 
-            var patchedConstructor = new ConstructorGenerator(Constructor.Constructor, args);
+            var patchedConstructor = new ConstructorDefinition(Constructor.Constructor, args);
             return Create(patchedConstructor);
         }
 
@@ -58,7 +58,12 @@ namespace FactoryBot.Configurations
                 .ToArray();
         }
 
-        private object Create(ConstructorGenerator constructor)
+        object IGenerator.Next()
+        {
+            return CreateNewObject();
+        }
+
+        private object Create(ConstructorDefinition constructor)
         {
             var obj = constructor.Create();
             foreach (var property in Properties)

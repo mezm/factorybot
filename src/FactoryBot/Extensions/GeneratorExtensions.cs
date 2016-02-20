@@ -10,7 +10,7 @@ namespace FactoryBot.Extensions
             Check.NotNull(generator, nameof(generator));
 
             var type = generator.GetType();
-            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof (GeneratorUsingDecorator<>);
+            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof (UsingGenerator<>);
         }
 
         public static Type GetDependencyType(this IGenerator generator)

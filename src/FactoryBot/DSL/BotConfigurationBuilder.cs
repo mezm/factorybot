@@ -13,7 +13,7 @@ namespace FactoryBot.DSL
 
         public DateGenerators Dates { get; } = new DateGenerators();
 
-        [Generator(typeof(GeneratorUsingDecorator<>))]
+        [Generator(typeof(UsingGenerator<>))]
         public T Use<T>() => default(T);
 
         [Generator(typeof(ArrayGenerator<>))]
