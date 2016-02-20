@@ -188,7 +188,7 @@ namespace FactoryBot.Tests
         {
             Bot.Define(x => new Model1(x.Numbers.AnyInteger(10, 20), ""));
 
-            var model = Bot.BuildCustom(x => new Model1(5, x.Builder.Strings.Any()));
+            var model = Bot.BuildCustom(x => new Model1(5, x.Strings.Any()));
 
             Assert.That(model.Number, Is.EqualTo(5));
             Assert.That(model.Text, Is.Not.Null.And.Not.Empty);
@@ -344,7 +344,7 @@ namespace FactoryBot.Tests
 
             Assert.That(models, Has.Length.EqualTo(Bot.SequenceMaxLength + 10));
         }
-
+        
         private static void GetModelsAndAssertTheSame<TModel>(Action<TModel> assertions)
         {
             for (var i = 0; i < 3; i++)
