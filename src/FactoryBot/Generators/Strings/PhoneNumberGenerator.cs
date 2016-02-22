@@ -2,7 +2,7 @@
 
 namespace FactoryBot.Generators.Strings
 {
-    public class TelephoneNumberGenerator : TypedGenerator<string>
+    public class PhoneNumberGenerator : TypedGenerator<string>
     {
         private const string DefaultTemplate = "###-###-####";
         private const char Placeholder = '#';
@@ -10,7 +10,7 @@ namespace FactoryBot.Generators.Strings
         private readonly char[] _template;
         private readonly int[] _placeholderIndexes;
 
-        public TelephoneNumberGenerator(string template = DefaultTemplate)
+        public PhoneNumberGenerator(string template = DefaultTemplate)
         {
             Check.NotNullOrWhiteSpace(template, nameof(template));
 

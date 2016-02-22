@@ -62,7 +62,7 @@
     <Compile Include="Generators\Strings\SequenceStringFromFileGeneratorTest.cs" />
     <Compile Include="Generators\Collections\SequenceFromListGeneratorTest.cs" />
     <Compile Include="Generators\Strings\StringRandomGeneratorTest.cs" />
-    <Compile Include="Generators\Strings\TelephoneNumberGeneratorTest.cs" />
+    <Compile Include="Generators\Strings\PhoneNumberGeneratorTest.cs" />
     <Compile Include="Generators\Strings\UrlGeneratorTest.cs" />
     <Compile Include="Generators\Strings\WordRandomGeneratorTest.cs" />
     <Compile Include="Models\AllTypesModel.cs" />

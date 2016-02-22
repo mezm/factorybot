@@ -80,7 +80,7 @@
     <Compile Include="Generators\Collections\RandomFromListGenerator.cs" />
     <Compile Include="Generators\Strings\SequenceStringFromFileGenerator.cs" />
     <Compile Include="Generators\Collections\SequenceFromListGenerator.cs" />
-    <Compile Include="Generators\Strings\TelephoneNumberGenerator.cs" />
+    <Compile Include="Generators\Strings\PhoneNumberGenerator.cs" />
     <Compile Include="Generators\Strings\UrlGenerator.cs" />
     <Compile Include="Generators\Strings\WordRandomGenerator.cs" />
     <Compile Include="Generators\TypedGenerator.cs" />

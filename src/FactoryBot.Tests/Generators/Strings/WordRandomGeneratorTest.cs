@@ -1,52 +1,29 @@
-﻿using System;
-
-using FactoryBot.Extensions;
-using FactoryBot.Generators.Strings;
-
+﻿using FactoryBot.Extensions;
+using FactoryBot.Tests.Models;
 using NUnit.Framework;
 
 namespace FactoryBot.Tests.Generators.Strings
 {
-    public class WordRandomGeneratorTest
+    public class WordRandomGeneratorTest : GeneratorTestKit
     {
         [Test]
         public void GenerateNextWithoutThreshold()
         {
-            var generator = new WordRandomGenerator();
-
-            var str1 = (string)generator.Next();
-            var str2 = (string)generator.Next();
-
-            Assert.That(str1, Is.Not.Null);
-            Assert.That(str2, Is.Not.Null.And.Not.EqualTo(str1));
+            AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Strings.Words() });
         }
 
         [Test]
         public void GenerateNextWithThreshold()
         {
-            var generator = new WordRandomGenerator(3, 15);
-
-            var str1 = (string)generator.Next();
-            var str2 = (string)generator.Next();
-
-            Assert.That(str1, Is.Not.Null);
-            Assert.That(str2, Is.Not.Null.And.Not.EqualTo(str1));
-            Assert.That(str1.Words(), Has.Length.InRange(3, 15));
-            Assert.That(str2.Words(), Has.Length.InRange(3, 15));
+            AssertGeneratorValue<string>(x => new AllTypesModel { String = x.Strings.Words(3, 15) },
+                x => Assert.That(x.Words(), Has.Length.InRange(3, 15)));
         }
 
         [Test]
         public void GenerateNextWithConstantThreshold()
         {
-            var generator = new WordRandomGenerator(10, 10);
-
-            var str1 = (string)generator.Next();
-            var str2 = (string)generator.Next();
-            var str3 = (string)generator.Next();
-
-            Assert.That(str1.Words(), Has.Length.EqualTo(10));
-            Assert.That(str2.Words(), Has.Length.EqualTo(10));
-            Assert.That(str3.Words(), Has.Length.EqualTo(10));
+            AssertGeneratorValue<string>(x => new AllTypesModel { String = x.Strings.Words(10, 10) },
+                x => Assert.That(x.Words(), Has.Length.EqualTo(10)));
         }
 
         [Test]
@@ -56,7 +33,7 @@ namespace FactoryBot.Tests.Generators.Strings
         [TestCase(0, 0)]
         public void CreateWithInvalidThreshold(int min, int max)
         {
-            Assert.That(() => new WordRandomGenerator(min, max), Throws.TypeOf<ArgumentOutOfRangeException>());
+            ExpectArgumentOutOfRangeInitException(x => new AllTypesModel { String = x.Strings.Words(min, max) });
         }
     }
 }

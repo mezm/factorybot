@@ -62,5 +62,17 @@ namespace FactoryBot.DSL
 
         [Generator(typeof(SequenceFromListGenerator<string>))]
         public string SequenceFromList(IReadOnlyList<string> source) => default(string);
+
+        [Generator(typeof(RandomLineFromFileGenerator))]
+        public string RandomFromFile(string filename) => default(string);
+
+        [Generator(typeof(SequenceStringFromFileGenerator))]
+        public string SequenceFromFile(string filename) => default(string);
+
+        [Generator(typeof(PhoneNumberGenerator))]
+        public string PhoneNumber() => default(string);
+
+        [Generator(typeof(PhoneNumberGenerator))]
+        public string PhoneNumber(string template) => default(string);
     }
 }

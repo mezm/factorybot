@@ -1,73 +1,52 @@
 ﻿using System.IO;
-
-using FactoryBot.Generators.Strings;
-
+using FactoryBot.Tests.Models;
 using NUnit.Framework;
 
 namespace FactoryBot.Tests.Generators.Strings
 {
     [TestFixture, Timeout(10000)]
-    public class RandomLineFromFileGeneratorTest
+    public class RandomLineFromFileGeneratorTest : GeneratorTestKit
     {
+        private const string Filename = "text.txt";
+
         [Test]
         public void GetRandomLine()
         {
-            const string Filename = "text.txt";
-            var contents = new[] { "this", "is", "the test", "file " };
-            File.WriteAllLines(Filename, contents);
+            var content = new[] { "this", "is", "the test", "file " };
+            File.WriteAllLines(Filename, content);
 
             FileUtils.WithFileDisposal(
                 Filename,
-                () =>
-                {
-                    var generator = new RandomLineFromFileGenerator(Filename);
-                    var line = (string)generator.Next();
-
-                    Assert.That(line, Is.Not.Null);
-                    Assert.That(contents, Does.Contain(line));
-                });
+                () => AssertGeneratorValue<string>(x => new AllTypesModel { String = x.Strings.RandomFromFile(Filename) },
+                    x => Assert.That(content, Does.Contain(x))));
         }
 
         [Test]
         public void GenerateFromFileWithSingleLine()
         {
-            const string Filename = "text.txt";
             File.WriteAllLines(Filename, new[] { "the single line test." });
 
             FileUtils.WithFileDisposal(
                 Filename,
-                () =>
-                {
-                    var generator = new RandomLineFromFileGenerator(Filename);
-                    var line1 = (string)generator.Next();
-                    var line2 = (string)generator.Next();
-
-                    Assert.That(line1, Is.EqualTo("the single line test."));
-                    Assert.That(line2, Is.EqualTo("the single line test."));
-                });
+                () => AssertGeneratorValue(x => new AllTypesModel { String = x.Strings.RandomFromFile(Filename) },
+                    Is.EqualTo("the single line test."), 
+                    Is.EqualTo("the single line test.")));
         }
 
         [Test]
         public void GenerateFromEmptyFile()
         {
-            const string Filename = "text.txt";
             File.WriteAllLines(Filename, new string[0]);
 
             FileUtils.WithFileDisposal(
                 Filename,
-                () =>
-                    {
-                        var generator = new RandomLineFromFileGenerator(Filename);
-                        Assert.That(() => generator.Next(), Throws.InstanceOf<IOException>());
-                    });
+                () => ExpectBuildException<IOException>(x => new AllTypesModel { String = x.Strings.RandomFromFile(Filename) }));
         }
 
         [Test]
         public void CreateWithNonExistingFile()
         {
-            Assert.That(
-                () => new RandomLineFromFileGenerator("some_non_existing.aaa"),
-                Throws.InstanceOf<IOException>());
+            ExpectInitException<IOException>(x => new AllTypesModel { String = x.Strings.RandomFromFile("some_non_existing.aaa") });
         }
     }
 }
