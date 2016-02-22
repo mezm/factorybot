@@ -1,25 +1,28 @@
-﻿using FactoryBot.Generators.Collections;
+﻿using System;
+
+using FactoryBot.Tests.Models;
 
 using NUnit.Framework;
 
 namespace FactoryBot.Tests.Generators.Collections
 {
     [TestFixture]
-    public class RandomFromListGeneratorTest
+    public class RandomFromListGeneratorTest : GeneratorTestKit
     {
         [Test]
         public void Generate()
         {
-            var list = new[] {"a", "ab", "bc", "def"};
-            var generator = new RandomFromListGenerator<string>(list);
-            var str = (string) generator.Next();
-            Assert.That(list, Does.Contain(str));
+            var list = new[] { "a", "ab", "bc", "def" };
+            Bot.Define(x => new AllTypesModel { String = x.Strings.RandomFromList(list) });
+
+            var model = Bot.Build<AllTypesModel>();
+            Assert.That(list, Does.Contain(model.String));
         }
 
         [Test]
         public void CreateWithEmptyList()
         {
-            Assert.That(() => new RandomFromListGenerator<decimal>(new decimal[0]), Throws.ArgumentException);
+            ExpectArgumentInitException(x => new AllTypesModel { Decimal = x.Decimal.RandomFromList(new decimal[0]) });
         }
     }
 }

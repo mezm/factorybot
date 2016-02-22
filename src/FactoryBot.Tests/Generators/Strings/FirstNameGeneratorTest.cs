@@ -1,28 +1,30 @@
 ﻿using FactoryBot.Extensions;
 using FactoryBot.Generators;
-using FactoryBot.Generators.Strings;
+using FactoryBot.Tests.Models;
 
 using NUnit.Framework;
 
 namespace FactoryBot.Tests.Generators.Strings
 {
     [TestFixture]
-    public class FirstNameGeneratorTest
+    public class FirstNameGeneratorTest : GeneratorTestKit
     {
         [Test]
-        public void GenerateName()
+        public void AllwaysNewName()
+        {
+            AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Strings.FirstName() });
+        }
+
+        [Test]
+        public void NamesAreFromTheSource()
         {
             var source = FileUtils.GetResourceContentWithoutLineBreaks(SourceNames.FirstNames);
-            var generator = new FirstNameGenerator();
-
-            var name1 = (string)generator.Next();
-            var name2 = (string)generator.Next();
-
-            Assert.That(name1, Is.Not.Null);
-            Assert.That(name2, Is.Not.Null.And.Not.EqualTo(name1));
-            Assert.That(name1.Words(), Has.Length.EqualTo(1));
-            Assert.That(name2.Words(), Has.Length.EqualTo(1));
-            Assert.That(source, Does.Contain(name1).And.Contain(name2));
+            AssertGeneratorValue<string>(x => new AllTypesModel { String = x.Strings.FirstName() },
+                x =>
+                    {
+                        Assert.That(x.Words(), Has.Length.EqualTo(1));
+                        Assert.That(source, Does.Contain(x));
+                    });
         }
     }
 }

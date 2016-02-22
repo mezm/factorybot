@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 
+using FactoryBot.Generators.Collections;
 using FactoryBot.Generators.Strings;
 
 namespace FactoryBot.DSL
@@ -48,5 +50,17 @@ namespace FactoryBot.DSL
             int maxQueryParams,
             string schema,
             string host) => default(string);
+
+        [Generator(typeof(FilePathGenerator))]
+        public string Filename() => default(string);
+
+        [Generator(typeof(FilePathGenerator))]
+        public string Filename(string fromFolder, bool existing) => default(string);
+
+        [Generator(typeof(RandomFromListGenerator<string>))]
+        public string RandomFromList(IReadOnlyList<string> source) => default(string);
+
+        [Generator(typeof(SequenceFromListGenerator<string>))]
+        public string SequenceFromList(IReadOnlyList<string> source) => default(string);
     }
 }

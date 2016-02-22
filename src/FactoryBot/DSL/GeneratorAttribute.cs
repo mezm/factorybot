@@ -28,7 +28,7 @@ namespace FactoryBot.DSL
             Check.NotNull(method, nameof(method));
             Check.NotNull(parameters, nameof(parameters));
 
-            if (!GeneratorType.IsGenericType)
+            if (!GeneratorType.IsGenericType || !GeneratorType.IsGenericTypeDefinition)
             {
                 return CreateGenerator(GeneratorType, parameters);
             }
@@ -48,12 +48,27 @@ namespace FactoryBot.DSL
             var constructor = generatorType.GetConstructors().FirstOrDefault(x => IsSuitableConstructor(x, parameters.Keys));
             if (constructor == null)
             {
-                var typesString = string.Join(", ", parameters.Keys);
-                throw new MissingMethodException($"No constructor of class {GeneratorType} with parameters {typesString} has been found.");
+                var parameterNames = string.Join(", ", parameters.Keys.Select(x => $"'{x}'"));
+                throw new MissingMethodException($"No constructor of class {GeneratorType} with parameters: {parameterNames} has been found.");
             }
 
-            var constructorParameters = constructor.GetParameters().Select(x => ChooseParameter(x, parameters)).ToArray();
-            return (IGenerator)constructor.Invoke(constructorParameters);
+            var constructorParameters =
+                constructor.GetParameters().Select(x => ChooseParameter(x, parameters)).ToArray();
+
+            try
+            {
+                return (IGenerator)constructor.Invoke(constructorParameters);
+            }
+            catch (TargetInvocationException ex)
+            {
+                if (ex.InnerException == null)
+                {
+                    throw;
+                }
+
+                throw new GeneratorInitializationException(generatorType, ex.InnerException);
+            }
+            
         }
 
         private static object ChooseParameter(ParameterInfo parameterInfo, IDictionary<string, object> parameters)

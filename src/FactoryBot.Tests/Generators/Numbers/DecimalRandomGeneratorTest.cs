@@ -1,48 +1,39 @@
-﻿using System;
-
-using FactoryBot.Generators.Numbers;
+﻿using FactoryBot.Tests.Models;
 
 using NUnit.Framework;
 
 namespace FactoryBot.Tests.Generators.Numbers
 {
     [TestFixture]
-    public class DecimalRandomGeneratorTest
+    public class DecimalRandomGeneratorTest : GeneratorTestKit
     {
         [Test]
         public void GetRandom()
         {
-            var generator = new DecimalRandomGenerator();
-
-            var d1 = (decimal)generator.Next();
-            var d2 = (decimal)generator.Next();
-
-            Assert.That(d1, Is.Not.EqualTo(d2));
+            AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { Decimal = x.Decimal.Any() });
         }
 
         [Test]
         public void GetRandomWithThreshfold()
         {
-            var generator = new DecimalRandomGenerator(-1.2m, 5.4457m);
-            var d = (decimal)generator.Next();
-            Assert.That(d, Is.InRange(-1.2m, 5.4457m));
+            AssertGeneratorValue(
+                x => new AllTypesModel { Decimal = x.Decimal.Any(-1.2m, 5.4457m) },
+                Is.InRange(-1.2m, 5.4457m));
         }
 
         [Test]
         public void GetRandomWithThreshfoldSingleValue()
         {
-            var generator = new DecimalRandomGenerator(-1.2m, -1.2m);
-
-            var d1 = (decimal)generator.Next();
-            var d2 = (decimal)generator.Next();
-
-            Assert.That(d1, Is.EqualTo(-1.2m).And.EqualTo(d2));
+            AssertGeneratorValue(
+                x => new AllTypesModel { Decimal = x.Decimal.Any(-1.2m, -1.2m) },
+                Is.EqualTo(-1.2m),
+                Is.EqualTo(-1.2m));
         }
 
         [Test]
         public void CreateWithWrongRange()
         {
-            Assert.That(() => new DecimalRandomGenerator(10m, -1.005m), Throws.InstanceOf<ArgumentOutOfRangeException>());
+            ExpectArgumentOutOfRangeInitException(x => new AllTypesModel { Decimal = x.Decimal.Any(10m, -1.005m) });
         }
     }
 }

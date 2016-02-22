@@ -1,52 +1,37 @@
-﻿using System;
-
-using FactoryBot.Generators.Numbers;
+﻿using FactoryBot.Tests.Models;
 
 using NUnit.Framework;
 
 namespace FactoryBot.Tests.Generators.Numbers
 {
     [TestFixture]
-    public class IntegerRandomGeneratorTest
+    public class IntegerRandomGeneratorTest : GeneratorTestKit
     {
         [Test]
         public void GenerateRandom()
         {
-            var generator = new IntegerRandomGenerator();
-
-            var n1 = (int)generator.Next();
-            var n2 = (int)generator.Next();
-
-            Assert.That(n1, Is.Not.EqualTo(n2));
+            AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { Integer = x.Integer.Any() });
         }
 
         [Test]
         public void GenerateRandomFromRange()
         {
-            var generator = new IntegerRandomGenerator(10, 150);
-
-            var n1 = (int)generator.Next();
-            var n2 = (int)generator.Next();
-
-            Assert.That(n1, Is.InRange(10, 150).And.Not.EqualTo(n2));
-            Assert.That(n2, Is.InRange(10, 150));
+            AssertGeneratorValue(x => new AllTypesModel { Integer = x.Integer.Any(10, 150) }, Is.InRange(10, 150));
         }
 
         [Test]
         public void GenerateRandomSingleValue()
         {
-            var generator = new IntegerRandomGenerator(150, 150);
-
-            var n1 = (int)generator.Next();
-            var n2 = (int)generator.Next();
-
-            Assert.That(n1, Is.EqualTo(150).And.EqualTo(n2));
+            AssertGeneratorValue(
+                x => new AllTypesModel { Integer = x.Integer.Any(150, 150) },
+                Is.EqualTo(150),
+                Is.EqualTo(150));
         }
 
         [Test]
         public void GenerateRandomWrongRange()
         {
-            Assert.That(() => new IntegerRandomGenerator(10, -10), Throws.InstanceOf<ArgumentOutOfRangeException>());
+            ExpectArgumentOutOfRangeInitException(x => new AllTypesModel { Integer = x.Integer.Any(10, -10) });
         }
     }
 }

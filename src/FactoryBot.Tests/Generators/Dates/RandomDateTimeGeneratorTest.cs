@@ -1,23 +1,18 @@
 ﻿using System;
 
-using FactoryBot.Generators.Dates;
+using FactoryBot.Tests.Models;
 
 using NUnit.Framework;
 
 namespace FactoryBot.Tests.Generators.Dates
 {
     [TestFixture]
-    public class RandomDateTimeGeneratorTest
+    public class RandomDateTimeGeneratorTest : GeneratorTestKit
     {
         [Test]
         public void GenerateRandom()
         {
-            var generator = new RandomDateTimeGenerator();
-
-            var n1 = (DateTime)generator.Next();
-            var n2 = (DateTime)generator.Next();
-
-            Assert.That(n1, Is.Not.EqualTo(n2));
+            AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { DateTime = x.Dates.Any() });
         }
 
         [Test]
@@ -25,33 +20,24 @@ namespace FactoryBot.Tests.Generators.Dates
         {
             var from = new DateTime(2015, 10, 4);
             var to = new DateTime(2025, 1, 1);
-            var generator = new RandomDateTimeGenerator(from, to);
-
-            var n1 = (DateTime)generator.Next();
-            var n2 = (DateTime)generator.Next();
-
-            Assert.That(n1, Is.InRange(from, to).And.Not.EqualTo(n2));
-            Assert.That(n2, Is.InRange(from, to));
+            AssertGeneratorValue(x => new AllTypesModel { DateTime = x.Dates.Any(from, to) }, Is.InRange(from, to));
         }
 
         [Test]
         public void GenerateRandomSingleValue()
         {
             var value = DateTime.Now;
-            var generator = new RandomDateTimeGenerator(value, value);
-
-            var n1 = (DateTime)generator.Next();
-            var n2 = (DateTime)generator.Next();
-
-            Assert.That(n1, Is.EqualTo(value).And.EqualTo(n2));
+            AssertGeneratorValue(
+                x => new AllTypesModel { DateTime = x.Dates.Any(value, value) },
+                Is.EqualTo(value),
+                Is.EqualTo(value));
         }
 
         [Test]
         public void GenerateRandomWrongRange()
         {
-            Assert.That(
-                () => new RandomDateTimeGenerator(new DateTime(2017, 1, 1), new DateTime(1992, 1, 10)),
-                Throws.InstanceOf<ArgumentOutOfRangeException>());
+            ExpectInitException<ArgumentOutOfRangeException>(
+                x => new AllTypesModel { DateTime = x.Dates.Any(new DateTime(2017, 1, 1), new DateTime(1992, 1, 10)) });
         }
     }
 }

@@ -69,7 +69,7 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildWithGenerators()
         {
-            Bot.Define(x => new Model1(x.Numbers.AnyInteger(10, 25)) { Text = x.Strings.Any() });
+            Bot.Define(x => new Model1(x.Integer.Any(10, 25)) { Text = x.Strings.Any() });
 
             GetModelsAndAssertTheSame<Model1>(
                 x =>
@@ -166,7 +166,7 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildWithSingleModifier()
         {
-            Bot.Define(x => new Model1(x.Numbers.AnyInteger(10, 20)));
+            Bot.Define(x => new Model1(x.Integer.Any(10, 20)));
 
             var model = Bot.Build<Model1>(x => x.Number = 100);
             Assert.That(model.Number, Is.EqualTo(100));
@@ -175,7 +175,7 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildWithMultipleModifier()
         {
-            Bot.Define(x => new Model1(x.Numbers.AnyInteger(10, 20), "t1"));
+            Bot.Define(x => new Model1(x.Integer.Any(10, 20), "t1"));
 
             var model = Bot.Build<Model1>(x => x.Number = 100, x => x.Text = "tt2");
 
@@ -186,7 +186,7 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildWithConstructorModifier()
         {
-            Bot.Define(x => new Model1(x.Numbers.AnyInteger(10, 20), ""));
+            Bot.Define(x => new Model1(x.Integer.Any(10, 20), ""));
 
             var model = Bot.BuildCustom(x => new Model1(5, x.Strings.Any()));
 
@@ -197,7 +197,7 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildWithConstructorModifierWithKeep()
         {
-            Bot.Define(x => new Model1(x.Numbers.AnyInteger(10, 20), "the text"));
+            Bot.Define(x => new Model1(x.Integer.Any(10, 20), "the text"));
 
             var model = Bot.BuildCustom(x => new Model1(5, x.Keep<string>()));
 
@@ -208,7 +208,7 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildWithConstructorModifierArgumentsMismatch()
         {
-            Bot.Define(x => new Model1(x.Numbers.AnyInteger(10, 20), "the text"));
+            Bot.Define(x => new Model1(x.Integer.Any(10, 20), "the text"));
             
             Assert.That(() => Bot.BuildCustom(x => new Model1(5)), Throws.InvalidOperationException);
         }
@@ -216,7 +216,7 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildWithConstructorModifierAndPostConstructModifiers()
         {
-            Bot.Define(x => new Model1(x.Numbers.AnyInteger(10, 20)));
+            Bot.Define(x => new Model1(x.Integer.Any(10, 20)));
 
             var model = Bot.BuildCustom(x => new Model1(5), x => x.Text = "a");
 
@@ -233,7 +233,7 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildWithUsingNestedConfigurations()
         {
-            Bot.Define(x => new Model1(x.Numbers.AnyInteger(100, 150), "the test"));
+            Bot.Define(x => new Model1(x.Integer.Any(100, 150), "the test"));
             Bot.Define(x => new Model3 { Number = 7, Nested = x.Use<Model1>() });
 
             var model = Bot.Build<Model3>();
@@ -251,7 +251,7 @@ namespace FactoryBot.Tests
                 new Model3
                     {
                         Number = 10,
-                        Nested = new Model1(x.Numbers.AnyInteger(10, 150)) { Text = x.Strings.Words() }
+                        Nested = new Model1(x.Integer.Any(10, 150)) { Text = x.Strings.Words() }
                     });
 
             var model = Bot.Build<Model3>();
@@ -269,7 +269,7 @@ namespace FactoryBot.Tests
                 new Model3
                     {
                         Number = 10,
-                        Nested = { Number = x.Numbers.AnyInteger(10, 150), Text = x.Strings.Words() }
+                        Nested = { Number = x.Integer.Any(10, 150), Text = x.Strings.Words() }
                     });
 
             var model = Bot.Build<Model3>();
@@ -319,7 +319,7 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildNestedComplexArrayUsingKnownConfig()
         {
-            Bot.Define(x => new Model1(x.Numbers.AnyInteger(100, 150), "the test"));
+            Bot.Define(x => new Model1(x.Integer.Any(100, 150), "the test"));
             Bot.Define(x => new Model3 { Number = 7, Nested = x.Use<Model1>() });
             Bot.Define(x => new Model4 { ComplexArray = x.Array(1, 3, x.Use<Model3>()) });
 
@@ -347,7 +347,7 @@ namespace FactoryBot.Tests
                                 new Model3
                                     {
                                         Number = 7,
-                                        Nested = new Model1(x.Numbers.AnyInteger(100, 150), "the test")
+                                        Nested = new Model1(x.Integer.Any(100, 150), "the test")
                                     })
                     });
 
@@ -364,7 +364,7 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildNestedPrimitiveListWithGenerator()
         {
-            Bot.Define(x => new Model4 { SimpleList = x.List(1, 5, x.Numbers.AnyInteger(100, 200)) });
+            Bot.Define(x => new Model4 { SimpleList = x.List(1, 5, x.Integer.Any(100, 200)) });
 
             var model = Bot.Build<Model4>();
 
@@ -394,7 +394,7 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildNestedComplexListUsingKnownConfig()
         {
-            Bot.Define(x => new Model1(x.Numbers.AnyInteger(100, 150), "the test"));
+            Bot.Define(x => new Model1(x.Integer.Any(100, 150), "the test"));
             Bot.Define(x => new Model4 { ComplexList = x.List(1, 3, x.Use<Model1>()) });
 
             var model = Bot.Build<Model4>();
@@ -411,7 +411,7 @@ namespace FactoryBot.Tests
         public void BuildNestedComplexListUsingNestedConfig()
         {
             Bot.Define(
-                x => new Model4 { ComplexList = x.List(1, 3, new Model1(x.Numbers.AnyInteger(100, 150), "the test")) });
+                x => new Model4 { ComplexList = x.List(1, 3, new Model1(x.Integer.Any(100, 150), "the test")) });
 
             var model = Bot.Build<Model4>();
 
@@ -426,7 +426,7 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildSequence()
         {
-            Bot.Define(x => new Model1(x.Numbers.AnyInteger(10, 25)) { Text = x.Strings.Any() });
+            Bot.Define(x => new Model1(x.Integer.Any(10, 25)) { Text = x.Strings.Any() });
 
             foreach (var model in Bot.BuildSequence<Model1>().Take(5))
             {
@@ -439,7 +439,7 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildFiniteSequenceAndTakeMoreThenLimit()
         {
-            Bot.Define(x => new Model1(x.Numbers.AnyInteger(10, 25)) { Text = x.Strings.Any() });
+            Bot.Define(x => new Model1(x.Integer.Any(10, 25)) { Text = x.Strings.Any() });
 
             Assert.That(() => Bot.BuildSequence<Model1>().Take(Bot.SequenceMaxLength).ToArray(), Throws.Nothing);
             Assert.That(() => Bot.BuildSequence<Model1>().Take(Bot.SequenceMaxLength + 1).ToArray(), Throws.InvalidOperationException);
@@ -448,7 +448,7 @@ namespace FactoryBot.Tests
         [Test]
         public void BuildInfiniteSequence()
         {
-            Bot.Define(x => new Model1(x.Numbers.AnyInteger(10, 25)) { Text = x.Strings.Any() });
+            Bot.Define(x => new Model1(x.Integer.Any(10, 25)) { Text = x.Strings.Any() });
 
             var models = Bot.BuildSequence<Model1>(true).Take(Bot.SequenceMaxLength + 10).ToArray();
 

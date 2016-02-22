@@ -2,14 +2,14 @@
 using System.IO;
 using System.Reflection;
 
-using FactoryBot.Generators.Strings;
+using FactoryBot.Tests.Models;
 
 using NUnit.Framework;
 
 namespace FactoryBot.Tests.Generators.Strings
 {
     [TestFixture]
-    public class FilePathGeneratorTest
+    public class FilePathGeneratorTest : GeneratorTestKit
     {
         private string _folderToRemove;
 
@@ -23,47 +23,51 @@ namespace FactoryBot.Tests.Generators.Strings
         }
 
         [Test]
+        public void GetAlwaysNewRandomFilename()
+        {
+            AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Strings.Filename() });
+        }
+
+        [Test]
         public void GetNotExistingFileFromEverywhere()
         {
-            var generator = new FilePathGenerator();
-
-            var path1 = (string)generator.Next();
-            var path2 = (string)generator.Next();
-
-            Assert.That(path1, Is.Not.Null);
-            AssertFilePathValidButNotExisting(path1);
-            Assert.That(path2, Is.Not.Null.And.Not.EqualTo(path1));
-            AssertFilePathValidButNotExisting(path2);
+            AssertGeneratorValue<string>(
+                x => new AllTypesModel { String = x.Strings.Filename() },
+                AssertFilePathValidButNotExisting);
         }
 
         [Test]
         public void GetNotExistingFileFromFolder()
         {
             var folder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var generator = new FilePathGenerator(folder);
-
-            var path = (string)generator.Next();
-
-            AssertFilePathValidButNotExisting(path);
-            Assert.That(path, Does.StartWith(folder + "\\"));
+            AssertGeneratorValue<string>(
+                x => new AllTypesModel { String = x.Strings.Filename(folder, false) },
+                x =>
+                    {
+                        AssertFilePathValidButNotExisting(x);
+                        Assert.That(x, Does.StartWith(folder + "\\"));
+                    });
         }
 
         [Test]
         public void GetExistingFileFromEverywhere()
         {
-            var generator = new FilePathGenerator(existing: true);
-            var path = (string)generator.Next();
-            AssertFileExists(path);
+            AssertGeneratorValue<string>(
+                x => new AllTypesModel { String = x.Strings.Filename(null, true) },
+                AssertFileExists);
         }
 
         [Test]
         public void GetExistingFileFromFolder()
         {
             var folder = Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFiles) + "\\";
-            var generator = new FilePathGenerator(folder, true);
-            var path = (string)generator.Next();
-            AssertFileExists(path);
-            Assert.That(path, Does.StartWith(folder));
+            AssertGeneratorValue<string>(
+                x => new AllTypesModel { String = x.Strings.Filename(folder, true) },
+                x =>
+                    {
+                        AssertFileExists(x);
+                        Assert.That(x, Does.StartWith(folder));
+                    });
         }
 
         [Test]
@@ -75,7 +79,7 @@ namespace FactoryBot.Tests.Generators.Strings
                 folder += $"\\{new Guid().ToString("D")}";
             }
 
-            Assert.That(() => new FilePathGenerator(folder, true), Throws.InstanceOf<IOException>());
+            ExpectInitException<IOException>(x => new AllTypesModel { String = x.Strings.Filename(folder, true) });
         }
 
         [Test]
@@ -85,8 +89,7 @@ namespace FactoryBot.Tests.Generators.Strings
             directory.Create();
             _folderToRemove = directory.FullName;
 
-            var generator = new FilePathGenerator(directory.FullName, true);
-            Assert.That(() => generator.Next(), Throws.InstanceOf<IOException>());
+            ExpectBuildException<IOException>(x => new AllTypesModel {String = x.Strings.Filename(directory.FullName, true)});
         }
 
         private static void AssertFilePathValidButNotExisting(string path)

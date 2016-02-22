@@ -7,11 +7,11 @@ namespace FactoryBot.DSL
 {
     public class BotConfigurationBuilder
     {
-        public NumberGenerators Numbers { get; } = new NumberGenerators();
-
+        public IntegerGenerators Integer { get; } = new IntegerGenerators();
         public StringGenerators Strings { get; } = new StringGenerators();
-
         public DateGenerators Dates { get; } = new DateGenerators();
+        public DecimalGenerators Decimal { get; } = new DecimalGenerators();
+        public DoubleGenerators Double { get; } = new DoubleGenerators();
 
         [Generator(typeof(UsingGenerator<>))]
         public T Use<T>() => default(T);
