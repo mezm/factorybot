@@ -25,30 +25,17 @@ namespace FactoryBot.Tests.Generators
             IResolveConstraint constraint,
             params IResolveConstraint[] constraints)
         {
-            AssertGeneratorValue<object>(
-                factory,
-                x =>
-                    {
-                        Assert.That(x, constraint);
-                        foreach (var resolveConstraint in constraints)
-                        {
-                            Assert.That(x, resolveConstraint);
-                        }
-                    });
+            var asserts = new[] {ConstraintToAssertAction(constraint)}
+                .Concat(constraints.Select(ConstraintToAssertAction))
+                .ToArray();
+            AssertGenetorValuesInRow(factory, asserts);
         }
 
         protected void AssertGeneratorValue<T>(
             Expression<Func<BotConfigurationBuilder, AllTypesModel>> factory,
             Action<T> assert)
         {
-            var memberInitExpr = (MemberInitExpression)factory.Body;
-            var property = (PropertyInfo)memberInitExpr.Bindings[0].Member;
-
-            Bot.Define(factory);
-
-            var model = Bot.Build<AllTypesModel>();
-            var value = (T)property.GetValue(model);
-            assert(value);
+            AssertGenetorValuesInRow(factory, x => assert((T) x));
         }
 
         protected void AssertGeneratorValuesAreNotTheSame(
@@ -96,6 +83,26 @@ namespace FactoryBot.Tests.Generators
         {
             Bot.Define(factory);
             Assert.That(() => Bot.Build<AllTypesModel>(), Throws.InstanceOf<T>());
+        }
+
+        private static void AssertGenetorValuesInRow(Expression<Func<BotConfigurationBuilder, AllTypesModel>> factory, params Action<object>[] asserts)
+        {
+            var memberInitExpr = (MemberInitExpression)factory.Body;
+            var property = (PropertyInfo)memberInitExpr.Bindings[0].Member;
+
+            Bot.Define(factory);
+
+            foreach (var assert in asserts)
+            {
+                var model = Bot.Build<AllTypesModel>();
+                var value = property.GetValue(model);
+                assert(value);
+            }
+        }
+
+        private static Action<object> ConstraintToAssertAction(IResolveConstraint constraint)
+        {
+            return x => Assert.That(x, constraint);
         }
     }
 }
