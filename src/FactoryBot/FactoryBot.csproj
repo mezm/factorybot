@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bot.cs" />
+    <Compile Include="CircularDependencyDetectedException.cs" />
     <Compile Include="Configurations\ConstructorDefinition.cs" />
     <Compile Include="DSL\BotConfigurationBuilder.cs" />
     <Compile Include="Configurations\BotConfiguration.cs" />

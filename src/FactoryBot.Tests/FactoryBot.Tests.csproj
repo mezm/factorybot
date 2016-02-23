@@ -70,6 +70,9 @@
     <Compile Include="Models\Model4.cs" />
     <Compile Include="Models\DataHolder1.cs" />
     <Compile Include="Models\DataHolder2.cs" />
+    <Compile Include="Models\ModelWithCircularDependency1.cs" />
+    <Compile Include="Models\ModelWithCircularDependency2.cs" />
+    <Compile Include="Models\ModelWithCircularDependency3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Model1.cs" />
     <Compile Include="Models\Model2.cs" />

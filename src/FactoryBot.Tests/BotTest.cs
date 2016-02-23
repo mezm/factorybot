@@ -454,6 +454,18 @@ namespace FactoryBot.Tests
 
             Assert.That(models, Has.Length.EqualTo(Bot.SequenceMaxLength + 10));
         }
+
+        [Test]
+        public void BuildWithCircularDependency()
+        {
+            Bot.Define(x => new ModelWithCircularDependency3());
+            Bot.Define(x => new ModelWithCircularDependency2(x.Use<ModelWithCircularDependency3>()));
+            Bot.Define(x => new ModelWithCircularDependency1 { Model = x.Use<ModelWithCircularDependency2>() });
+
+            Assert.That(
+                () => Bot.Define(x => new ModelWithCircularDependency3 { Model = x.Use<ModelWithCircularDependency1>() }),
+                Throws.InstanceOf<CircularDependencyDetectedException>());
+        }
         
         private static void GetModelsAndAssertTheSame<TModel>(Action<TModel> assertions)
         {

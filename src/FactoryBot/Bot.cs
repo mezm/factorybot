@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 using FactoryBot.Configurations;
@@ -20,7 +21,7 @@ namespace FactoryBot
 
             var parser = new FactoryParser();
             var configuration = parser.Parse(factory);
-            CheckNestedDependencies(configuration);
+            CheckNestedAndCircularDependencies(configuration);
 
             BuildRules[configuration.ConstructingType] = configuration;
         }
@@ -92,11 +93,19 @@ namespace FactoryBot
             return config;
         }
 
-        private static void CheckNestedDependencies(BotConfiguration configuration)
+        private static void CheckNestedAndCircularDependencies(BotConfiguration configuration)
         {
-            foreach (var dependency in configuration.GetNestedDependencies())
+            var dependencies = configuration.GetNestedDependencies().ToList();
+            for (var i = 0; i < dependencies.Count; i++)
             {
-                GetConfiguration(dependency);
+                var dependencyType = dependencies[i];
+                var nestedDependency = (dependencyType == configuration.ConstructingType ? configuration : GetConfiguration(dependencyType)).GetNestedDependencies();
+                if (nestedDependency.Any(x => dependencies.Contains(x)))
+                {
+                    throw new CircularDependencyDetectedException();
+                }
+
+                dependencies.AddRange(nestedDependency);
             }
         }
     }
