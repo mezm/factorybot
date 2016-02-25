@@ -5,6 +5,6 @@ FactoryBot is a tool to generate test objects with random data. Inspired by fact
 
 ```csharp
 Bot.Define(x => new Model({ Text = x.Strings.Any() });
-var model = Bot.Build<Model1>();
+var model = Bot.Build<Model>();
 
 ```
