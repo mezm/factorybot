@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("FactoryBot")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("FactoryBot is a tool to generate test objects with random data.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Mezm")]
 [assembly: AssemblyProduct("FactoryBot")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]

@@ -4,3 +4,4 @@ packages/
 *.suo
 *.user
 .vs/
+*.nupkg
