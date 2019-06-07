@@ -7,10 +7,7 @@ namespace FactoryBot.Tests.Generators.Strings
     public class WordRandomGeneratorTest : GeneratorTestKit
     {
         [Test]
-        public void GenerateNextWithoutThreshold()
-        {
-            AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Strings.Words() });
-        }
+        public void GenerateNextWithoutThreshold() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Strings.Words() });
 
         [Test]
         public void GenerateNextWithThreshold()
@@ -31,9 +28,6 @@ namespace FactoryBot.Tests.Generators.Strings
         [TestCase(10, -40)]
         [TestCase(40, 10)]
         [TestCase(0, 0)]
-        public void CreateWithInvalidThreshold(int min, int max)
-        {
-            ExpectArgumentOutOfRangeInitException(x => new AllTypesModel { String = x.Strings.Words(min, max) });
-        }
+        public void CreateWithInvalidThreshold(int min, int max) => ExpectArgumentOutOfRangeInitException(x => new AllTypesModel { String = x.Strings.Words(min, max) });
     }
 }

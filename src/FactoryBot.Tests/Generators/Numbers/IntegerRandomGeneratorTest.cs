@@ -8,16 +8,10 @@ namespace FactoryBot.Tests.Generators.Numbers
     public class IntegerRandomGeneratorTest : GeneratorTestKit
     {
         [Test]
-        public void GenerateRandom()
-        {
-            AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { Integer = x.Integer.Any() });
-        }
+        public void GenerateRandom() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { Integer = x.Integer.Any() });
 
         [Test]
-        public void GenerateRandomFromRange()
-        {
-            AssertGeneratorValue(x => new AllTypesModel { Integer = x.Integer.Any(10, 150) }, Is.InRange(10, 150));
-        }
+        public void GenerateRandomFromRange() => AssertGeneratorValue(x => new AllTypesModel { Integer = x.Integer.Any(10, 150) }, Is.InRange(10, 150));
 
         [Test]
         public void GenerateRandomSingleValue()
@@ -29,9 +23,6 @@ namespace FactoryBot.Tests.Generators.Numbers
         }
 
         [Test]
-        public void GenerateRandomWrongRange()
-        {
-            ExpectArgumentOutOfRangeInitException(x => new AllTypesModel { Integer = x.Integer.Any(10, -10) });
-        }
+        public void GenerateRandomWrongRange() => ExpectArgumentOutOfRangeInitException(x => new AllTypesModel { Integer = x.Integer.Any(10, -10) });
     }
 }

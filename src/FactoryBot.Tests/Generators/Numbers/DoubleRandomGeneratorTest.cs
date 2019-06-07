@@ -8,10 +8,7 @@ namespace FactoryBot.Tests.Generators.Numbers
     public class DoubleRandomGeneratorTest : GeneratorTestKit
     {
         [Test]
-        public void GetRandom()
-        {
-            AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { Double = x.Double.Any() });
-        }
+        public void GetRandom() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { Double = x.Double.Any() });
 
         [Test]
         public void GetRandomWithThreshfold()
@@ -29,9 +26,6 @@ namespace FactoryBot.Tests.Generators.Numbers
         }
 
         [Test]
-        public void CreateWithWrongRange()
-        {
-            ExpectArgumentOutOfRangeInitException(x => new AllTypesModel { Double = x.Double.Any(10, -1.005) });
-        }
+        public void CreateWithWrongRange() => ExpectArgumentOutOfRangeInitException(x => new AllTypesModel { Double = x.Double.Any(10, -1.005) });
     }
 }

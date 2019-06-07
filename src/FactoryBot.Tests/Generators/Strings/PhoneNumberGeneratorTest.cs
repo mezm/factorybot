@@ -7,16 +7,10 @@ namespace FactoryBot.Tests.Generators.Strings
     public class PhoneNumberGeneratorTest : GeneratorTestKit
     {
         [Test]
-        public void GenerateDefaultNumber()
-        {
-            AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Strings.PhoneNumber() });
-        }
+        public void GenerateDefaultNumber() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Strings.PhoneNumber() });
 
         [Test]
-        public void GenerateNumberFromTemplate()
-        {
-            AssertGeneratorValue(x => new AllTypesModel { String = x.Strings.PhoneNumber("+1-800-###-####") }, Does.Match(@"\+1\-800\-\d{3}\-\d{4}"));
-        }
+        public void GenerateNumberFromTemplate() => AssertGeneratorValue(x => new AllTypesModel { String = x.Strings.PhoneNumber("+1-800-###-####") }, Does.Match(@"\+1\-800\-\d{3}\-\d{4}"));
 
         [Test]
         public void GenerateNumberFromTemplateWithoutRandomData()

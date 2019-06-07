@@ -8,10 +8,7 @@ namespace FactoryBot.Tests.Generators.Numbers
     public class DecimalRandomGeneratorTest : GeneratorTestKit
     {
         [Test]
-        public void GetRandom()
-        {
-            AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { Decimal = x.Decimal.Any() });
-        }
+        public void GetRandom() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { Decimal = x.Decimal.Any() });
 
         [Test]
         public void GetRandomWithThreshfold()
@@ -31,9 +28,6 @@ namespace FactoryBot.Tests.Generators.Numbers
         }
 
         [Test]
-        public void CreateWithWrongRange()
-        {
-            ExpectArgumentOutOfRangeInitException(x => new AllTypesModel { Decimal = x.Decimal.Any(10m, -1.005m) });
-        }
+        public void CreateWithWrongRange() => ExpectArgumentOutOfRangeInitException(x => new AllTypesModel { Decimal = x.Decimal.Any(10m, -1.005m) });
     }
 }

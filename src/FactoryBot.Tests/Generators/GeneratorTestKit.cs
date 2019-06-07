@@ -13,9 +13,7 @@ namespace FactoryBot.Tests.Generators
 {
     public abstract class GeneratorTestKit
     {
-        protected void AssertGeneratorValue(
-            Expression<Func<BotConfigurationBuilder, AllTypesModel>> factory,
-            IResolveConstraint constraint)
+        protected void AssertGeneratorValue(Expression<Func<BotConfigurationBuilder, AllTypesModel>> factory, IResolveConstraint constraint)
         {
             AssertGeneratorValue(factory, constraint, new IResolveConstraint[0]);
         }
@@ -31,9 +29,7 @@ namespace FactoryBot.Tests.Generators
             AssertGenetorValuesInRow(factory, asserts);
         }
 
-        protected void AssertGeneratorValue<T>(
-            Expression<Func<BotConfigurationBuilder, AllTypesModel>> factory,
-            Action<T> assert)
+        protected void AssertGeneratorValue<T>(Expression<Func<BotConfigurationBuilder, AllTypesModel>> factory, Action<T> assert)
         {
             AssertGenetorValuesInRow(factory, x => assert((T) x));
         }
@@ -68,10 +64,7 @@ namespace FactoryBot.Tests.Generators
                 Throws.InstanceOf<GeneratorInitializationException>().And.InnerException.InstanceOf<T>());
         }
 
-        protected void ExpectArgumentInitException(Expression<Func<BotConfigurationBuilder, AllTypesModel>> factory)
-        {
-            ExpectInitException<ArgumentException>(factory);
-        }
+        protected void ExpectArgumentInitException(Expression<Func<BotConfigurationBuilder, AllTypesModel>> factory) => ExpectInitException<ArgumentException>(factory);
 
         protected void ExpectArgumentOutOfRangeInitException(
             Expression<Func<BotConfigurationBuilder, AllTypesModel>> factory)
@@ -101,9 +94,6 @@ namespace FactoryBot.Tests.Generators
             }
         }
 
-        private static Action<object> ConstraintToAssertAction(IResolveConstraint constraint)
-        {
-            return x => Assert.That(x, constraint);
-        }
+        private static Action<object> ConstraintToAssertAction(IResolveConstraint constraint) => x => Assert.That(x, constraint);
     }
 }

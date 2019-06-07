@@ -11,10 +11,7 @@ namespace FactoryBot.Tests
     public class BotTest
     {
         [TearDown]
-        public void Terminate()
-        {
-            Bot.ForgetAll();
-        }
+        public void Terminate() => Bot.ForgetAll();
 
         [Test]
         public void BuildAlwaysCreatesNewInstance()
@@ -476,14 +473,8 @@ namespace FactoryBot.Tests
             }
         }
 
-        private static int GetNumberInternal()
-        {
-            return 111;
-        }
+        private static int GetNumberInternal() => 111;
 
-        private string GetTextInternal()
-        {
-            return "a";
-        }
+        private string GetTextInternal() => "a";
     }
 }

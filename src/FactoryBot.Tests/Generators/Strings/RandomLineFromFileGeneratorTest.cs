@@ -45,9 +45,6 @@ namespace FactoryBot.Tests.Generators.Strings
         }
 
         [Test]
-        public void CreateWithNonExistingFile()
-        {
-            ExpectInitException<IOException>(x => new AllTypesModel { String = x.Strings.RandomFromFile("some_non_existing.aaa") });
-        }
+        public void CreateWithNonExistingFile() => ExpectInitException<IOException>(x => new AllTypesModel { String = x.Strings.RandomFromFile("some_non_existing.aaa") });
     }
 }

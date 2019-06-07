@@ -28,9 +28,6 @@ namespace FactoryBot.Tests.Generators.Collections
         }
 
         [Test]
-        public void CreateWithEmptyList()
-        {
-            ExpectArgumentInitException(x => new AllTypesModel { Integer = x.Integer.SequenceFromList(new int[0]) });
-        }
+        public void CreateWithEmptyList() => ExpectArgumentInitException(x => new AllTypesModel { Integer = x.Integer.SequenceFromList(new int[0]) });
     }
 }

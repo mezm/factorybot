@@ -16,10 +16,7 @@ namespace FactoryBot.Tests.DSL
     public class GeneratorAttributeTest
     {
         [Test]
-        public void CreateAttributeWithNonGeneratorClass()
-        {
-            Assert.That(() => new GeneratorAttribute(typeof(string)), Throws.ArgumentException);
-        }
+        public void CreateAttributeWithNonGeneratorClass() => Assert.That(() => new GeneratorAttribute(typeof(string)), Throws.ArgumentException);
 
         [Test]
         public void CreateGeneratorWithoutParameters()
@@ -110,24 +107,21 @@ namespace FactoryBot.Tests.DSL
             Assert.That(generator.Text2, Is.EqualTo("abc"));
         }
 
-        private static MethodInfo GetDSLMethod(Expression<Func<TestDSL, object>> getMethodExpr)
-        {
-            return ((MethodCallExpression)getMethodExpr.Body).Method;
-        }
+        private static MethodInfo GetDSLMethod(Expression<Func<TestDSL, object>> getMethodExpr) => ((MethodCallExpression)getMethodExpr.Body).Method;
 
         [SuppressMessage("ReSharper", "UnusedParameter.Local")]
         [SuppressMessage("ReSharper", "UnusedTypeParameter")]
         private class TestDSL
         {
-            public object GetTestGenerator() => default(object);
+            public object GetTestGenerator() => default;
 
-            public object GetTestGenerator(int length, string source) => default(object);
+            public object GetTestGenerator(int length, string source) => default;
 
-            public object GetTestGenericGenerator<T1, T2>() => default(object);
+            public object GetTestGenericGenerator<T1, T2>() => default;
 
-            public object GetTestGenericGenerator<T1, T2>(T1 value1, T2 value2) => default(object);
+            public object GetTestGenericGenerator<T1, T2>(T1 value1, T2 value2) => default;
 
-            public object GetTestGeneratorWithDefaultParameters(int numberInteger, string text2) => default(object);
+            public object GetTestGeneratorWithDefaultParameters(int numberInteger, string text2) => default;
         }
 
         [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
@@ -148,10 +142,7 @@ namespace FactoryBot.Tests.DSL
                 Source = source;
             }
 
-            public object Next()
-            {
-                throw new NotSupportedException();
-            }
+            public object Next() => throw new NotSupportedException();
         }
 
         private class TestGenericGenerator<T1, T2> : IGenerator
@@ -166,10 +157,7 @@ namespace FactoryBot.Tests.DSL
 
             public T2 Value2 { get; }
 
-            public object Next()
-            {
-                throw new NotSupportedException();
-            }
+            public object Next() => throw new NotSupportedException();
         }
 
         private class TestGeneratorWithDefaultParameters : IGenerator
@@ -187,10 +175,7 @@ namespace FactoryBot.Tests.DSL
 
             public string Text2 { get; }
 
-            public object Next()
-            {
-                throw new NotSupportedException();
-            }
+            public object Next() => throw new NotSupportedException();
         }
     }
 }

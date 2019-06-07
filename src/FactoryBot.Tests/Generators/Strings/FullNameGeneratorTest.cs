@@ -14,10 +14,7 @@ namespace FactoryBot.Tests.Generators.Strings
         private readonly string _lastNameSource = FileUtils.GetResourceContentWithoutLineBreaks(SourceNames.LastNames);
 
         [Test]
-        public void AlwaysNewName()
-        {
-            AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Strings.FullName() });
-        }
+        public void AlwaysNewName() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Strings.FullName() });
 
         [Test]
         public void GenerateFirstLastName()

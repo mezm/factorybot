@@ -23,10 +23,7 @@ namespace FactoryBot.Tests.Generators.Strings
         }
 
         [Test]
-        public void GetAlwaysNewRandomFilename()
-        {
-            AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Strings.Filename() });
-        }
+        public void GetAlwaysNewRandomFilename() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Strings.Filename() });
 
         [Test]
         public void GetNotExistingFileFromEverywhere()

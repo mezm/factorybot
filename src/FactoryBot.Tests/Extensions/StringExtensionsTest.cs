@@ -22,16 +22,10 @@ workers
 proceed no further";
 
         [Test]
-        public void GetWordsFromEmptyString()
-        {
-            Assert.That("".Words(), Is.EqualTo(new string[0]));
-        }
+        public void GetWordsFromEmptyString() => Assert.That("".Words(), Is.EqualTo(new string[0]));
 
         [Test]
-        public void GetWordsOnlyOne()
-        {
-            Assert.That("word".Words(), Is.EqualTo(new[] { "word" }));
-        }
+        public void GetWordsOnlyOne() => Assert.That("word".Words(), Is.EqualTo(new[] { "word" }));
 
         [Test]
         public void GetWordsFew()
@@ -50,10 +44,7 @@ proceed no further";
         }
 
         [Test]
-        public void GetWordsNoWords()
-        {
-            Assert.That(",! #-# ---".Words(), Is.EquivalentTo(new string[0]));
-        }
+        public void GetWordsNoWords() => Assert.That(",! #-# ---".Words(), Is.EquivalentTo(new string[0]));
 
         [Test]
         [TestCase("", "")]
@@ -62,9 +53,6 @@ proceed no further";
         [TestCase(MultiLineEmptyInput, "")]
         [TestCase(MultiLineSingleBreakInput, "wicked workers proceed no further")]
         [TestCase(MultiLineFewBreaksInput, "wicked workers proceed no further")]
-        public void RemoveLineBreaks(string str, string expected)
-        {
-            Assert.That(str.RemoveLineBreaks(), Is.EqualTo(expected));
-        }
+        public void RemoveLineBreaks(string str, string expected) => Assert.That(str.RemoveLineBreaks(), Is.EqualTo(expected));
     }
 }

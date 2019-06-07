@@ -6,10 +6,7 @@ namespace FactoryBot.Tests.Models
         {
         }
 
-        public Model1(int number)
-        {
-            Number = number;
-        }
+        public Model1(int number) => Number = number;
 
         public Model1(int number, string text)
         {

@@ -10,10 +10,7 @@ namespace FactoryBot.Tests.Generators.Strings
     public class LastNameGeneratorTest : GeneratorTestKit
     {
         [Test]
-        public void AlwaysGetNewName()
-        {
-            AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Strings.LastName() });
-        }
+        public void AlwaysGetNewName() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Strings.LastName() });
 
         [Test]
         public void GenerateName()

@@ -10,10 +10,7 @@ namespace FactoryBot.Tests.Generators.Dates
     public class RandomDateTimeGeneratorTest : GeneratorTestKit
     {
         [Test]
-        public void GenerateRandom()
-        {
-            AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { DateTime = x.Dates.Any() });
-        }
+        public void GenerateRandom() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { DateTime = x.Dates.Any() });
 
         [Test]
         public void GenerateRandomFromRange()
