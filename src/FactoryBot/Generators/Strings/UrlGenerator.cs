@@ -77,19 +77,10 @@ namespace FactoryBot.Generators.Strings
             return GetNextRandomUrlPart() + domain;
         }
 
-        private string GetSchema()
-        {
-            return string.IsNullOrWhiteSpace(_schema) ? Schemas[NextRandomInteger(0, Schemas.Length - 1)] : _schema;
-        }
+        private string GetSchema() => string.IsNullOrWhiteSpace(_schema) ? Schemas[NextRandomInteger(0, Schemas.Length - 1)] : _schema;
 
-        private string GetNextRandomUrlPart()
-        {
-            return ((string)_wordsGenerator.Next()).Replace(" ", "");
-        }
+        private string GetNextRandomUrlPart() => ((string)_wordsGenerator.Next()).Replace(" ", "");
 
-        private string GetNextQueryParamPart()
-        {
-            return (string)_singleWordGenerator.Next();
-        }
+        private string GetNextQueryParamPart() => (string)_singleWordGenerator.Next();
     }
 }

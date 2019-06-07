@@ -52,29 +52,21 @@ namespace FactoryBot.DSL
                 throw new MissingMethodException($"No constructor of class {GeneratorType} with parameters: {parameterNames} has been found.");
             }
 
-            var constructorParameters =
-                constructor.GetParameters().Select(x => ChooseParameter(x, parameters)).ToArray();
+            var constructorParameters = constructor.GetParameters().Select(x => ChooseParameter(x, parameters)).ToArray();
 
             try
             {
                 return (IGenerator)constructor.Invoke(constructorParameters);
             }
-            catch (TargetInvocationException ex)
+            catch (TargetInvocationException ex) when (ex.InnerException != null)
             {
-                if (ex.InnerException == null)
-                {
-                    throw;
-                }
-
                 throw new GeneratorInitializationException(generatorType, ex.InnerException);
-            }
-            
+            }            
         }
 
         private static object ChooseParameter(ParameterInfo parameterInfo, IDictionary<string, object> parameters)
         {
-            object result;
-            return parameters.TryGetValue(parameterInfo.Name, out result) ? result : parameterInfo.DefaultValue;
+            return parameters.TryGetValue(parameterInfo.Name, out object result) ? result : parameterInfo.DefaultValue;
         }
 
         private static bool IsSuitableConstructor(ConstructorInfo constructor, ICollection<string> parameterNames)

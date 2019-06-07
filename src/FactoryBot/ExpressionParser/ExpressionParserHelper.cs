@@ -45,14 +45,12 @@ namespace FactoryBot.ExpressionParser
                 return generatorAttr.CreateGenerator(methodCallExpr.Method, generatorParamenters);
             }
 
-            var memberInitExpr = expr as MemberInitExpression;
-            if (memberInitExpr != null)
+            if (expr is MemberInitExpression memberInitExpr)
             {
                 return ParseMemberInit(memberInitExpr);
             }
 
-            var constructorExpr = expr as NewExpression;
-            if (constructorExpr != null)
+            if (expr is NewExpression constructorExpr)
             {
                 return ParseConstructor(constructorExpr);
             }

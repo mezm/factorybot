@@ -7,9 +7,6 @@ namespace FactoryBot.Generators
     /// </summary>
     internal class KeepGenerator : IGenerator
     {
-        public object Next()
-        {
-            throw new NotSupportedException();
-        }
+        public object Next() => throw new NotSupportedException();
     }
 }

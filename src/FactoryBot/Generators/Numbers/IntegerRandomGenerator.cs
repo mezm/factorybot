@@ -11,10 +11,7 @@
             _from = from;
             _to = to;
         }
-        
-        protected override int NextInternal()
-        {
-            return NextRandomInteger(_from, _to);
-        }
+
+        protected override int NextInternal() => NextRandomInteger(_from, _to);
     }
 }

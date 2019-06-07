@@ -14,7 +14,7 @@ namespace FactoryBot.DSL
         public DoubleGenerators Double { get; } = new DoubleGenerators();
 
         [Generator(typeof(UsingGenerator<>))]
-        public T Use<T>() => default(T);
+        public T Use<T>() => default;
 
         [Generator(typeof(ArrayGenerator<>))]
         public T[] Array<T>(int minElements, int maxElements, [ItemGenerator] T itemGenerator) => new T[0];

@@ -11,9 +11,6 @@
             _doubleRandomGenerator = new DoubleRandomGenerator((double)from, (double)to);
         }
 
-        protected override decimal NextInternal()
-        {
-            return new decimal((double)_doubleRandomGenerator.Next());
-        }
+        protected override decimal NextInternal() => new decimal((double)_doubleRandomGenerator.Next());
     }
 }

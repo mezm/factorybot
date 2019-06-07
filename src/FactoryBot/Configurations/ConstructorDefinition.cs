@@ -27,9 +27,6 @@ namespace FactoryBot.Configurations
 
         public IReadOnlyList<IGenerator> Arguments { get; }
 
-        public object Create()
-        {
-            return Constructor.Invoke(Arguments.Select(x => x.Next()).ToArray());
-        }
+        public object Create() => Constructor.Invoke(Arguments.Select(x => x.Next()).ToArray());
     }
 }

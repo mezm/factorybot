@@ -4,14 +4,8 @@
     {
         private readonly object _constant;
 
-        public ConstantGenerator(object constant)
-        {
-            _constant = constant;
-        }
+        public ConstantGenerator(object constant) => _constant = constant;
 
-        public object Next()
-        {
-            return _constant;
-        }
+        public object Next() => _constant;
     }
 }

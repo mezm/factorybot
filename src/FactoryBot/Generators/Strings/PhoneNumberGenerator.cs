@@ -50,9 +50,6 @@ namespace FactoryBot.Generators.Strings
             return new string(result);
         }
 
-        private string CreateRandomNumberString()
-        {
-            return NextRandomInteger(0, int.MaxValue).ToString();
-        }
+        private string CreateRandomNumberString() => NextRandomInteger(0, int.MaxValue).ToString();
     }
 }

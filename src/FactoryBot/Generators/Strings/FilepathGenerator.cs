@@ -37,11 +37,8 @@ namespace FactoryBot.Generators.Strings
                 _fromFolder += "\\";
             }
         }
-        
-        protected override string NextInternal()
-        {
-            return _existing ? GetExistingPath() : GetRandomPath();
-        }
+
+        protected override string NextInternal() => _existing ? GetExistingPath() : GetRandomPath();
 
         private string GetRandomPath()
         {

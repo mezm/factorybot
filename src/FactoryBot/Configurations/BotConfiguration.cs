@@ -23,10 +23,7 @@ namespace FactoryBot.Configurations
 
         public List<PropertyDefinition> Properties { get; } = new List<PropertyDefinition>();
 
-        public object CreateNewObject()
-        {
-            return Create(Constructor);
-        }
+        public object CreateNewObject() => Create(Constructor);
 
         public object CreateNewObjectWithModification(ConstructorDefinition modification)
         {
@@ -58,10 +55,7 @@ namespace FactoryBot.Configurations
                 .ToArray();
         }
 
-        object IGenerator.Next()
-        {
-            return CreateNewObject();
-        }
+        object IGenerator.Next() => CreateNewObject();
 
         private object Create(ConstructorDefinition constructor)
         {

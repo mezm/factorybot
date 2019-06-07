@@ -2,9 +2,6 @@
 {
     internal class UsingGenerator<T> : IGenerator
     {
-        public object Next()
-        {
-            return Bot.Build<T>();
-        }
+        public object Next() => Bot.Build<T>();
     }
 }

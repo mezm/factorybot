@@ -9,37 +9,37 @@ namespace FactoryBot.DSL
     public class StringGenerators
     {
         [Generator(typeof(StringRandomGenerator))]
-        public string Any() => default(string);
+        public string Any() => default;
 
         [Generator(typeof(StringRandomGenerator))]
-        public string Any(int minLength, int maxLength) => default(string);
+        public string Any(int minLength, int maxLength) => default;
 
         [Generator(typeof(WordRandomGenerator))]
-        public string Words() => default(string);
+        public string Words() => default;
 
         [Generator(typeof(WordRandomGenerator))]
-        public string Words(int minWords, int maxWords) => default(string);
+        public string Words(int minWords, int maxWords) => default;
 
         [Generator(typeof(FirstNameGenerator))]
-        public string FirstName() => default(string);
+        public string FirstName() => default;
 
         [Generator(typeof(LastNameGenerator))]
-        public string LastName() => default(string);
+        public string LastName() => default;
 
         [Generator(typeof(FullNameGenerator))]
-        public string FullName() => default(string);
+        public string FullName() => default;
 
         [Generator(typeof(FullNameGenerator))]
-        public string FullName(FullNameFormat format) => default(string);
+        public string FullName(FullNameFormat format) => default;
 
         [Generator(typeof(UrlGenerator))]
-        public string Url() => default(string);
+        public string Url() => default;
 
         [Generator(typeof(UrlGenerator))]
-        public string Url(UriKind uriKind) => default(string);
+        public string Url(UriKind uriKind) => default;
 
         [Generator(typeof(UrlGenerator))]
-        public string Url(string schema, string host) => default(string);
+        public string Url(string schema, string host) => default;
 
         [Generator(typeof(UrlGenerator))]
         public string Url(
@@ -49,30 +49,30 @@ namespace FactoryBot.DSL
             int minQueryParams,
             int maxQueryParams,
             string schema,
-            string host) => default(string);
+            string host) => default;
 
         [Generator(typeof(FilePathGenerator))]
-        public string Filename() => default(string);
+        public string Filename() => default;
 
         [Generator(typeof(FilePathGenerator))]
-        public string Filename(string fromFolder, bool existing) => default(string);
+        public string Filename(string fromFolder, bool existing) => default;
 
         [Generator(typeof(RandomFromListGenerator<string>))]
-        public string RandomFromList(IReadOnlyList<string> source) => default(string);
+        public string RandomFromList(IReadOnlyList<string> source) => default;
 
         [Generator(typeof(SequenceFromListGenerator<string>))]
-        public string SequenceFromList(IReadOnlyList<string> source) => default(string);
+        public string SequenceFromList(IReadOnlyList<string> source) => default;
 
         [Generator(typeof(RandomLineFromFileGenerator))]
-        public string RandomFromFile(string filename) => default(string);
+        public string RandomFromFile(string filename) => default;
 
         [Generator(typeof(SequenceStringFromFileGenerator))]
-        public string SequenceFromFile(string filename) => default(string);
+        public string SequenceFromFile(string filename) => default;
 
         [Generator(typeof(PhoneNumberGenerator))]
-        public string PhoneNumber() => default(string);
+        public string PhoneNumber() => default;
 
         [Generator(typeof(PhoneNumberGenerator))]
-        public string PhoneNumber(string template) => default(string);
+        public string PhoneNumber(string template) => default;
     }
 }

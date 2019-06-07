@@ -25,10 +25,7 @@ namespace FactoryBot.Generators.Strings
             _approximateWordCountInSource = (int)(ResourceHelper.GetStreamLength(SourceNames.RandomText)/AvarageWordSize);
         }
 
-        protected override string NextInternal()
-        {
-            return ResourceHelper.Read(SourceNames.RandomText, Read);
-        }
+        protected override string NextInternal() => ResourceHelper.Read(SourceNames.RandomText, Read);
 
         private string Read(StreamReader reader)
         {

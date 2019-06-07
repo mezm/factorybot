@@ -9,15 +9,15 @@ namespace FactoryBot.DSL
     public class DateGenerators
     {
         [Generator(typeof(RandomDateTimeGenerator))]
-        public DateTime Any() => default(DateTime);
+        public DateTime Any() => default;
 
         [Generator(typeof(RandomDateTimeGenerator))]
-        public DateTime Any(DateTime from, DateTime to) => default(DateTime);
+        public DateTime Any(DateTime from, DateTime to) => default;
 
         [Generator(typeof(RandomFromListGenerator<DateTime>))]
-        public DateTime RandomFromList(IReadOnlyList<DateTime> source) => default(DateTime);
+        public DateTime RandomFromList(IReadOnlyList<DateTime> source) => default;
 
         [Generator(typeof(SequenceFromListGenerator<DateTime>))]
-        public DateTime SequenceFromList(IReadOnlyList<int> source) => default(DateTime);
+        public DateTime SequenceFromList(IReadOnlyList<int> source) => default;
     }
 }

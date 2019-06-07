@@ -15,9 +15,6 @@
             _to = to;
         }
 
-        protected override double NextInternal()
-        {
-            return NextRandomDouble()*(_to - _from) + _from;
-        }
+        protected override double NextInternal() => NextRandomDouble() * (_to - _from) + _from;
     }
 }

@@ -8,15 +8,15 @@ namespace FactoryBot.DSL
     public class IntegerGenerators 
     {
         [Generator(typeof(IntegerRandomGenerator))]
-        public int Any() => default(int);
+        public int Any() => default;
 
         [Generator(typeof(IntegerRandomGenerator))]
-        public int Any(int from, int to) => default(int);
+        public int Any(int from, int to) => default;
 
         [Generator(typeof(RandomFromListGenerator<int>))]
-        public int RandomFromList(IReadOnlyList<int> source) => default(int);
+        public int RandomFromList(IReadOnlyList<int> source) => default;
 
         [Generator(typeof(SequenceFromListGenerator<int>))]
-        public int SequenceFromList(IReadOnlyList<int> source) => default(int);
+        public int SequenceFromList(IReadOnlyList<int> source) => default;
     }
 }

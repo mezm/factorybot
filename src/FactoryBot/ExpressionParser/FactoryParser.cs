@@ -12,14 +12,12 @@ namespace FactoryBot.ExpressionParser
         {
             Check.NotNull(factory, nameof(factory));
 
-            var memberInitExpr = factory.Body as MemberInitExpression;
-            if (memberInitExpr != null)
+            if (factory.Body is MemberInitExpression memberInitExpr)
             {
                 return ExpressionParserHelper.ParseMemberInit(memberInitExpr);
             }
 
-            var newExpr = factory.Body as NewExpression;
-            if (newExpr != null)
+            if (factory.Body is NewExpression newExpr)
             {
                 return ExpressionParserHelper.ParseConstructor(newExpr);
             }

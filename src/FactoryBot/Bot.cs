@@ -76,20 +76,11 @@ namespace FactoryBot
                 "BuildSequence generates infinite sequence and should not be used in a foreach look. If it's not the case set infinite parameter to true.");
         }
 
-        public static void ForgetAll()
-        {
-            BuildRules.Clear();            
-        }
+        public static void ForgetAll() => BuildRules.Clear();
 
         private static BotConfiguration GetConfiguration(Type ruleKey)
         {
-            BotConfiguration config;
-            if (!BuildRules.TryGetValue(ruleKey, out config))
-            {
-                throw new UnknownTypeException(ruleKey);
-            }
-
-            return config;
+            return BuildRules.TryGetValue(ruleKey, out var config) ? config : throw new UnknownTypeException(ruleKey);
         }
 
         private static void CheckNestedAndCircularDependencies(BotConfiguration configuration)

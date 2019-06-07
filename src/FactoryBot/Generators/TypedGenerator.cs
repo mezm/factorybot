@@ -6,31 +6,16 @@ namespace FactoryBot.Generators
     {
         private readonly Random _random = new Random();
 
-        public object Next()
-        {
-            return NextInternal();
-        }
+        public object Next() => NextInternal();
 
         protected abstract T NextInternal();
 
-        protected int NextRandomInteger(int from, int to)
-        {
-            return _random.Next(from, to);
-        }
+        protected int NextRandomInteger(int from, int to) => _random.Next(from, to);
 
-        protected double NextRandomDouble()
-        {
-            return _random.NextDouble();
-        }
+        protected double NextRandomDouble() => _random.NextDouble();
 
-        protected bool NextRandomBool()
-        {
-            return _random.Next(0, 1) == 1;
-        }
+        protected bool NextRandomBool() => _random.Next(0, 1) == 1;
 
-        protected TItem NextRandomFromArray<TItem>(TItem[] array)
-        {
-            return array[NextRandomInteger(0, array.Length)];
-        }
+        protected TItem NextRandomFromArray<TItem>(TItem[] array) => array[NextRandomInteger(0, array.Length)];
     }
 }
