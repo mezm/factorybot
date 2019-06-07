@@ -1,7 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>FactoryBot</PackageId>
+    <Version>1.1.0</Version>
+    <Authors>Mezm</Authors>
+    <Company>Home</Company>
+    <PackageDescription>FactoryBot is a tool to generate test objects with random data.</PackageDescription>
+    <RepositoryUrl>https://github.com/mezm/factorybot</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
