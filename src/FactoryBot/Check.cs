@@ -4,6 +4,7 @@ using System.Diagnostics;
 
 namespace FactoryBot
 {
+    // todo: get rid of this class
     [DebuggerStepThrough]
     internal static class Check
     {

@@ -11,5 +11,9 @@ namespace FactoryBot.Tests.Models
         public List<Model1> ComplexList { get; set; }
             
         public Model3[] ComplexArray { get; set; }
+
+        public Dictionary<int, string> SimpleDictionary { get; set; }
+
+        public Dictionary<Model1, Model2> ComplexDictionary { get; set; }
     }
 }

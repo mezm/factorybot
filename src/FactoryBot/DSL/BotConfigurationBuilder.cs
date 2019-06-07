@@ -21,5 +21,8 @@ namespace FactoryBot.DSL
 
         [Generator(typeof(ListGenerator<>))]
         public List<T> List<T>(int minElements, int maxElements, [ItemGenerator] T itemGenerator) => new List<T>();
+
+        [Generator(typeof(DictionaryGenerator<,>))]
+        public Dictionary<TKey, TValue> Dictionary<TKey, TValue>(int minElements, int maxElements, [ItemGenerator] TKey keyGenerator, [ItemGenerator] TValue valueGenerator) => new Dictionary<TKey, TValue>();
     }
 }
