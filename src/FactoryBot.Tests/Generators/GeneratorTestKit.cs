@@ -80,6 +80,7 @@ namespace FactoryBot.Tests.Generators
         }
 
         protected void ExpectBuildException<T>(Expression<Func<BotConfigurationBuilder, AllTypesModel>> factory)
+            where T : Exception
         {
             Bot.Define(factory);
             Assert.That(() => Bot.Build<AllTypesModel>(), Throws.InstanceOf<T>());

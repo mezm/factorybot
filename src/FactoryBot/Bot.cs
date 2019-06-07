@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-
 using FactoryBot.Configurations;
 using FactoryBot.DSL;
 using FactoryBot.ExpressionParser;
@@ -77,7 +76,7 @@ namespace FactoryBot
                 "BuildSequence generates infinite sequence and should not be used in a foreach look. If it's not the case set infinite parameter to true.");
         }
 
-        internal static void ForgetAll()
+        public static void ForgetAll()
         {
             BuildRules.Clear();            
         }

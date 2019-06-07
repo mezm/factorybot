@@ -4,7 +4,8 @@ using NUnit.Framework;
 
 namespace FactoryBot.Tests.Generators.Strings
 {
-    [TestFixture, Timeout(10000)]
+    [TestFixture]
+    // [Timeout(10000)] // todo: Not currently available in the .NET Standard builds of the framework.
     public class SequenceStringFromFileGeneratorTest : GeneratorTestKit
     {
         private const string Filename = "text.txt";

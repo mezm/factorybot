@@ -79,12 +79,32 @@ namespace FactoryBot.Generators.Strings
 
         private static IEnumerable<string> GetFileNameEnumerator(DirectoryInfo folder)
         {
-            foreach (var file in folder.GetFiles())
+            FileInfo[] files;
+            try
+            {
+                files = folder.GetFiles();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                files = Array.Empty<FileInfo>();
+            }
+
+            foreach (var file in files)
             {
                 yield return file.FullName;
             }
 
-            foreach (var subFolder in folder.GetDirectories())
+            DirectoryInfo[] subFolders;
+            try
+            {
+                subFolders = folder.GetDirectories();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                subFolders = Array.Empty<DirectoryInfo>();
+            }
+
+            foreach (var subFolder in subFolders)
             {
                 foreach (var filenames in GetFileNameEnumerator(subFolder))
                 {
