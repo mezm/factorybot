@@ -63,23 +63,32 @@ namespace FactoryBot.Configurations
 
         private object Create(ConstructorDefinition constructor)
         {
+            var obj = constructor.Create();
+
             try
             {
-                var obj = constructor.Create();
                 BeforeBindingHook(obj);
-
-                foreach (var property in Properties)
-                {
-                    property.Apply(obj);
-                }
-
-                AfterBindingHook(obj);
-                return obj;
             }
             catch (Exception ex)
             {
-                throw new BuildFailedException($"Failed to create {ConstructingType}. See InnerException for more details.", ex);
+                throw new BuildFailedException($"Failed process BeforeBindingHook on creation of {ConstructingType}. See InnerException for more details.", ex);
             }
+
+            foreach (var property in Properties)
+            {
+                property.Apply(obj);
+            }
+
+            try
+            {
+                AfterBindingHook(obj);
+            }
+            catch (Exception ex)
+            {
+                throw new BuildFailedException($"Failed process AfterBindingHook on creation of {ConstructingType}. See InnerException for more details.", ex);
+            }
+
+            return obj;
         }
     }
 }
