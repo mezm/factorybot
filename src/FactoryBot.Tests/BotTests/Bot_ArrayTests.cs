@@ -57,6 +57,31 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
+        public void BuildNestedComplexArrayUsingKnownConfigSimplifiedSytax()
+        {
+            Bot.Define(x => new Model1(x.Integer.Any(100, 150), "the test"));
+            Bot.Define(x => new Model3 { Number = 7, Nested = x.Use<Model1>() });
+            Bot.Define(x => new Model4 { ComplexArray = x.Array<Model3>(1, 3) });
+
+            var model = Bot.Build<Model4>();
+
+            Assert.That(
+                model.ComplexArray,
+                Is.Not.Null
+                    .And.Length.InRange(1, 3)
+                    .And.All.Not.Null
+                    .And.All.Property("Nested").Property("Number").InRange(100, 150));
+        }
+
+        [Test]
+        public void BuildNestedComplexArrayUsingUnknownConfigSimplifiedSytax()
+        {
+            Bot.Define(x => new Model4 { ComplexArray = x.Array<Model3>(1, 3) });
+
+            Assert.Throws<UnknownTypeException>(() => Bot.Build<Model4>());
+        }
+
+        [Test]
         public void BuildNestedComplexArrayUsingNestedConfig()
         {
             Bot.Define(
