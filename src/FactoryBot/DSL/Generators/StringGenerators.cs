@@ -7,7 +7,7 @@ using FactoryBot.Generators.Strings;
 
 namespace FactoryBot.DSL.Generators
 {
-    public class StringGenerators
+    public class StringGenerators : IPrimitiveGenerators<string, int>
     {
         public AddressGenerators Address { get; } = new AddressGenerators();
 

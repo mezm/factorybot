@@ -5,7 +5,7 @@ using FactoryBot.Generators.Numbers;
 
 namespace FactoryBot.DSL.Generators
 {
-    public class DoubleGenerators
+    public class DoubleGenerators : IPrimitiveGenerators<double, double>
     {
         [Generator(typeof(DoubleRandomGenerator))]
         public double Any() => default;

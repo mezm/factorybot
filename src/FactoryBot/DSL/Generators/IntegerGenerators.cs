@@ -5,7 +5,7 @@ using FactoryBot.Generators.Numbers;
 
 namespace FactoryBot.DSL.Generators
 {
-    public class IntegerGenerators 
+    public class IntegerGenerators : IPrimitiveGenerators<int, int>
     {
         [Generator(typeof(IntegerRandomGenerator))]
         public int Any() => default;

@@ -6,7 +6,7 @@ using FactoryBot.Generators.Dates;
 
 namespace FactoryBot.DSL.Generators
 {
-    public class DateGenerators
+    public class DateGenerators : IPrimitiveGenerators<DateTime, DateTime>
     {
         [Generator(typeof(RandomDateTimeGenerator))]
         public DateTime Any() => default;
