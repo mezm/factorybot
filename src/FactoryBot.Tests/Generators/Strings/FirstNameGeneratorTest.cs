@@ -15,7 +15,7 @@ namespace FactoryBot.Tests.Generators.Strings
         [Test]
         public void NamesAreFromTheSource()
         {
-            var source = FileUtils.GetResourceContentWithoutLineBreaks(SourceNames.FirstNames);
+            var source = FileUtils.GetResourceContentWithoutLineBreaks(SourceNames.FIRST_NAMES);
             AssertGeneratorValue<string>(x => new AllTypesModel { String = x.Strings.FirstName() },
                 x =>
                     {

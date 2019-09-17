@@ -8,6 +8,8 @@ namespace FactoryBot.DSL.Generators
 {
     public class StringGenerators
     {
+        public AddressGenerators Address { get; } = new AddressGenerators();
+
         [Generator(typeof(StringRandomGenerator))]
         public string Any() => default;
 
@@ -76,6 +78,9 @@ namespace FactoryBot.DSL.Generators
 
         [Generator(typeof(PhoneNumberGenerator))]
         public string PhoneNumber(string template) => default;
+
+        [Generator(typeof(GuidGenerator))]
+        public string Guid() => default;
 
 #pragma warning restore IDE0060 // Remove unused parameter
     }

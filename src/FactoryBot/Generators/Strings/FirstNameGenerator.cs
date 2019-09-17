@@ -2,7 +2,7 @@
 {
     public class FirstNameGenerator : RandomLineFromResourceGenerator
     {
-        public FirstNameGenerator() : base(SourceNames.FirstNames)
+        public FirstNameGenerator() : base(SourceNames.FIRST_NAMES)
         {
         }
     }

@@ -15,7 +15,7 @@ namespace FactoryBot.Tests.Generators.Strings
         [Test]
         public void GenerateName()
         {
-            var source = FileUtils.GetResourceContentWithoutLineBreaks(SourceNames.LastNames);
+            var source = FileUtils.GetResourceContentWithoutLineBreaks(SourceNames.LAST_NAMES);
             AssertGeneratorValue<string>(
                 x => new AllTypesModel { String = x.Strings.LastName() },
                 x =>

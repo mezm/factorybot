@@ -7,7 +7,7 @@ namespace FactoryBot.Tests.Generators.Strings
     [TestFixture]
     public class StringRandomGeneratorTest : GeneratorTestKit
     {
-        private readonly string _fileContent = FileUtils.GetResourceContentWithoutLineBreaks(SourceNames.RandomText);
+        private readonly string _fileContent = FileUtils.GetResourceContentWithoutLineBreaks(SourceNames.RANDOM_TEXT);
 
         [Test]
         public void AlwaysNewValue() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Strings.Any() });

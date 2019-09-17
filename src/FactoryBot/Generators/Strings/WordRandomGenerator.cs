@@ -22,10 +22,10 @@ namespace FactoryBot.Generators.Strings
 
             _minWords = minWords;
             _maxWords = maxWords;
-            _approximateWordCountInSource = (int)(ResourceHelper.GetStreamLength(SourceNames.RandomText)/AvarageWordSize);
+            _approximateWordCountInSource = (int)(ResourceHelper.GetStreamLength(SourceNames.RANDOM_TEXT)/AvarageWordSize);
         }
 
-        protected override string NextInternal() => ResourceHelper.Read(SourceNames.RandomText, Read);
+        protected override string NextInternal() => ResourceHelper.Read(SourceNames.RANDOM_TEXT, Read);
 
         private string Read(StreamReader reader)
         {

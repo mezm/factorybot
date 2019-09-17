@@ -10,8 +10,8 @@ namespace FactoryBot.Tests.Generators.Strings
     [TestFixture]
     public class FullNameGeneratorTest : GeneratorTestKit
     {
-        private readonly string _firstNameSource = FileUtils.GetResourceContentWithoutLineBreaks(SourceNames.FirstNames);
-        private readonly string _lastNameSource = FileUtils.GetResourceContentWithoutLineBreaks(SourceNames.LastNames);
+        private readonly string _firstNameSource = FileUtils.GetResourceContentWithoutLineBreaks(SourceNames.FIRST_NAMES);
+        private readonly string _lastNameSource = FileUtils.GetResourceContentWithoutLineBreaks(SourceNames.LAST_NAMES);
 
         [Test]
         public void AlwaysNewName() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Strings.FullName() });

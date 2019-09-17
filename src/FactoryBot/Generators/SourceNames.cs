@@ -2,8 +2,9 @@
 {
     internal static class SourceNames
     {
-        public const string RandomText = "FactoryBot.Generators.Resources.RandomTextSource.txt";
-        public const string FirstNames = "FactoryBot.Generators.Resources.FirstNameSource.txt";
-        public const string LastNames = "FactoryBot.Generators.Resources.LastNameSource.txt";
+        public const string RANDOM_TEXT = "FactoryBot.Generators.Resources.RandomTextSource.txt";
+        public const string FIRST_NAMES = "FactoryBot.Generators.Resources.FirstNameSource.txt";
+        public const string LAST_NAMES = "FactoryBot.Generators.Resources.LastNameSource.txt";
+        public const string COUNTRIES = "FactoryBot.Generators.Resources.CountrySource.txt";
     }
 }
