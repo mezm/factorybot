@@ -23,9 +23,9 @@ namespace FactoryBot.DSL.Builders
         /// Generates array of random items of type T.
         /// </summary>
         /// <typeparam name="T">Item type</typeparam>
-        /// <param name="minElements">Min length of generated list</param>
-        /// <param name="maxElements">Max length of generated list</param>
-        /// <param name="itemGenerator">List item generator</param>
+        /// <param name="minElements">Min length of generated array</param>
+        /// <param name="maxElements">Max length of generated array</param>
+        /// <param name="itemGenerator">Array item generator</param>
         /// <returns>Array of random items</returns>
         [Generator(typeof(ArrayGenerator<>))]
         public T[] Array<T>(int minElements, int maxElements, [ItemGenerator] T itemGenerator) => new T[0];
@@ -34,8 +34,8 @@ namespace FactoryBot.DSL.Builders
         /// Generates array of random items of type T. The same as Array(minElements, maxElements, Use&lt;T&gt;()).
         /// </summary>
         /// <typeparam name="T">Item type</typeparam>
-        /// <param name="minElements">Min length of generated list</param>
-        /// <param name="maxElements">Max length of generated list</param>
+        /// <param name="minElements">Min length of generated array</param>
+        /// <param name="maxElements">Max length of generated array</param>
         /// <returns>Array of random items</returns>
         [Generator(typeof(ArrayGenerator<>))]
         [UseDefaultItemGenerator("itemGenerator")]
@@ -63,8 +63,31 @@ namespace FactoryBot.DSL.Builders
         [UseDefaultItemGenerator("itemGenerator")]
         public List<T> List<T>(int minElements, int maxElements) => new List<T>();
 
+        /// <summary>
+        /// Generates dictionary of random key value pairs.
+        /// </summary>
+        /// <typeparam name="TKey">Dictionary key type</typeparam>
+        /// <typeparam name="TValue">Dictionary value type</typeparam>
+        /// <param name="minElements">Min length of generated dictionary</param>
+        /// <param name="maxElements">Max length of generated dictionary</param>
+        /// <param name="keyGenerator">Key generator</param>
+        /// <param name="valueGenerator">Value generator</param>
+        /// <returns>Dictionary of random key value pairs</returns>
         [Generator(typeof(DictionaryGenerator<,>))]
         public Dictionary<TKey, TValue> Dictionary<TKey, TValue>(int minElements, int maxElements, [ItemGenerator] TKey keyGenerator, [ItemGenerator] TValue valueGenerator) => new Dictionary<TKey, TValue>();
+
+        /// <summary>
+        /// Generates dictionary of random key value pairs. The same as Dictionary(minElements, maxElements, Use&lt;TKey&gt;(), Use&lt;TValue&gt;()).
+        /// </summary>
+        /// <typeparam name="TKey">Dictionary key type</typeparam>
+        /// <typeparam name="TValue">Dictionary value type</typeparam>
+        /// <param name="minElements">Min length of generated dictionary</param>
+        /// <param name="maxElements">Max length of generated dictionary</param>
+        /// <returns>Dictionary of random key value pairs</returns>
+        [Generator(typeof(DictionaryGenerator<,>))]
+        [UseDefaultItemGenerator("keyGenerator")]
+        [UseDefaultItemGenerator("valueGenerator", 1)]
+        public Dictionary<TKey, TValue> Dictionary<TKey, TValue>(int minElements, int maxElements) => new Dictionary<TKey, TValue>();
 
 #pragma warning restore IDE0060 // Remove unused parameter
     }

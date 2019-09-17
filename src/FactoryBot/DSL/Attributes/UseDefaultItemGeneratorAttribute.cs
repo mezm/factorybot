@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace FactoryBot.DSL.Attributes
 {
-    [AttributeUsage(AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public sealed class UseDefaultItemGeneratorAttribute : Attribute
     {
         public UseDefaultItemGeneratorAttribute(string parameterName, int genericParameterIndex = 0)

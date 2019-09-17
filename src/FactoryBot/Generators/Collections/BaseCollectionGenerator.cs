@@ -27,6 +27,7 @@ namespace FactoryBot.Generators.Collections
                 AddItemToCollection(result, i, (TItem)_itemGenerator.Next());
             }
 
+            // todo: does not guarantee that length in [min, max]. should be fixed!
             return result;
         }
 

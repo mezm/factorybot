@@ -49,6 +49,42 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
+        public void BuildNestedComplexDictionaryUsingKnownConfigSimplifiedSyntax()
+        {
+            Bot.Define(x => new Model1(x.Integer.Any(100, 150), "the test"));
+            Bot.Define(x => new Model2(x.Integer.Any(10, 15)));
+            Bot.Define(x => new Model4 { ComplexDictionary = x.Dictionary<Model1, Model2>(1, 5) });
+
+            var model = Bot.Build<Model4>();
+
+            Assert.That(
+                model.ComplexDictionary,
+                Is.Not.Null
+                    .And.Count.InRange(1, 5)
+                    .And.All.Not.Null
+                    .And.All.Property("Key").Property("Number").InRange(100, 150)
+                    .And.All.Property("Value").Property("Number").InRange(10, 15));
+        }
+
+        [Test]
+        public void BuildNestedComplexDictionaryUsingUnknownKeyConfigSimplifiedSintax()
+        {
+            Bot.Define(x => new Model2(x.Integer.Any(10, 15)));
+            Bot.Define(x => new Model4 { ComplexDictionary = x.Dictionary<Model1, Model2>(1, 5) });
+
+            Assert.Throws<UnknownTypeException>(() => Bot.Build<Model4>());
+        }
+
+        [Test]
+        public void BuildNestedComplexDictionaryUsingUnknownValueConfigSimplifiedSyntax()
+        {
+            Bot.Define(x => new Model1(x.Integer.Any(100, 150), "the test"));
+            Bot.Define(x => new Model4 { ComplexDictionary = x.Dictionary<Model1, Model2>(1, 5) });
+
+            Assert.Throws<UnknownTypeException>(() => Bot.Build<Model4>());
+        }
+
+        [Test]
         public void BuildNestedComplexDictionaryUsingNestedConfig()
         {
             Bot.Define(x => new Model4 { ComplexDictionary = x.Dictionary(2, 5, new Model1(x.Integer.Any(100, 150)), new Model2(x.Integer.Any(1, 5))) });
