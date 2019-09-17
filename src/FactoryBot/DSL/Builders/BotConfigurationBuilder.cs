@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FactoryBot.DSL.Attributes;
 using FactoryBot.DSL.Generators;
 using FactoryBot.Generators;
@@ -8,6 +9,7 @@ namespace FactoryBot.DSL.Builders
 {
     public class BotConfigurationBuilder
     {
+        // todo: move IntegerGenerators, StringGenerators, etc. into this namespace
         public IntegerGenerators Integer { get; } = new IntegerGenerators();
         public StringGenerators Strings { get; } = new StringGenerators();
         public DateGenerators Dates { get; } = new DateGenerators();
@@ -18,6 +20,15 @@ namespace FactoryBot.DSL.Builders
         public T Use<T>() => default;
 
 #pragma warning disable IDE0060 // Remove unused parameter
+
+        /// <summary>
+        /// Generates value based on callback passed into the method.
+        /// </summary>
+        /// <typeparam name="T">Value type</typeparam>
+        /// <param name="nextItem">Callback that is going to be called each time generator needs new value</param>
+        /// <returns>Generated value</returns>
+        [Generator(typeof(FactoryGenerator<>))]
+        public T Factory<T>(Func<T> nextItem) => default;
 
         /// <summary>
         /// Generates array of random items of type T.
