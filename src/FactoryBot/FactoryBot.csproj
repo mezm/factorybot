@@ -8,6 +8,7 @@
     <Company>Home</Company>
     <PackageDescription>FactoryBot is a tool to generate test objects with random data.</PackageDescription>
     <RepositoryUrl>https://github.com/mezm/factorybot</RepositoryUrl>
+    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
