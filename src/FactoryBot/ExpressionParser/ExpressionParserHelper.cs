@@ -32,6 +32,13 @@ namespace FactoryBot.ExpressionParser
             {
                 var methodParameters = methodCallExpr.Method.GetParameters();
                 var generatorParamenters = new Dictionary<string, object>(methodParameters.Length);
+
+                var defaultItemGenerators = methodCallExpr.Method.GetCustomAttributes<UseDefaultItemGeneratorAttribute>();
+                foreach (var attr in defaultItemGenerators)
+                {
+                    generatorParamenters[attr.ParameterName] = attr.CreateGenerator(methodCallExpr.Method);
+                }
+
                 for (var i = 0; i < methodParameters.Length; i++)
                 {
                     var parameter = methodParameters[i];

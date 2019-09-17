@@ -56,6 +56,30 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
+        public void BuildNestedComplexListUsingKnownConfigSimplyfiedSyntax()
+        {
+            Bot.Define(x => new Model1(x.Integer.Any(100, 150), "the test"));
+            Bot.Define(x => new Model4 { ComplexList = x.List<Model1>(1, 3) });
+
+            var model = Bot.Build<Model4>();
+
+            Assert.That(
+                model.ComplexList,
+                Is.Not.Null
+                    .And.Count.InRange(1, 3)
+                    .And.All.Not.Null
+                    .And.All.Property("Number").InRange(100, 150));
+        }
+
+        [Test]
+        public void BuildNestedComplexListUsingUnknownConfigSimplyfiedSyntax()
+        {
+            Bot.Define(x => new Model4 { ComplexList = x.List<Model1>(1, 3) });
+
+            Assert.Throws<UnknownTypeException>(() => Bot.Build<Model4>());
+        }
+
+        [Test]
         public void BuildNestedComplexListUsingNestedConfig()
         {
             Bot.Define(
