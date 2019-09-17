@@ -4,7 +4,7 @@ namespace FactoryBot.Generators
 {
     public abstract class TypedGenerator<T> : IGenerator
     {
-        private readonly Random _random = new Random();
+        private readonly Random _random = new Random((int)DateTime.Now.Ticks);
 
         public object Next() => NextInternal();
 
