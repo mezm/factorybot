@@ -8,11 +8,22 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout code
+      uses: actions/checkout@v1
+      
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '2.2.103'
+        
     - name: Build code
       run: dotnet build --configuration Release 
       working-directory: ./src/FactoryBot
+      
+    - name: Build tests
+      run: dotnet build --configuration Release
+      working-directory: ./src/FactoryBot.Tests
+      
+    - name: Run tests
+      run: dotnet test --no-build -v n --configuration Release
+      working-directory: ./src/FactoryBot.Tests
