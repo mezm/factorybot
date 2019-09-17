@@ -18,6 +18,6 @@ namespace FactoryBot.Tests.Generators.Collections
         }
 
         [Test]
-        public void CreateWithEmptyList() => ExpectArgumentInitException(x => new AllTypesModel { Decimal = x.Decimal.RandomFromList(new decimal[0]) });
+        public void CreateWithEmptyList() => ExpectArgumentInitException(x => new AllTypesModel { Decimal = x.Decimal.RandomFromList() });
     }
 }

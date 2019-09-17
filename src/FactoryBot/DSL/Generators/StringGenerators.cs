@@ -65,8 +65,14 @@ namespace FactoryBot.DSL.Generators
         [Generator(typeof(RandomFromListGenerator<string>))]
         public string RandomFromList(IReadOnlyList<string> source) => default;
 
+        [Generator(typeof(RandomFromListGenerator<string>))]
+        public string RandomFromList(params string[] source) => default;
+
         [Generator(typeof(SequenceFromListGenerator<string>))]
         public string SequenceFromList(IReadOnlyList<string> source) => default;
+
+        [Generator(typeof(SequenceFromListGenerator<string>))]
+        public string SequenceFromList(params string[] source) => default;
 
         [Generator(typeof(RandomLineFromFileGenerator))]
         public string RandomFromFile(string filename) => default;

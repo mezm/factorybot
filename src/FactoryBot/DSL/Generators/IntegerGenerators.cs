@@ -18,8 +18,14 @@ namespace FactoryBot.DSL.Generators
         [Generator(typeof(RandomFromListGenerator<int>))]
         public int RandomFromList(IReadOnlyList<int> source) => default;
 
+        [Generator(typeof(RandomFromListGenerator<int>))]
+        public int RandomFromList(params int[] source) => default;
+
         [Generator(typeof(SequenceFromListGenerator<int>))]
         public int SequenceFromList(IReadOnlyList<int> source) => default;
+
+        [Generator(typeof(SequenceFromListGenerator<int>))]
+        public int SequenceFromList(params int[] source) => default;
 
 #pragma warning restore IDE0060 // Remove unused parameter
     }

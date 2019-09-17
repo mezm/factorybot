@@ -103,8 +103,7 @@ namespace FactoryBot.Tests.BotTests
         [Test]
         public void BuildNestedPrimitiveDictionaryOfConstant()
         {
-            var keys = new int[] { 1, 2, 3, 4, 5, 6, 7 };
-            Bot.Define(x => new Model4 { SimpleDictionary = x.Dictionary(4, 7, x.Integer.SequenceFromList(keys), "test") });
+            Bot.Define(x => new Model4 { SimpleDictionary = x.Dictionary(4, 7, x.Integer.SequenceFromList(1, 2, 3, 4, 5, 6, 7), "test") });
 
             var model = Bot.Build<Model4>();
 
@@ -115,8 +114,7 @@ namespace FactoryBot.Tests.BotTests
         [Test]
         public void BuildWithKeyDuplication()
         {
-            var keys = new int[] { 1, 1, 2, 2, 3, 4, 5, 5, 5 };
-            Bot.Define(x => new Model4 { SimpleDictionary = x.Dictionary(5, 5, x.Integer.SequenceFromList(keys), x.Strings.Any()) });
+            Bot.Define(x => new Model4 { SimpleDictionary = x.Dictionary(5, 5, x.Integer.SequenceFromList(1, 1, 2, 2, 3, 4, 5, 5, 5), x.Strings.Any()) });
 
             var model = Bot.Build<Model4>();
 
@@ -126,8 +124,7 @@ namespace FactoryBot.Tests.BotTests
         [Test]
         public void BuildUnableToDoDueToLackOfUniqueKeys()
         {
-            var keys = new int[] { 1, 2, 3 };
-            Bot.Define(x => new Model4 { SimpleDictionary = x.Dictionary(5, 5, x.Integer.SequenceFromList(keys), x.Strings.Any()) });
+            Bot.Define(x => new Model4 { SimpleDictionary = x.Dictionary(5, 5, x.Integer.SequenceFromList(1, 2, 3), x.Strings.Any()) });
 
             Assert.Throws<BuildFailedException>(() => Bot.Build<Model4>());
         }

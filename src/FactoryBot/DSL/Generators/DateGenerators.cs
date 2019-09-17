@@ -19,8 +19,14 @@ namespace FactoryBot.DSL.Generators
         [Generator(typeof(RandomFromListGenerator<DateTime>))]
         public DateTime RandomFromList(IReadOnlyList<DateTime> source) => default;
 
+        [Generator(typeof(RandomFromListGenerator<DateTime>))]
+        public DateTime RandomFromList(params DateTime[] source) => default;
+
         [Generator(typeof(SequenceFromListGenerator<DateTime>))]
-        public DateTime SequenceFromList(IReadOnlyList<int> source) => default;
+        public DateTime SequenceFromList(IReadOnlyList<DateTime> source) => default;
+
+        [Generator(typeof(SequenceFromListGenerator<DateTime>))]
+        public DateTime SequenceFromList(params DateTime[] source) => default;
 
 #pragma warning restore IDE0060 // Remove unused parameter
     }
