@@ -17,5 +17,11 @@ namespace FactoryBot.Tests.Generators.Strings
         {
             AssertGeneratorValue(x => new AllTypesModel { String = x.Strings.Address.City() }, Is.Not.Null.And.Not.Empty);
         }
+
+        [Test]
+        public void NextState_NoCondition_Success()
+        {
+            AssertGeneratorValue(x => new AllTypesModel { String = x.Strings.Address.State() }, Is.Not.Null.And.Not.Empty);
+        }
     }
 }

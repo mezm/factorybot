@@ -10,5 +10,8 @@ namespace FactoryBot.DSL.Generators
 
         [StringGeneratorFromResource(SourceNames.CITIES)]
         public string City() => default;
+
+        [StringGeneratorFromResource(SourceNames.STATES)]
+        public string State() => default;
     }
 }
