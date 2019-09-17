@@ -8,11 +8,11 @@ namespace FactoryBot.Generators.Strings
 {
     public class FilePathGenerator : TypedGenerator<string>
     {
-        private const int MaxRandomDeep = 15;
-        private const int FileFetchLimit = 1000;
+        private const int MAX_RANDOM_DEEP = 15;
+        private const int FILE_FETCH_LIMIT = 1000;
 
-        private static readonly string[] Drives = { "C", "D", "E", "F", "G", "Z" };
-        private static readonly string[] FileExtensions =
+        private static readonly string[] _drives = { "C", "D", "E", "F", "G", "Z" };
+        private static readonly string[] _fileExtensions =
             {
                 ".cs", ".js", ".py", ".java", ".cpp", ".rb", ".exe", ".bat",
                 ".doc", ".docx", ".xls", ".xlsx"
@@ -32,9 +32,9 @@ namespace FactoryBot.Generators.Strings
                 throw new IOException($"Folder {_fromFolder} doesn't exist.");
             }
 
-            if (!_fromFolder?.EndsWith("\\") ?? false)
+            if (!_fromFolder?.EndsWith(Path.DirectorySeparatorChar.ToString()) ?? false)
             {
-                _fromFolder += "\\";
+                _fromFolder += Path.DirectorySeparatorChar;
             }
         }
 
@@ -44,19 +44,24 @@ namespace FactoryBot.Generators.Strings
         {
             var result = new StringBuilder();
 
-            var startingFolder = !string.IsNullOrWhiteSpace(_fromFolder)
-                                     ? _fromFolder
-                                     : $"{NextRandomFromArray(Drives)}:\\";
+            var startingFolder = !string.IsNullOrWhiteSpace(_fromFolder) ? _fromFolder : GetRandomRoot();
             result.Append(startingFolder);
-            var deep = NextRandomInteger(0, MaxRandomDeep);
+            var deep = NextRandomInteger(0, MAX_RANDOM_DEEP);
             for (var i = 0; i < deep; i++)
             {
-                result.AppendFormat("{0}\\", _wordGenerator.Next());
+                result.Append(_wordGenerator.Next()).Append(Path.DirectorySeparatorChar);
             }
 
             result.Append(_wordGenerator.Next());
-            result.Append(NextRandomFromArray(FileExtensions));
+            result.Append(NextRandomFromArray(_fileExtensions));
             return result.ToString();
+        }
+
+        private string GetRandomRoot()
+        {
+            return Environment.OSVersion.Platform == PlatformID.Win32NT 
+                ? $"{NextRandomFromArray(_drives)}:{Path.DirectorySeparatorChar}" 
+                : "/";
         }
 
         private string GetExistingPath()
@@ -65,7 +70,7 @@ namespace FactoryBot.Generators.Strings
                                      ? _fromFolder
                                      : Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             var directory = new DirectoryInfo(startingFolder);
-            var allFiles = GetFileNameEnumerator(directory).Take(FileFetchLimit).ToArray();
+            var allFiles = GetFileNameEnumerator(directory).Take(FILE_FETCH_LIMIT).ToArray();
             if (allFiles.Length == 0)
             {
                 throw new IOException($"Folder {startingFolder} doesn't contain any nested file.");

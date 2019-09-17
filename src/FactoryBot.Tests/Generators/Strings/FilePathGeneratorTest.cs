@@ -42,7 +42,7 @@ namespace FactoryBot.Tests.Generators.Strings
                 x =>
                     {
                         AssertFilePathValidButNotExisting(x);
-                        Assert.That(x, Does.StartWith(folder + "\\"));
+                        Assert.That(x, Does.StartWith(folder + Path.DirectorySeparatorChar));
                     });
         }
 
@@ -57,7 +57,7 @@ namespace FactoryBot.Tests.Generators.Strings
         [Test]
         public void GetExistingFileFromFolder()
         {
-            var folder = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar;
+            var folder = Directory.GetCurrentDirectory();
             AssertGeneratorValue<string>(
                 x => new AllTypesModel { String = x.Strings.Filename(folder, true) },
                 x =>
@@ -73,7 +73,7 @@ namespace FactoryBot.Tests.Generators.Strings
             var folder = Directory.GetCurrentDirectory();
             while (Directory.Exists(folder))
             {
-                folder += Path.DirectorySeparatorChar + new Guid().ToString("D");
+                folder += new Guid().ToString("D") + Path.DirectorySeparatorChar;
             }
 
             ExpectInitException<IOException>(x => new AllTypesModel { String = x.Strings.Filename(folder, true) });
