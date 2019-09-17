@@ -2,8 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-
-using FactoryBot.DSL;
+using FactoryBot.DSL.Builders;
 using FactoryBot.Tests.Models;
 
 using NUnit.Framework;

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
-
 using FactoryBot.Configurations;
-using FactoryBot.DSL;
+using FactoryBot.DSL.Builders;
 
 namespace FactoryBot.ExpressionParser
 {

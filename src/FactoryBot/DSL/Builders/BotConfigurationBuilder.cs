@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-
+using FactoryBot.DSL.Attributes;
+using FactoryBot.DSL.Generators;
 using FactoryBot.Generators;
 using FactoryBot.Generators.Collections;
 
-namespace FactoryBot.DSL
+namespace FactoryBot.DSL.Builders
 {
     public class BotConfigurationBuilder
     {

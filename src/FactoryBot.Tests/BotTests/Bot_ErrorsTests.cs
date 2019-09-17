@@ -1,8 +1,5 @@
 ﻿using FactoryBot.Tests.Models;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FactoryBot.Tests.BotTests
 {

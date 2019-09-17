@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using FactoryBot.Configurations;
-using FactoryBot.DSL;
+using FactoryBot.DSL.Builders;
 using FactoryBot.ExpressionParser;
 
 namespace FactoryBot
 {
     public class Bot
     {
-        public const int SequenceMaxLength = 100;
+        public const int SEQUENCE_MAX_LENGTH = 100;
 
-        private static readonly Dictionary<Type, BotConfiguration> BuildRules = new Dictionary<Type, BotConfiguration>(); 
+        private static readonly Dictionary<Type, BotConfiguration> _buildRules = new Dictionary<Type, BotConfiguration>(); 
 
         public static void Define<T>(Expression<Func<BotConfigurationBuilder, T>> factory)
         {
@@ -22,7 +22,7 @@ namespace FactoryBot
             var configuration = parser.Parse(factory);
             CheckNestedAndCircularDependencies(configuration);
 
-            BuildRules[configuration.ConstructingType] = configuration;
+            _buildRules[configuration.ConstructingType] = configuration;
         }
 
         public static T Build<T>(params Action<T>[] modifiers)
@@ -67,7 +67,7 @@ namespace FactoryBot
                 }
             }
 
-            for (var i = 0; i < SequenceMaxLength; i++)
+            for (var i = 0; i < SEQUENCE_MAX_LENGTH; i++)
             {
                 yield return Build<T>();
             }
@@ -76,11 +76,11 @@ namespace FactoryBot
                 "BuildSequence generates infinite sequence and should not be used in a foreach look. If it's not the case set infinite parameter to true.");
         }
 
-        public static void ForgetAll() => BuildRules.Clear();
+        public static void ForgetAll() => _buildRules.Clear();
 
         private static BotConfiguration GetConfiguration(Type ruleKey)
         {
-            return BuildRules.TryGetValue(ruleKey, out var config) ? config : throw new UnknownTypeException(ruleKey);
+            return _buildRules.TryGetValue(ruleKey, out var config) ? config : throw new UnknownTypeException(ruleKey);
         }
 
         private static void CheckNestedAndCircularDependencies(BotConfiguration configuration)

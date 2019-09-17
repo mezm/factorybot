@@ -1,6 +1,7 @@
-﻿using FactoryBot.Generators;
+﻿using FactoryBot.DSL.Attributes;
+using FactoryBot.Generators;
 
-namespace FactoryBot.DSL
+namespace FactoryBot.DSL.Builders
 {
     public class CustomConstructBuilder : BotConfigurationBuilder
     {

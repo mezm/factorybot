@@ -28,8 +28,8 @@ namespace FactoryBot.Tests.BotTests
         {
             Bot.Define(x => new Model1(x.Integer.Any(10, 25)) { Text = x.Strings.Any() });
 
-            Assert.That(() => Bot.BuildSequence<Model1>().Take(Bot.SequenceMaxLength).ToArray(), Throws.Nothing);
-            Assert.That(() => Bot.BuildSequence<Model1>().Take(Bot.SequenceMaxLength + 1).ToArray(), Throws.InvalidOperationException);
+            Assert.That(() => Bot.BuildSequence<Model1>().Take(Bot.SEQUENCE_MAX_LENGTH).ToArray(), Throws.Nothing);
+            Assert.That(() => Bot.BuildSequence<Model1>().Take(Bot.SEQUENCE_MAX_LENGTH + 1).ToArray(), Throws.InvalidOperationException);
         }
 
         [Test]
@@ -37,9 +37,9 @@ namespace FactoryBot.Tests.BotTests
         {
             Bot.Define(x => new Model1(x.Integer.Any(10, 25)) { Text = x.Strings.Any() });
 
-            var models = Bot.BuildSequence<Model1>(true).Take(Bot.SequenceMaxLength + 10).ToArray();
+            var models = Bot.BuildSequence<Model1>(true).Take(Bot.SEQUENCE_MAX_LENGTH + 10).ToArray();
 
-            Assert.That(models, Has.Length.EqualTo(Bot.SequenceMaxLength + 10));
+            Assert.That(models, Has.Length.EqualTo(Bot.SEQUENCE_MAX_LENGTH + 10));
         }
     }
 }

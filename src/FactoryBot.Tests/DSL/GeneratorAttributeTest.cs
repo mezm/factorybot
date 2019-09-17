@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
-
-using FactoryBot.DSL;
+using FactoryBot.DSL.Attributes;
 using FactoryBot.Generators;
 
 using NUnit.Framework;
@@ -109,11 +108,11 @@ namespace FactoryBot.Tests.DSL
 
         private static MethodInfo GetDSLMethod(Expression<Func<TestDSL, object>> getMethodExpr) => ((MethodCallExpression)getMethodExpr.Body).Method;
 
-        [SuppressMessage("ReSharper", "UnusedParameter.Local")]
-        [SuppressMessage("ReSharper", "UnusedTypeParameter")]
         private class TestDSL
         {
             public object GetTestGenerator() => default;
+
+#pragma warning disable IDE0060 // Remove unused parameter
 
             public object GetTestGenerator(int length, string source) => default;
 
@@ -122,10 +121,10 @@ namespace FactoryBot.Tests.DSL
             public object GetTestGenericGenerator<T1, T2>(T1 value1, T2 value2) => default;
 
             public object GetTestGeneratorWithDefaultParameters(int numberInteger, string text2) => default;
+
+#pragma warning restore IDE0060 // Remove unused parameter
         }
 
-        [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
-        [SuppressMessage("ReSharper", "UnusedMember.Local")]
         private class TestGenerator : IGenerator
         {
             public int Length { get; }

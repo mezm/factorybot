@@ -1,15 +1,17 @@
 using System;
 using System.Collections.Generic;
-
+using FactoryBot.DSL.Attributes;
 using FactoryBot.Generators.Collections;
 using FactoryBot.Generators.Strings;
 
-namespace FactoryBot.DSL
+namespace FactoryBot.DSL.Generators
 {
     public class StringGenerators
     {
         [Generator(typeof(StringRandomGenerator))]
         public string Any() => default;
+
+#pragma warning disable IDE0060 // Remove unused parameter
 
         [Generator(typeof(StringRandomGenerator))]
         public string Any(int minLength, int maxLength) => default;
@@ -74,5 +76,7 @@ namespace FactoryBot.DSL
 
         [Generator(typeof(PhoneNumberGenerator))]
         public string PhoneNumber(string template) => default;
+
+#pragma warning restore IDE0060 // Remove unused parameter
     }
 }

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
-
 using FactoryBot.Configurations;
-using FactoryBot.DSL;
+using FactoryBot.DSL.Builders;
 
 namespace FactoryBot.ExpressionParser
 {
@@ -12,8 +11,7 @@ namespace FactoryBot.ExpressionParser
         {
             Check.NotNull(constructor, nameof(constructor));
 
-            var newExpr = constructor.Body as NewExpression;
-            if (newExpr != null)
+            if (constructor.Body is NewExpression newExpr)
             {
                 return ExpressionParserHelper.CreateConstructorGenerator(newExpr);
             }

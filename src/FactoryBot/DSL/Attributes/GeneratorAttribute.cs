@@ -5,10 +5,10 @@ using System.Reflection;
 
 using FactoryBot.Generators;
 
-namespace FactoryBot.DSL
+namespace FactoryBot.DSL.Attributes
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public class GeneratorAttribute : Attribute
+    public sealed class GeneratorAttribute : Attribute
     {
         public GeneratorAttribute(Type generatorType)
         {

@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-namespace FactoryBot.DSL
+namespace FactoryBot.DSL.Attributes
 {
     [AttributeUsage(AttributeTargets.Method)]
     public sealed class UseDefaultItemGeneratorAttribute : Attribute

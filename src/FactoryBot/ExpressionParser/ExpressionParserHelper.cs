@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 
 using FactoryBot.Configurations;
-using FactoryBot.DSL;
+using FactoryBot.DSL.Attributes;
 using FactoryBot.Generators;
 using FactoryBot.Generators.Collections;
 
