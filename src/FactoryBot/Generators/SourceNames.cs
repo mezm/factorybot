@@ -6,5 +6,6 @@
         public const string FIRST_NAMES = "FactoryBot.Generators.Resources.FirstNameSource.txt";
         public const string LAST_NAMES = "FactoryBot.Generators.Resources.LastNameSource.txt";
         public const string COUNTRIES = "FactoryBot.Generators.Resources.CountrySource.txt";
+        public const string CITIES = "FactoryBot.Generators.Resources.CitySource.txt";
     }
 }

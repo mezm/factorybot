@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-
 using FactoryBot.Generators;
 
 namespace FactoryBot.DSL.Attributes
 {
-    [AttributeUsage(AttributeTargets.Method)]
-    public sealed class GeneratorAttribute : Attribute
+    public sealed class GeneratorAttribute : GeneratorAttributeBase
     {
         public GeneratorAttribute(Type generatorType)
         {
@@ -23,7 +21,7 @@ namespace FactoryBot.DSL.Attributes
 
         public Type GeneratorType { get; }
 
-        public IGenerator CreateGenerator(MethodInfo method, IDictionary<string, object> parameters)
+        public override IGenerator CreateGenerator(MethodInfo method, IDictionary<string, object> parameters)
         {
             Check.NotNull(method, nameof(method));
             Check.NotNull(parameters, nameof(parameters));

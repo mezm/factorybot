@@ -27,7 +27,7 @@ namespace FactoryBot.ExpressionParser
             Check.NotNull(expr, nameof(expr));
 
             var methodCallExpr = expr as MethodCallExpression;
-            var generatorAttr = methodCallExpr?.Method.GetCustomAttribute<GeneratorAttribute>();
+            var generatorAttr = methodCallExpr?.Method.GetCustomAttribute<GeneratorAttributeBase>();
             if (generatorAttr != null)
             {
                 var methodParameters = methodCallExpr.Method.GetParameters();

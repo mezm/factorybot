@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FactoryBot.DSL.Attributes;
+using FactoryBot.Generators;
 using FactoryBot.Generators.Collections;
 using FactoryBot.Generators.Strings;
 
@@ -24,10 +25,10 @@ namespace FactoryBot.DSL.Generators
         [Generator(typeof(WordRandomGenerator))]
         public string Words(int minWords, int maxWords) => default;
 
-        [Generator(typeof(FirstNameGenerator))]
+        [StringGeneratorFromResource(SourceNames.FIRST_NAMES)]
         public string FirstName() => default;
 
-        [Generator(typeof(LastNameGenerator))]
+        [StringGeneratorFromResource(SourceNames.LAST_NAMES)]
         public string LastName() => default;
 
         [Generator(typeof(FullNameGenerator))]

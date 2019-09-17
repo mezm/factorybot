@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Generators\Resources\CitySource.txt" />
     <None Remove="Generators\Resources\CountrySource.txt" />
     <None Remove="Generators\Resources\FirstNameSource.txt" />
     <None Remove="Generators\Resources\LastNameSource.txt" />
@@ -23,6 +24,7 @@
     <EmbeddedResource Include="Generators\Resources\LastNameSource.txt" />
     <EmbeddedResource Include="Generators\Resources\RandomTextSource.txt" />
     <EmbeddedResource Include="Generators\Resources\CountrySource.txt" />
+    <EmbeddedResource Include="Generators\Resources\CitySource.txt" />
   </ItemGroup>
 
 </Project>

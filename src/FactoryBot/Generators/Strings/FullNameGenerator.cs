@@ -3,8 +3,8 @@
     public class FullNameGenerator : TypedGenerator<string>
     {
         private readonly FullNameFormat _format;
-        private readonly IGenerator _firstNameGenerator = new FirstNameGenerator();
-        private readonly IGenerator _lastNameGenerator = new LastNameGenerator();
+        private readonly IGenerator _firstNameGenerator = new RandomLineFromResourceGenerator(SourceNames.FIRST_NAMES);
+        private readonly IGenerator _lastNameGenerator = new RandomLineFromResourceGenerator(SourceNames.LAST_NAMES);
 
         public FullNameGenerator(FullNameFormat format = FullNameFormat.FirstNameLastName) => _format = format;
 

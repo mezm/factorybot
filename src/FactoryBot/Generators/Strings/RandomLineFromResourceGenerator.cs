@@ -1,20 +1,19 @@
 ﻿using System.IO;
-
 using FactoryBot.Utils;
 
 namespace FactoryBot.Generators.Strings
 {
-    public abstract class RandomLineFromResourceGenerator : RandomLineFromStreamGenerator
+    public class RandomLineFromResourceGenerator : RandomLineFromStreamGenerator
     {
-        private readonly string _resourceName;
+        private readonly string _resource;
 
-        protected RandomLineFromResourceGenerator(string resourceName)
+        public RandomLineFromResourceGenerator(string resource)
         {
-            Check.NotNullOrWhiteSpace(resourceName, nameof(resourceName));
+            Check.NotNullOrWhiteSpace(resource, nameof(resource));
 
-            _resourceName = resourceName;
+            _resource = resource;
         }
 
-        protected override Stream OpenStream() => ResourceHelper.OpenStream(_resourceName);
+        protected override Stream OpenStream() => ResourceHelper.OpenStream(_resource);
     }
 }
