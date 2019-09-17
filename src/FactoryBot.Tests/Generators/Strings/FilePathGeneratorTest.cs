@@ -57,7 +57,7 @@ namespace FactoryBot.Tests.Generators.Strings
         [Test]
         public void GetExistingFileFromFolder()
         {
-            var folder = Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFiles) + "\\";
+            var folder = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar;
             AssertGeneratorValue<string>(
                 x => new AllTypesModel { String = x.Strings.Filename(folder, true) },
                 x =>
@@ -70,10 +70,10 @@ namespace FactoryBot.Tests.Generators.Strings
         [Test]
         public void GetExistingFileFromNotExistingFolder()
         {
-            var folder = Environment.GetFolderPath(Environment.SpecialFolder.CommonProgramFiles);
+            var folder = Directory.GetCurrentDirectory();
             while (Directory.Exists(folder))
             {
-                folder += $"\\{new Guid().ToString("D")}";
+                folder += Path.DirectorySeparatorChar + new Guid().ToString("D");
             }
 
             ExpectInitException<IOException>(x => new AllTypesModel { String = x.Strings.Filename(folder, true) });
@@ -91,7 +91,7 @@ namespace FactoryBot.Tests.Generators.Strings
 
         private static void AssertFilePathValidButNotExisting(string path)
         {
-            Assert.That(Path.IsPathRooted(path), "Path is incorrect.");
+            Assert.That(Path.IsPathRooted(path), $"Path is incorrect. Actual: {path}");
             Assert.That(Path.GetFileName(path), Is.Not.Empty, "File name is absent.");
         }
 
