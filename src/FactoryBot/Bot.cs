@@ -14,7 +14,7 @@ namespace FactoryBot
 
         private static readonly Dictionary<Type, BotConfiguration> _buildRules = new Dictionary<Type, BotConfiguration>(); 
 
-        public static void Define<T>(Expression<Func<BotConfigurationBuilder, T>> factory)
+        public static BotDefinitionBuilder<T> Define<T>(Expression<Func<BotConfigurationBuilder, T>> factory)
         {
             Check.NotNull(factory, nameof(factory));
 
@@ -23,6 +23,8 @@ namespace FactoryBot
             CheckNestedAndCircularDependencies(configuration);
 
             _buildRules[configuration.ConstructingType] = configuration;
+
+            return new BotDefinitionBuilder<T>(configuration);
         }
 
         public static T Build<T>(params Action<T>[] modifiers)

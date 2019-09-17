@@ -23,6 +23,10 @@ namespace FactoryBot.Configurations
 
         public List<PropertyDefinition> Properties { get; } = new List<PropertyDefinition>();
 
+        public Action<object> BeforeBindingHook { get; set; } = x => { };
+
+        public Action<object> AfterBindingHook { get; set; } = x => { };
+
         public object CreateNewObject() => Create(Constructor);
 
         public object CreateNewObjectWithModification(ConstructorDefinition modification)
@@ -59,13 +63,23 @@ namespace FactoryBot.Configurations
 
         private object Create(ConstructorDefinition constructor)
         {
-            var obj = constructor.Create();
-            foreach (var property in Properties)
+            try
             {
-                property.Apply(obj);
-            }
+                var obj = constructor.Create();
+                BeforeBindingHook(obj);
 
-            return obj;
+                foreach (var property in Properties)
+                {
+                    property.Apply(obj);
+                }
+
+                AfterBindingHook(obj);
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                throw new BuildFailedException($"Failed to create {ConstructingType}. See InnerException for more details.", ex);
+            }
         }
     }
 }
