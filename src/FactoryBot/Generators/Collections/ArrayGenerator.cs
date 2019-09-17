@@ -9,6 +9,10 @@
 
         protected override T[] CreateNewEmptyCollection(int length) => new T[length];
 
-        protected override void AddItemToCollection(T[] collection, int index, T item) => collection[index] = item;
+        protected override int AddItemToCollection(T[] collection, int index, T item)
+        {
+            collection[index] = item;
+            return index + 1;
+        }
     }
 }

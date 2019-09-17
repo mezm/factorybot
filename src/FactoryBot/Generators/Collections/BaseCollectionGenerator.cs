@@ -5,6 +5,8 @@ namespace FactoryBot.Generators.Collections
     public abstract class BaseCollectionGenerator<TItem, TCollection> : TypedGenerator<TCollection> 
         where TCollection : IEnumerable<TItem>
     {
+        private const int TRIES_FACTOR = 10;
+
         private readonly int _minElements, _maxElements;
         private readonly IGenerator _itemGenerator;
 
@@ -22,17 +24,23 @@ namespace FactoryBot.Generators.Collections
         {
             var length = NextRandomInteger(_minElements, _maxElements);
             var result = CreateNewEmptyCollection(length);
-            for (var i = 0; i < length; i++)
+
+            var currentLength = 0;
+            var maxTries = length * TRIES_FACTOR;
+            for (var tries = 0 ; currentLength < length; tries++)
             {
-                AddItemToCollection(result, i, (TItem)_itemGenerator.Next());
+                currentLength = AddItemToCollection(result, currentLength, (TItem)_itemGenerator.Next());
+                if (tries >= maxTries)
+                {
+                    throw new BuildFailedException($"Failed to generate collection {typeof(TCollection)} of length {length} due to items not added. Tried to add items {tries} tiems.");
+                }
             }
 
-            // todo: does not guarantee that length in [min, max]. should be fixed!
             return result;
         }
 
         protected abstract TCollection CreateNewEmptyCollection(int length);
 
-        protected abstract void AddItemToCollection(TCollection collection, int index, TItem item);
+        protected abstract int AddItemToCollection(TCollection collection, int index, TItem item);
     }
 }

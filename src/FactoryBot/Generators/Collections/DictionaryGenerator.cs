@@ -10,7 +10,11 @@ namespace FactoryBot.Generators.Collections
         {
         }
 
-        protected override void AddItemToCollection(Dictionary<TKey, TValue> collection, int index, KeyValuePair<TKey, TValue> item) => collection[item.Key] = item.Value;
+        protected override int AddItemToCollection(Dictionary<TKey, TValue> collection, int index, KeyValuePair<TKey, TValue> item)
+        {
+            collection[item.Key] = item.Value;
+            return collection.Count;
+        }
 
         protected override Dictionary<TKey, TValue> CreateNewEmptyCollection(int length) => new Dictionary<TKey, TValue>(length);
 

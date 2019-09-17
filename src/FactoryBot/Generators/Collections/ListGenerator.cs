@@ -11,6 +11,10 @@ namespace FactoryBot.Generators.Collections
 
         protected override List<T> CreateNewEmptyCollection(int length) => new List<T>(length);
 
-        protected override void AddItemToCollection(List<T> collection, int index, T item) => collection.Add(item);
+        protected override int AddItemToCollection(List<T> collection, int index, T item)
+        {
+            collection.Add(item);
+            return collection.Count;
+        }
     }
 }
