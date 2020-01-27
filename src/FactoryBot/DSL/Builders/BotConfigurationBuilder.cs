@@ -16,6 +16,11 @@ namespace FactoryBot.DSL.Builders
         public DecimalGenerators Decimal { get; } = new DecimalGenerators();
         public DoubleGenerators Double { get; } = new DoubleGenerators();
 
+        /// <summary>
+        /// Network related (URL, email, host, etc.) generators
+        /// </summary>
+        public NetworkGenerators Network { get; } = new NetworkGenerators();
+
         [Generator(typeof(UsingGenerator<>))]
         public T Use<T>() => default;
 

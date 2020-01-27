@@ -18,6 +18,7 @@
     <None Remove="Generators\Resources\LastNameSource.txt" />
     <None Remove="Generators\Resources\RandomTextSource.txt" />
     <None Remove="Generators\Resources\StateSource.txt" />
+    <None Remove="Generators\Resources\TLDSource.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +31,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Generators\Resources\StateSource.txt" />
+    <EmbeddedResource Include="Generators\Resources\TLDSource.txt" />
   </ItemGroup>
 
 </Project>
