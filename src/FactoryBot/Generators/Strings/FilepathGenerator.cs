@@ -20,7 +20,7 @@ namespace FactoryBot.Generators.Strings
 
         private readonly string _fromFolder;
         private readonly bool _existing;
-        private readonly IGenerator _wordGenerator = new WordRandomGenerator(1, 1);
+        private readonly IGenerator _wordGenerator = WordRandomGenerator.CreateSingleWordGenerator();
 
         public FilePathGenerator(string fromFolder = null, bool existing = false)
         {

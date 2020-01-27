@@ -6,10 +6,10 @@ namespace FactoryBot.Generators.Strings
     public class UrlGenerator : TypedGenerator<string>
     {
         private static readonly string[] Schemas = { Uri.UriSchemeHttp, Uri.UriSchemeHttps };
-        private static readonly string[] Domains = { ".com", ".net", ".org", ".edu", ".gov" };
 
         private readonly IGenerator _wordsGenerator = new WordRandomGenerator(1, 3);
-        private readonly IGenerator _singleWordGenerator = new WordRandomGenerator(1, 1);
+        private readonly IGenerator _singleWordGenerator = WordRandomGenerator.CreateSingleWordGenerator();
+        private readonly IGenerator _hostGenerator = new HostnameGenerator();
         private readonly UriKind _uriKind;
         private readonly int _minPathSegments, _maxPathSegments, _minQueryParams, _maxQueryParams;
         private readonly string _schema, _host;
@@ -44,7 +44,7 @@ namespace FactoryBot.Generators.Strings
             {
                 result.Append(GetSchema());
                 result.Append(Uri.SchemeDelimiter); 
-                result.Append(GetHost());
+                result.Append(_host ?? _hostGenerator.Next());
             }
 
             result.Append("/");
@@ -64,17 +64,6 @@ namespace FactoryBot.Generators.Strings
             }
 
             return result.ToString().ToLowerInvariant();
-        }
-
-        private string GetHost()
-        {
-            if (!string.IsNullOrWhiteSpace(_host))
-            {
-                return _host;
-            }
-
-            var domain = Domains[NextRandomInteger(0, Domains.Length - 1)];
-            return GetNextRandomUrlPart() + domain;
         }
 
         private string GetSchema() => string.IsNullOrWhiteSpace(_schema) ? Schemas[NextRandomInteger(0, Schemas.Length - 1)] : _schema;

@@ -2,7 +2,7 @@
 {
     public class EmailGenerator : TypedGenerator<string>
     {
-        private readonly WordRandomGenerator _wordGenerator = new WordRandomGenerator(1, 1);
+        private readonly WordRandomGenerator _wordGenerator = WordRandomGenerator.CreateSingleWordGenerator();
         private readonly HostnameGenerator _hostnameGenerator = new HostnameGenerator();
 
         protected override string NextInternal()

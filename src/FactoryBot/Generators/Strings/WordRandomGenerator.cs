@@ -69,5 +69,7 @@ namespace FactoryBot.Generators.Strings
 
             return result.ToString().TrimEnd();
         }
+
+        public static WordRandomGenerator CreateSingleWordGenerator() => new WordRandomGenerator(1, 1);
     }
 }

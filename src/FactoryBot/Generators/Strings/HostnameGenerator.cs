@@ -4,8 +4,8 @@ namespace FactoryBot.Generators.Strings
 {
     public class HostnameGenerator : TypedGenerator<string>
     {
-        private readonly IGenerator _tldGenerator = new RandomLineFromResourceGenerator(SourceNames.TOP_LEVEL_DOMAINS); // todo: create factory for these cases
-        private readonly WordRandomGenerator _wordGenerator = new WordRandomGenerator(1, 1);
+        private readonly IGenerator _tldGenerator = ResourceBasedGeneratorFactory.CreateTopLevelDomainGenerator();
+        private readonly WordRandomGenerator _wordGenerator = WordRandomGenerator.CreateSingleWordGenerator();
         private readonly int _minSubdomains;
         private readonly int _maxSubdomains;
 
