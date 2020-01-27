@@ -13,7 +13,7 @@ namespace FactoryBot.Tests.Generators.Strings
         {
             var source = FileUtils.GetResourceContentWithoutLineBreaks(SourceNames.COUNTRIES);
             AssertGeneratorValue<string>(
-                x => new AllTypesModel { String = x.Strings.Address.Country() }, 
+                x => new AllTypesModel { String = x.Address.Country() }, 
                 x => Assert.That(source, Does.Contain(x)));
         }
 
@@ -22,7 +22,7 @@ namespace FactoryBot.Tests.Generators.Strings
         {
             var source = FileUtils.GetResourceContentWithoutLineBreaks(SourceNames.CITIES);
             AssertGeneratorValue<string>(
-                x => new AllTypesModel { String = x.Strings.Address.City() }, 
+                x => new AllTypesModel { String = x.Address.City() }, 
                 x => Assert.That(source, Does.Contain(x)));
         }
 
@@ -31,7 +31,7 @@ namespace FactoryBot.Tests.Generators.Strings
         {
             var source = FileUtils.GetResourceContentWithoutLineBreaks(SourceNames.STATES);
             AssertGeneratorValue<string>(
-                x => new AllTypesModel { String = x.Strings.Address.State() }, 
+                x => new AllTypesModel { String = x.Address.State() }, 
                 x => Assert.That(source, Does.Contain(x)));
         }
 
@@ -39,7 +39,7 @@ namespace FactoryBot.Tests.Generators.Strings
         public void NextPostalCode_Zip_Success()
         {
             AssertGeneratorValue(
-                x => new AllTypesModel { String = x.Strings.Address.PostalCode(PostalCodeFormat.Zip) }, 
+                x => new AllTypesModel { String = x.Address.PostalCode(PostalCodeFormat.Zip) }, 
                 Is.Not.Null.And.Match(@"^\d{5}$"));
         }
 
@@ -47,7 +47,7 @@ namespace FactoryBot.Tests.Generators.Strings
         public void NextStreetAndBuilding_NoCondition_Success()
         {
             AssertGeneratorValue(
-                x => new AllTypesModel { String = x.Strings.Address.StreetAndBuilding() },
+                x => new AllTypesModel { String = x.Address.StreetAndBuilding() },
                 Is.Not.Null.And.Match(@"^\d+\s[\w\s]+\sst\.$"));
         }
     }

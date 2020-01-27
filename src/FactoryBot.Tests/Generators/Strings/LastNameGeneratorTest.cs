@@ -10,14 +10,14 @@ namespace FactoryBot.Tests.Generators.Strings
     public class LastNameGeneratorTest : GeneratorTestKit
     {
         [Test]
-        public void AlwaysGetNewName() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Strings.LastName() });
+        public void AlwaysGetNewName() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Names.LastName() });
 
         [Test]
         public void GenerateName()
         {
             var source = FileUtils.GetResourceContentWithoutLineBreaks(SourceNames.LAST_NAMES);
             AssertGeneratorValue<string>(
-                x => new AllTypesModel { String = x.Strings.LastName() },
+                x => new AllTypesModel { String = x.Names.LastName() },
                 x =>
                     {
                         Assert.That(x.Words(), Has.Length.EqualTo(1));

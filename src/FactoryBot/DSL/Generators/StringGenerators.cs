@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using FactoryBot.DSL.Attributes;
-using FactoryBot.Generators;
 using FactoryBot.Generators.Collections;
 using FactoryBot.Generators.Strings;
 
@@ -9,8 +7,6 @@ namespace FactoryBot.DSL.Generators
 {
     public class StringGenerators : IPrimitiveGenerators<string, int>
     {
-        public AddressGenerators Address { get; } = new AddressGenerators();
-
         [Generator(typeof(StringRandomGenerator))]
         public string Any() => default;
 
@@ -24,37 +20,6 @@ namespace FactoryBot.DSL.Generators
 
         [Generator(typeof(WordRandomGenerator))]
         public string Words(int minWords, int maxWords) => default;
-
-        [StringGeneratorFromResource(SourceNames.FIRST_NAMES)]
-        public string FirstName() => default;
-
-        [StringGeneratorFromResource(SourceNames.LAST_NAMES)]
-        public string LastName() => default;
-
-        [Generator(typeof(FullNameGenerator))]
-        public string FullName() => default;
-
-        [Generator(typeof(FullNameGenerator))]
-        public string FullName(FullNameFormat format) => default;
-
-        [Generator(typeof(UrlGenerator))]
-        public string Url() => default;
-
-        [Generator(typeof(UrlGenerator))]
-        public string Url(UriKind uriKind) => default;
-
-        [Generator(typeof(UrlGenerator))]
-        public string Url(string schema, string host) => default;
-
-        [Generator(typeof(UrlGenerator))]
-        public string Url(
-            UriKind uriKind,
-            int minPathSegments,
-            int maxPathSegments,
-            int minQueryParams,
-            int maxQueryParams,
-            string schema,
-            string host) => default;
 
         [Generator(typeof(FilePathGenerator))]
         public string Filename() => default;
@@ -79,12 +44,6 @@ namespace FactoryBot.DSL.Generators
 
         [Generator(typeof(SequenceStringFromFileGenerator))]
         public string SequenceFromFile(string filename) => default;
-
-        [Generator(typeof(PhoneNumberGenerator))]
-        public string PhoneNumber() => default;
-
-        [Generator(typeof(PhoneNumberGenerator))]
-        public string PhoneNumber(string template) => default;
 
         [Generator(typeof(GuidGenerator))]
         public string Guid() => default;

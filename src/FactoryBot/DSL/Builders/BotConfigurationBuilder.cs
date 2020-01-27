@@ -17,6 +17,16 @@ namespace FactoryBot.DSL.Builders
         public DoubleGenerators Double { get; } = new DoubleGenerators();
 
         /// <summary>
+        /// Name related generators
+        /// </summary>
+        public NameGenerators Names { get; } = new NameGenerators();
+
+        /// <summary>
+        /// Address related generator
+        /// </summary>
+        public AddressGenerators Address { get; } = new AddressGenerators();
+
+        /// <summary>
         /// Network related (URL, email, host, etc.) generators
         /// </summary>
         public NetworkGenerators Network { get; } = new NetworkGenerators();
