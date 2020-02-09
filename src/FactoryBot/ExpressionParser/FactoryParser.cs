@@ -23,7 +23,5 @@ namespace FactoryBot.ExpressionParser
 
             throw new NotSupportedException();
         }
-
-        
     }
 }

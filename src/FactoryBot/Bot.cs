@@ -27,6 +27,16 @@ namespace FactoryBot
             return new BotDefinitionBuilder<T>(configuration);
         }
 
+        public static BotDefinitionBuilder<T> DefineAuto<T>(Expression<Func<BotConfigurationBuilder, T>> overrideDefault = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static void SetDefaultAutoGenerator<T>(Expression<Func<BotConfigurationBuilder, T>> defaultGenerator)
+        {
+            throw new NotImplementedException();
+        }
+
         public static T Build<T>(params Action<T>[] modifiers)
         {
             Check.NotNull(modifiers, nameof(modifiers));
