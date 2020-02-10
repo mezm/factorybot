@@ -16,6 +16,13 @@ namespace FactoryBot.Generators
 
         protected bool NextRandomBool() => _random.Next(0, 1) == 1;
 
+        protected byte[] NextBytesRandom(int length)
+        {
+            var result = new byte[length];
+            _random.NextBytes(result);
+            return result;
+        }
+
         protected TItem NextRandomFromArray<TItem>(TItem[] array) => array[NextRandomInteger(0, array.Length)];
     }
 }
