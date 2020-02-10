@@ -2,16 +2,16 @@
 
 namespace FactoryBot.Generators.Dates
 {
-    public class RandomDateTimeGenerator : TypedGenerator<DateTime>
+    public class DateTimeRandomGenerator : TypedGenerator<DateTime>
     {
         private readonly long _from, _to;
 
-        public RandomDateTimeGenerator()
+        public DateTimeRandomGenerator()
             : this(DateTime.MinValue, DateTime.MaxValue)
         {
         }
 
-        public RandomDateTimeGenerator(DateTime from, DateTime to)
+        public DateTimeRandomGenerator(DateTime from, DateTime to)
         {
             Check.MinMax(from, to, nameof(from));
 
