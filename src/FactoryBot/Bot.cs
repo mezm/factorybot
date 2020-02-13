@@ -47,9 +47,11 @@ namespace FactoryBot
             return new BotDefinitionBuilder<T>(configuration);
         }
 
-        public static void SetDefaultAutoGenerator<T>(Expression<Func<BotConfigurationBuilder, T>> defaultGenerator)
+        public static void SetDefaultAutoGenerator<T>(Expression<Func<BotConfigurationBuilder, T>> generator)
         {
-            throw new NotImplementedException();
+            Check.NotNull(generator, nameof(generator));
+
+            AutoBindingParser.DefaultGenerators[typeof(T)] = ExpressionParserHelper.ParseGeneratorVariable(generator.Body);
         }
 
         public static T Build<T>(params Action<T>[] modifiers)

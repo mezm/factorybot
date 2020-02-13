@@ -14,11 +14,12 @@ namespace FactoryBot.ExpressionParser
     {
         private const int COLLECTION_MIN_LENGTH = 1;
         private const int COLLECTION_MAX_LENGTH = 100;
-        private static readonly Dictionary<Type, IGenerator> _defaultGenerators;
+
+        public static Dictionary<Type, IGenerator> DefaultGenerators { get; }
 
         static AutoBindingParser()
         {
-            _defaultGenerators = new Dictionary<Type, IGenerator>
+            DefaultGenerators = new Dictionary<Type, IGenerator>
             {
                 [typeof(int)] = new IntegerRandomGenerator(),
                 [typeof(long)] = new LongRandomGenerator(),
@@ -96,7 +97,7 @@ namespace FactoryBot.ExpressionParser
 
         private static IGenerator GetPropertyGenerator(Type type)
         {
-            if (_defaultGenerators.TryGetValue(type, out var generator))
+            if (DefaultGenerators.TryGetValue(type, out var generator))
             {
                 return generator;
             }
