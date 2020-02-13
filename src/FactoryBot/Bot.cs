@@ -28,8 +28,23 @@ namespace FactoryBot
         }
 
         public static BotDefinitionBuilder<T> DefineAuto<T>(Expression<Func<BotConfigurationBuilder, T>> overrideDefault = null)
+            where T : class
         {
-            throw new NotImplementedException();
+            var parser = new AutoBindingParser();
+            var configuration = parser.Parse<T>();
+            CheckNestedAndCircularDependencies(configuration);
+
+            if (overrideDefault != null)
+            {
+                var factoryParser = new FactoryParser();
+                var overrideConfig = factoryParser.Parse(overrideDefault);
+                overrideConfig.MergeProperties(configuration);
+                configuration = overrideConfig;
+            }
+
+            _buildRules[configuration.ConstructingType] = configuration;
+
+            return new BotDefinitionBuilder<T>(configuration);
         }
 
         public static void SetDefaultAutoGenerator<T>(Expression<Func<BotConfigurationBuilder, T>> defaultGenerator)

@@ -50,6 +50,15 @@ namespace FactoryBot.Configurations
             return Create(patchedConstructor);
         }
 
+        public void MergeProperties(BotConfiguration configuration)
+        {
+            Check.NotNull(configuration, nameof(configuration));
+
+            var existingProperties = Properties.Select(x => x.Property).ToArray();
+            var propertiesToAdd = configuration.Properties.Where(x => !existingProperties.Contains(x.Property));
+            Properties.AddRange(propertiesToAdd);
+        }
+
         public Type[] GetNestedDependencies()
         {
             return Constructor.Arguments.Where(x => x.IsUsingDecorator())

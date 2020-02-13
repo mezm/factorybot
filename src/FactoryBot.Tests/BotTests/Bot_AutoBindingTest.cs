@@ -39,6 +39,23 @@ namespace FactoryBot.Tests.BotTests
         public void AutoBinding_DateTime_ShouldBindDefaultValue() => AutoBindingTestDefaultValue(x => x.DateTime);
 
         [Test]
+        public void AutoBinding_NoPublicConstructor_ShouldThrowException() => Assert.Throws(typeof(BuildFailedException), () => Bot.DefineAuto<NoPublicConstructorModel>());
+
+        [Test]
+        public void AutoBinding_AbstractClass_ShouldThrowException() => Assert.Throws(typeof(BuildFailedException), () => Bot.DefineAuto<AbstractModel>());
+
+        [Test]
+        public void AutoBinding_NonDefaultConstructor_ShouldBindCorrectly()
+        {
+            Bot.DefineAuto<Model2>();
+
+            var model = Bot.Build<Model2>();
+
+            Assert.That(model.Number, Is.Not.Zero);
+            Assert.That(model.Date, Is.Not.EqualTo(default(DateTime)));
+        }
+
+        [Test]
         public void AutoBinding_DefaultSettingsAndFlatHierarchy_ShouldBindAllProperties()
         {
             Bot.DefineAuto<Model1>();
