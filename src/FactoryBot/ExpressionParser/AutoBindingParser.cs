@@ -41,26 +41,33 @@ namespace FactoryBot.ExpressionParser
                 throw new BuildFailedException("Abstract types can't be auto generated");
             }
 
-            return Parse(type);
+            return Parse(type, Array.Empty<Type>());
         }
 
-        private static BotConfiguration Parse(Type type)
+        private static BotConfiguration Parse(Type type, Type[] parents)
         {
-            var constructor = FindSuitableConstructor(type);
+            var constructor = FindSuitableConstructor(type, parents);
             var config = new BotConfiguration(type, constructor);
+
+            if (parents.Contains(type))
+            {
+                throw new CircularDependencyDetectedException();
+            }
+
+            parents = parents.Concat(new[] { type }).ToArray();
 
             var properties = type.GetProperties();
             foreach (var property in properties.Where(x => x.CanWrite))
             {
                 var propertyType = property.PropertyType;
-                var propertyGenerator = GetPropertyGenerator(propertyType);
+                var propertyGenerator = GetPropertyGenerator(propertyType, parents);
                 config.Properties.Add(new PropertyDefinition(property, propertyGenerator));
             }
 
             return config;
         }
 
-        private static ConstructorDefinition FindSuitableConstructor(Type type)
+        private static ConstructorDefinition FindSuitableConstructor(Type type, Type[] parents)
         {
             var constructors = type.GetConstructors().OrderBy(x => x.GetParameters().Length);
             foreach (var constructor in constructors)
@@ -76,12 +83,11 @@ namespace FactoryBot.ExpressionParser
                 {
                     try
                     {
-                        var paramGenerator = GetPropertyGenerator(param.ParameterType);
+                        var paramGenerator = GetPropertyGenerator(param.ParameterType, parents);
                         generators.Add(paramGenerator);
                     }
-                    catch
+                    catch (UnknownTypeException)
                     {
-                        // todo: catch some type
                         break;
                     }
                 }
@@ -95,7 +101,7 @@ namespace FactoryBot.ExpressionParser
             throw new BuildFailedException($"No suitable public constructor of type {type} found");
         }
 
-        private static IGenerator GetPropertyGenerator(Type type)
+        private static IGenerator GetPropertyGenerator(Type type, Type[] parents)
         {
             if (DefaultGenerators.TryGetValue(type, out var generator))
             {
@@ -105,17 +111,17 @@ namespace FactoryBot.ExpressionParser
             if (type.IsArray)
             {
                 var itemType = type.GetElementType();
-                var itemGenerator = GetPropertyGenerator(itemType);
+                var itemGenerator = GetPropertyGenerator(itemType, parents);
                 return CreateCollectionGenerator(typeof(ArrayGenerator<>), new[] { itemType }, new[] { itemGenerator });
             }
 
             if (type.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IDictionary<,>)))
             {
                 var keyType = type.GetGenericArguments()[0];
-                var keyGenerator = GetPropertyGenerator(keyType);
+                var keyGenerator = GetPropertyGenerator(keyType, parents);
 
                 var valueType = type.GetGenericArguments()[1];
-                var valueGenerator = GetPropertyGenerator(valueType);
+                var valueGenerator = GetPropertyGenerator(valueType, parents);
 
                 return CreateCollectionGenerator(typeof(DictionaryGenerator<,>), new[] { keyType, valueType }, new[] { keyGenerator, valueGenerator });
             }
@@ -123,14 +129,14 @@ namespace FactoryBot.ExpressionParser
             if (type.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IEnumerable<>)))
             {
                 var itemType = type.GetGenericArguments()[0];
-                var itemGenerator = GetPropertyGenerator(itemType);
+                var itemGenerator = GetPropertyGenerator(itemType, parents);
                 
                 return CreateCollectionGenerator(typeof(ListGenerator<>), new[] { itemType }, new[] { itemGenerator });
             }
 
             if (!type.IsPrimitive)
             {
-                return Parse(type);
+                return Parse(type, parents);
             }
 
             throw new UnknownTypeException(type);
