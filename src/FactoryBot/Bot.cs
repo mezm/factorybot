@@ -18,7 +18,7 @@ namespace FactoryBot
         {
             Check.NotNull(factory, nameof(factory));
 
-            var parser = new FactoryParser();
+            var parser = new FactoryExpressionParser();
             var configuration = parser.Parse(factory);
             CheckNestedAndCircularDependencies(configuration);
 
@@ -35,7 +35,7 @@ namespace FactoryBot
             
             if (overrideDefault != null)
             {
-                var factoryParser = new FactoryParser();
+                var factoryParser = new FactoryExpressionParser();
                 var overrideConfig = factoryParser.Parse(overrideDefault);
                 overrideConfig.MergeProperties(configuration);
                 configuration = overrideConfig;
