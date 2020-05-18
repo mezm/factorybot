@@ -1,5 +1,6 @@
 ﻿using FactoryBot.Tests.Models;
 using NUnit.Framework;
+using System;
 
 namespace FactoryBot.Tests.BotTests
 {
@@ -10,11 +11,11 @@ namespace FactoryBot.Tests.BotTests
         public void Terminate() => Bot.ForgetAll();
 
         [Test]
-        public void BuildCustom_ConstructorModifierArgumentsMismatch_ThrowsException()
+        public void BuildCustom_UseKeepWithOtherConstructor_ThrowsException()
         {
             Bot.Define(x => new Model1(x.Integer.Any(10, 20), "the text"));
 
-            Assert.That(() => Bot.BuildCustom(x => new Model1(5)), Throws.InvalidOperationException);
+            Assert.That(() => Bot.BuildCustom(x => new Model1(x.Keep<int>())), Throws.InstanceOf<NotSupportedException>());
         }
 
         [Test]

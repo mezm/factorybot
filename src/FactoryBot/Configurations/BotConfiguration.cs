@@ -35,8 +35,8 @@ namespace FactoryBot.Configurations
 
             if (Constructor.Constructor != modification.Constructor)
             {
-                throw new InvalidOperationException(
-                    $"Constructors mismatch. Origin: {Constructor.Constructor}, modification: {modification.Constructor}");
+                var constructor = new ConstructorDefinition(modification.Constructor, modification.Arguments);
+                return Create(constructor);
             }
 
             var args = new IGenerator[Constructor.Arguments.Count];

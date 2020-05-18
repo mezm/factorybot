@@ -145,6 +145,28 @@ namespace FactoryBot.Tests.BotTests
             Assert.That(model.Number, Is.Not.Zero);
         }
 
+        [Test]
+        public void AutoBinding_BuildOverrides_ShouldBindAllPropertiesWithOverride()
+        {
+            Bot.DefineAuto<Model1>();
+            
+            var model = Bot.Build<Model1>(x => x.Number = 10);
+
+            Assert.That(model.Number, Is.EqualTo(10));
+            Assert.That(model.Text, Is.Not.Null);
+        }
+
+        [Test]
+        public void AutoBinding_BuildCustom_ShouldBindAllPropertiesWithOverride()
+        {
+            Bot.DefineAuto<Model1>();
+
+            var model = Bot.BuildCustom(x => new Model1(x.Integer.Any(1, 15), "test"));
+
+            Assert.That(model.Number, Is.InRange(1, 15));
+            Assert.That(model.Text, Is.EqualTo("test"));
+        }
+
         private void AutoBindingTestDefaultValue<T>(Func<AllTypesModel, T> getActual)
         {
             Bot.DefineAuto<AllTypesModel>();
