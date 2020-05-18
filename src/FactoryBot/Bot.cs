@@ -18,13 +18,39 @@ namespace FactoryBot
         {
             Check.NotNull(factory, nameof(factory));
 
-            var parser = new FactoryParser();
+            var parser = new FactoryExpressionParser();
             var configuration = parser.Parse(factory);
             CheckNestedAndCircularDependencies(configuration);
 
             _buildRules[configuration.ConstructingType] = configuration;
 
             return new BotDefinitionBuilder<T>(configuration);
+        }
+
+        public static BotDefinitionBuilder<T> DefineAuto<T>(Expression<Func<BotConfigurationBuilder, T>> overrideDefault = null)
+            where T : class
+        {
+            var parser = new AutoBindingParser();
+            var configuration = parser.Parse<T>();
+            
+            if (overrideDefault != null)
+            {
+                var factoryParser = new FactoryExpressionParser();
+                var overrideConfig = factoryParser.Parse(overrideDefault);
+                overrideConfig.MergeProperties(configuration);
+                configuration = overrideConfig;
+            }
+
+            _buildRules[configuration.ConstructingType] = configuration;
+
+            return new BotDefinitionBuilder<T>(configuration);
+        }
+
+        public static void SetDefaultAutoGenerator<T>(Expression<Func<BotConfigurationBuilder, T>> generator)
+        {
+            Check.NotNull(generator, nameof(generator));
+
+            AutoBindingParser.DefaultGenerators[typeof(T)] = ExpressionParserHelper.ParseGeneratorVariable(generator.Body);
         }
 
         public static T Build<T>(params Action<T>[] modifiers)

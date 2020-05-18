@@ -2,8 +2,8 @@
 {
     public class DoubleRandomGenerator : TypedGenerator<double>
     {
-        private const int DEFAULT_MIN_VALUE = -1000;
-        private const int DEFAULT_MAX_VALUE = 1000;
+        private const double DEFAULT_MIN_VALUE = -1000d;
+        private const double DEFAULT_MAX_VALUE = 1000d;
 
         private readonly double _from, _to;
 

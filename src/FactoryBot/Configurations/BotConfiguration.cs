@@ -35,8 +35,8 @@ namespace FactoryBot.Configurations
 
             if (Constructor.Constructor != modification.Constructor)
             {
-                throw new InvalidOperationException(
-                    $"Constructors mismatch. Origin: {Constructor.Constructor}, modification: {modification.Constructor}");
+                var constructor = new ConstructorDefinition(modification.Constructor, modification.Arguments);
+                return Create(constructor);
             }
 
             var args = new IGenerator[Constructor.Arguments.Count];
@@ -48,6 +48,15 @@ namespace FactoryBot.Configurations
 
             var patchedConstructor = new ConstructorDefinition(Constructor.Constructor, args);
             return Create(patchedConstructor);
+        }
+
+        public void MergeProperties(BotConfiguration configuration)
+        {
+            Check.NotNull(configuration, nameof(configuration));
+
+            var existingProperties = Properties.Select(x => x.Property).ToArray();
+            var propertiesToAdd = configuration.Properties.Where(x => !existingProperties.Contains(x.Property));
+            Properties.AddRange(propertiesToAdd);
         }
 
         public Type[] GetNestedDependencies()

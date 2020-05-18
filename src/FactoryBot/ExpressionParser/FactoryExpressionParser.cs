@@ -5,7 +5,7 @@ using FactoryBot.DSL.Builders;
 
 namespace FactoryBot.ExpressionParser
 {
-    internal class FactoryParser
+    internal class FactoryExpressionParser
     {
         public BotConfiguration Parse<T>(Expression<Func<BotConfigurationBuilder, T>> factory)
         {
@@ -23,7 +23,5 @@ namespace FactoryBot.ExpressionParser
 
             throw new NotSupportedException();
         }
-
-        
     }
 }

@@ -8,12 +8,12 @@ namespace FactoryBot.DSL.Generators
 {
     public class DateGenerators : IPrimitiveGenerators<DateTime, DateTime>
     {
-        [Generator(typeof(RandomDateTimeGenerator))]
+        [Generator(typeof(DateTimeRandomGenerator))]
         public DateTime Any() => default;
 
 #pragma warning disable IDE0060 // Remove unused parameter
 
-        [Generator(typeof(RandomDateTimeGenerator))]
+        [Generator(typeof(DateTimeRandomGenerator))]
         public DateTime Any(DateTime from, DateTime to) => default;
 
         [Generator(typeof(RandomFromListGenerator<DateTime>))]

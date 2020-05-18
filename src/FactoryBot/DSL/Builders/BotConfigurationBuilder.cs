@@ -9,12 +9,50 @@ namespace FactoryBot.DSL.Builders
 {
     public class BotConfigurationBuilder
     {
-        // todo: move IntegerGenerators, StringGenerators, etc. into this namespace
+        /// <summary>
+        /// Integer generators
+        /// </summary>
         public IntegerGenerators Integer { get; } = new IntegerGenerators();
+
+        /// <summary>
+        /// Byte generators
+        /// </summary>
+        public ByteGenerators Byte { get; } = new ByteGenerators();
+
+        /// <summary>
+        /// Short generators
+        /// </summary>
+        public ShortGenerators Short { get; } = new ShortGenerators();
+
+        /// <summary>
+        /// Long generators
+        /// </summary>
+        public LongGenerators Long { get; } = new LongGenerators();
+
+        /// <summary>
+        /// String generators
+        /// </summary>
         public StringGenerators Strings { get; } = new StringGenerators();
+
+        /// <summary>
+        /// Date generators
+        /// </summary>
         public DateGenerators Dates { get; } = new DateGenerators();
+
+        /// <summary>
+        /// Decimal generators
+        /// </summary>
         public DecimalGenerators Decimal { get; } = new DecimalGenerators();
+
+        /// <summary>
+        /// Double generators
+        /// </summary>
         public DoubleGenerators Double { get; } = new DoubleGenerators();
+
+        /// <summary>
+        /// Float generators
+        /// </summary>
+        public FloatGenerators Float { get; } = new FloatGenerators();
 
         /// <summary>
         /// Name related generators
