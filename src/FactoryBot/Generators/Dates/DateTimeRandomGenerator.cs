@@ -6,17 +6,15 @@ namespace FactoryBot.Generators.Dates
     {
         private readonly long _from, _to;
 
-        public DateTimeRandomGenerator()
-            : this(new DateTime(1753, 1, 1), DateTime.MaxValue)
+        public DateTimeRandomGenerator(DateTime? from = null, DateTime? to = null)
         {
-        }
+            if (from == null) from = new DateTime(1753, 1, 1);
+            if (to == null) to = DateTime.MaxValue;
 
-        public DateTimeRandomGenerator(DateTime from, DateTime to)
-        {
-            Check.MinMax(from, to, nameof(from));
+            Check.MinMax(from.Value, to.Value, nameof(from));
 
-            _from = from.Ticks;
-            _to = to.Ticks;
+            _from = from.Value.Ticks;
+            _to = to.Value.Ticks;
         }
 
         protected override DateTime NextInternal()

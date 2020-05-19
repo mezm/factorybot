@@ -16,6 +16,20 @@ namespace FactoryBot.DSL.Generators
         [Generator(typeof(DateTimeRandomGenerator))]
         public DateTime Any(DateTime from, DateTime to) => default;
 
+        [Generator(typeof(DateTimeRandomGenerator))]
+        public DateTime After(DateTime from) => default;
+
+        [Generator(typeof(DateTimeRandomGenerator))]
+        [GeneratorParameter("from", Factory = nameof(Now))]
+        public DateTime AfterNow() => default; 
+
+        [Generator(typeof(DateTimeRandomGenerator))]
+        public DateTime Before(DateTime to) => default;
+
+        [Generator(typeof(DateTimeRandomGenerator))]
+        [GeneratorParameter("to", Factory = nameof(Now))]
+        public DateTime BeforeNow() => default; 
+
         [Generator(typeof(RandomFromListGenerator<DateTime>))]
         public DateTime RandomFromList(IReadOnlyList<DateTime> source) => default;
 
@@ -29,5 +43,7 @@ namespace FactoryBot.DSL.Generators
         public DateTime SequenceFromList(params DateTime[] source) => default;
 
 #pragma warning restore IDE0060 // Remove unused parameter
+
+        private static DateTime Now() => DateTime.Now;
     }
 }

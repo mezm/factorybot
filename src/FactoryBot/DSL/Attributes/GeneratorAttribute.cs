@@ -26,6 +26,13 @@ namespace FactoryBot.DSL.Attributes
             Check.NotNull(method, nameof(method));
             Check.NotNull(parameters, nameof(parameters));
 
+            var declaredParameters = method.GetCustomAttributes<GeneratorParameterAttribute>().ToList(); 
+            if (declaredParameters.Any())
+            {
+                parameters = new Dictionary<string, object>(parameters);
+                declaredParameters.ForEach(x => parameters[x.Name] = x.GetParameterValue(method));
+            }
+
             if (!GeneratorType.IsGenericType || !GeneratorType.IsGenericTypeDefinition)
             {
                 return CreateGenerator(GeneratorType, parameters);
@@ -41,13 +48,13 @@ namespace FactoryBot.DSL.Attributes
             return CreateGenerator(GeneratorType.MakeGenericType(method.GetGenericArguments()), parameters); 
         }
         
-        private IGenerator CreateGenerator(Type generatorType, IDictionary<string, object> parameters)
+        private static IGenerator CreateGenerator(Type generatorType, IDictionary<string, object> parameters)
         {
             var constructor = generatorType.GetConstructors().FirstOrDefault(x => IsSuitableConstructor(x, parameters.Keys));
             if (constructor == null)
             {
                 var parameterNames = string.Join(", ", parameters.Keys.Select(x => $"'{x}'"));
-                throw new MissingMethodException($"No constructor of class {GeneratorType} with parameters: {parameterNames} has been found.");
+                throw new MissingMethodException($"No constructor of class {generatorType} with parameters: {parameterNames} has been found.");
             }
 
             var constructorParameters = constructor.GetParameters().Select(x => ChooseParameter(x, parameters)).ToArray();
