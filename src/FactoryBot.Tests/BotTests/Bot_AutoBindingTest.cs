@@ -39,6 +39,14 @@ namespace FactoryBot.Tests.BotTests
         public void AutoBinding_DateTime_ShouldBindDefaultValue() => AutoBindingTestDefaultValue(x => x.DateTime);
 
         [Test]
+        public void AutoBinding_Boolean_ShouldBindDefaultValue()
+        {
+            Bot.DefineAuto<AllTypesModel>();
+
+            Assert.That(() => Bot.Build<AllTypesModel>(), Throws.Nothing);
+        }
+
+        [Test]
         public void AutoBinding_NoPublicConstructor_ShouldThrowException() => Assert.Throws(typeof(BuildFailedException), () => Bot.DefineAuto<NoPublicConstructorModel>());
 
         [Test]

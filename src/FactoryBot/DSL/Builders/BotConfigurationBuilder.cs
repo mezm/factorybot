@@ -55,6 +55,11 @@ namespace FactoryBot.DSL.Builders
         public FloatGenerators Float { get; } = new FloatGenerators();
 
         /// <summary>
+        /// Boolean generators
+        /// </summary>
+        public BooleanGenerators Boolean { get; } = new BooleanGenerators();
+
+        /// <summary>
         /// Name related generators
         /// </summary>
         public NameGenerators Names { get; } = new NameGenerators();

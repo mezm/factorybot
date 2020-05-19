@@ -13,6 +13,8 @@ namespace FactoryBot.Tests.Models
         public float Float { get; set; }
         public decimal Decimal { get; set; }
 
+        public bool Boolean { get; set; }
+
         public string String { get; set; }
 
         public DateTime DateTime { get; set; }
