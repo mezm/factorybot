@@ -52,7 +52,15 @@ namespace FactoryBot.ExpressionParser
                                                                : EvaluateExpression(argumentExpr);
                 }
 
-                // todo: move read from GeneratorParameterAttribute here from GeneratorAttribute
+                var declaredParameters = methodCallExpr.Method.GetCustomAttributes<GeneratorParameterAttribute>();
+                foreach (var attr in declaredParameters)
+                {
+                    var value = attr.GetParameterValue(methodCallExpr.Method);
+                    if (value != null)
+                    {
+                        generatorParamenters[attr.Name] = value;
+                    }
+                }
 
                 return generatorAttr.CreateGenerator(methodCallExpr.Method, generatorParamenters);
             }

@@ -26,13 +26,6 @@ namespace FactoryBot.DSL.Attributes
             Check.NotNull(method, nameof(method));
             Check.NotNull(parameters, nameof(parameters));
 
-            var declaredParameters = method.GetCustomAttributes<GeneratorParameterAttribute>().ToList(); 
-            if (declaredParameters.Any())
-            {
-                parameters = new Dictionary<string, object>(parameters);
-                declaredParameters.ForEach(x => parameters[x.Name] = x.GetParameterValue(method));
-            }
-
             if (!GeneratorType.IsGenericType || !GeneratorType.IsGenericTypeDefinition)
             {
                 return CreateGenerator(GeneratorType, parameters);

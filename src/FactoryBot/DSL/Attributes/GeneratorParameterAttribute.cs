@@ -4,7 +4,6 @@ using System.Reflection;
 
 namespace FactoryBot.DSL.Attributes
 {
-    // todo: write tests
     [AttributeUsage(AttributeTargets.Method)]
     public sealed class GeneratorParameterAttribute : Attribute
     {
