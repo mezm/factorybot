@@ -8,45 +8,45 @@ namespace FactoryBot.DSL.Generators
     public class StringGenerators : IPrimitiveGenerators<string, int>
     {
         [Generator(typeof(StringRandomGenerator))]
-        public string Any() => default;
+        public string Any() => Returns.Type<string>();
 
 #pragma warning disable IDE0060 // Remove unused parameter
 
         [Generator(typeof(StringRandomGenerator))]
-        public string Any(int minLength, int maxLength) => default;
+        public string Any(int minLength, int maxLength) => Returns.Type<string>();
 
         [Generator(typeof(WordRandomGenerator))]
-        public string Words() => default;
+        public string Words() => Returns.Type<string>();
 
         [Generator(typeof(WordRandomGenerator))]
-        public string Words(int minWords, int maxWords) => default;
+        public string Words(int minWords, int maxWords) => Returns.Type<string>();
 
         [Generator(typeof(FilePathGenerator))]
-        public string Filename() => default;
+        public string Filename() => Returns.Type<string>();
 
         [Generator(typeof(FilePathGenerator))]
-        public string Filename(string fromFolder, bool existing) => default;
+        public string Filename(string fromFolder, bool existing) => Returns.Type<string>();
 
         [Generator(typeof(RandomFromListGenerator<string>))]
-        public string RandomFromList(IReadOnlyList<string> source) => default;
+        public string RandomFromList(IReadOnlyList<string> source) => Returns.Type<string>();
 
         [Generator(typeof(RandomFromListGenerator<string>))]
-        public string RandomFromList(params string[] source) => default;
+        public string RandomFromList(params string[] source) => Returns.Type<string>();
 
         [Generator(typeof(SequenceFromListGenerator<string>))]
-        public string SequenceFromList(IReadOnlyList<string> source) => default;
+        public string SequenceFromList(IReadOnlyList<string> source) => Returns.Type<string>();
 
         [Generator(typeof(SequenceFromListGenerator<string>))]
-        public string SequenceFromList(params string[] source) => default;
+        public string SequenceFromList(params string[] source) => Returns.Type<string>();
 
         [Generator(typeof(RandomLineFromFileGenerator))]
-        public string RandomFromFile(string filename) => default;
+        public string RandomFromFile(string filename) => Returns.Type<string>();
 
         [Generator(typeof(SequenceStringFromFileGenerator))]
-        public string SequenceFromFile(string filename) => default;
+        public string SequenceFromFile(string filename) => Returns.Type<string>();
 
         [Generator(typeof(GuidGenerator))]
-        public string Guid() => default;
+        public string Guid() => Returns.Type<string>();
 
 #pragma warning restore IDE0060 // Remove unused parameter
     }

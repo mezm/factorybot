@@ -4,6 +4,7 @@ using System.Reflection;
 
 namespace FactoryBot.DSL.Attributes
 {
+    // todo: write tests
     [AttributeUsage(AttributeTargets.Method)]
     public sealed class GeneratorParameterAttribute : Attribute
     {
@@ -11,11 +12,11 @@ namespace FactoryBot.DSL.Attributes
 
         public string Name { get; }
 
-        public object Value { get; set; }
+        public object? Value { get; set; }
 
-        public string Factory { get; set; }
+        public string? Factory { get; set; }
 
-        public object GetParameterValue(MethodInfo method)
+        public object? GetParameterValue(MethodInfo method)
         {
             if (Factory == null) return Value;
 

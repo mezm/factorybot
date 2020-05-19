@@ -11,18 +11,18 @@ namespace FactoryBot.Generators.Strings
         private const int MAX_RANDOM_DEEP = 15;
         private const int FILE_FETCH_LIMIT = 1000;
 
-        private static readonly string[] _drives = { "C", "D", "E", "F", "G", "Z" };
-        private static readonly string[] _fileExtensions =
+        private static readonly string[] Drives = { "C", "D", "E", "F", "G", "Z" };
+        private static readonly string[] FileExtensions =
             {
                 ".cs", ".js", ".py", ".java", ".cpp", ".rb", ".exe", ".bat",
                 ".doc", ".docx", ".xls", ".xlsx"
             };
 
-        private readonly string _fromFolder;
+        private readonly string? _fromFolder;
         private readonly bool _existing;
         private readonly IGenerator _wordGenerator = WordRandomGenerator.CreateSingleWordGenerator();
 
-        public FilePathGenerator(string fromFolder = null, bool existing = false)
+        public FilePathGenerator(string? fromFolder = null, bool existing = false)
         {
             _fromFolder = fromFolder;
             _existing = existing;
@@ -53,14 +53,14 @@ namespace FactoryBot.Generators.Strings
             }
 
             result.Append(_wordGenerator.Next());
-            result.Append(NextRandomFromArray(_fileExtensions));
+            result.Append(NextRandomFromArray(FileExtensions));
             return result.ToString();
         }
 
         private string GetRandomRoot()
         {
             return Environment.OSVersion.Platform == PlatformID.Win32NT 
-                ? $"{NextRandomFromArray(_drives)}:{Path.DirectorySeparatorChar}" 
+                ? $"{NextRandomFromArray(Drives)}:{Path.DirectorySeparatorChar}" 
                 : "/";
         }
 

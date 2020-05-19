@@ -12,7 +12,7 @@ namespace FactoryBot
     {
         public const int SEQUENCE_MAX_LENGTH = 100;
 
-        private static readonly Dictionary<Type, BotConfiguration> _buildRules = new Dictionary<Type, BotConfiguration>(); 
+        private static readonly Dictionary<Type, BotConfiguration> BuildRules = new Dictionary<Type, BotConfiguration>(); 
 
         public static BotDefinitionBuilder<T> Define<T>(Expression<Func<BotConfigurationBuilder, T>> factory)
         {
@@ -22,12 +22,12 @@ namespace FactoryBot
             var configuration = parser.Parse(factory);
             CheckNestedAndCircularDependencies(configuration);
 
-            _buildRules[configuration.ConstructingType] = configuration;
+            BuildRules[configuration.ConstructingType] = configuration;
 
             return new BotDefinitionBuilder<T>(configuration);
         }
 
-        public static BotDefinitionBuilder<T> DefineAuto<T>(Expression<Func<BotConfigurationBuilder, T>> overrideDefault = null)
+        public static BotDefinitionBuilder<T> DefineAuto<T>(Expression<Func<BotConfigurationBuilder, T>>? overrideDefault = null)
             where T : class
         {
             var parser = new AutoBindingParser();
@@ -41,7 +41,7 @@ namespace FactoryBot
                 configuration = overrideConfig;
             }
 
-            _buildRules[configuration.ConstructingType] = configuration;
+            BuildRules[configuration.ConstructingType] = configuration;
 
             return new BotDefinitionBuilder<T>(configuration);
         }
@@ -101,14 +101,14 @@ namespace FactoryBot
             }
 
             throw new InvalidOperationException(
-                "BuildSequence generates infinite sequence and should not be used in a foreach look. If it's not the case set infinite parameter to true.");
+                "BuildSequence generates infinite sequence and should not be used in a foreach loop. If it's not the case set infinite parameter to true.");
         }
 
-        public static void ForgetAll() => _buildRules.Clear();
+        public static void ForgetAll() => BuildRules.Clear();
 
         private static BotConfiguration GetConfiguration(Type ruleKey)
         {
-            return _buildRules.TryGetValue(ruleKey, out var config) ? config : throw new UnknownTypeException(ruleKey);
+            return BuildRules.TryGetValue(ruleKey, out var config) ? config : throw new UnknownTypeException(ruleKey);
         }
 
         private static void CheckNestedAndCircularDependencies(BotConfiguration configuration)

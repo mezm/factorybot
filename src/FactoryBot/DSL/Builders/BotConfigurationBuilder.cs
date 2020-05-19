@@ -70,7 +70,7 @@ namespace FactoryBot.DSL.Builders
         public NetworkGenerators Network { get; } = new NetworkGenerators();
 
         [Generator(typeof(UsingGenerator<>))]
-        public T Use<T>() => default;
+        public T Use<T>() => Returns.Type<T>();
 
 #pragma warning disable IDE0060 // Remove unused parameter
 
@@ -81,7 +81,7 @@ namespace FactoryBot.DSL.Builders
         /// <param name="nextItem">Callback that is going to be called each time generator needs new value</param>
         /// <returns>Generated value</returns>
         [Generator(typeof(FactoryGenerator<>))]
-        public T Factory<T>(Func<T> nextItem) => default;
+        public T Factory<T>(Func<T> nextItem) => Returns.Type<T>();
 
         /// <summary>
         /// Generates array of random items of type T.

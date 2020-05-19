@@ -30,7 +30,10 @@ namespace FactoryBot.ExpressionParser
             var generatorAttr = methodCallExpr?.Method.GetCustomAttribute<GeneratorAttributeBase>();
             if (generatorAttr != null)
             {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 var methodParameters = methodCallExpr.Method.GetParameters();
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+
                 var generatorParamenters = new Dictionary<string, object>(methodParameters.Length);
 
                 var defaultItemGenerators = methodCallExpr.Method.GetCustomAttributes<UseDefaultItemGeneratorAttribute>();
@@ -48,6 +51,8 @@ namespace FactoryBot.ExpressionParser
                                                                ? ParseGeneratorVariable(argumentExpr)
                                                                : EvaluateExpression(argumentExpr);
                 }
+
+                // todo: move read from GeneratorParameterAttribute here from GeneratorAttribute
 
                 return generatorAttr.CreateGenerator(methodCallExpr.Method, generatorParamenters);
             }
