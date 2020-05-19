@@ -7,7 +7,7 @@ namespace FactoryBot.Generators.Dates
         private readonly long _from, _to;
 
         public DateTimeRandomGenerator()
-            : this(DateTime.MinValue, DateTime.MaxValue)
+            : this(new DateTime(1753, 1, 1), DateTime.MaxValue)
         {
         }
 
