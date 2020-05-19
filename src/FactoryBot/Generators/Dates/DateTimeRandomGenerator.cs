@@ -8,8 +8,8 @@ namespace FactoryBot.Generators.Dates
 
         public DateTimeRandomGenerator(DateTime? from = null, DateTime? to = null)
         {
-            if (from == null) from = new DateTime(1753, 1, 1);
-            if (to == null) to = DateTime.MaxValue;
+            from ??= new DateTime(1753, 1, 1);
+            to ??= DateTime.MaxValue;
 
             Check.MinMax(from.Value, to.Value, nameof(from));
 

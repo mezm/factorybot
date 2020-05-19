@@ -40,6 +40,11 @@ namespace FactoryBot.DSL.Builders
         public DateGenerators Dates { get; } = new DateGenerators();
 
         /// <summary>
+        /// Time generators
+        /// </summary>
+        public TimeGenerators Time { get; } = new TimeGenerators();
+
+        /// <summary>
         /// Decimal generators
         /// </summary>
         public DecimalGenerators Decimal { get; } = new DecimalGenerators();

@@ -30,6 +30,7 @@ namespace FactoryBot.ExpressionParser
                 [typeof(decimal)] = new DecimalRandomGenerator(),
                 [typeof(string)] = new StringRandomGenerator(),
                 [typeof(DateTime)] = new DateTimeRandomGenerator(),
+                [typeof(TimeSpan)] = new TimeSpanRandomGenerator(),
                 [typeof(bool)] = new BooleanRandomGenerator()
             };
         }

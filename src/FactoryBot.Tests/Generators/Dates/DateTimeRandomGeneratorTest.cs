@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace FactoryBot.Tests.Generators.Dates
 {
     [TestFixture]
-    public class RandomDateTimeGeneratorTest : GeneratorTestKit
+    public class DateTimeRandomGeneratorTest : GeneratorTestKit
     {
         [Test]
         public void Any_Random_GeneratesAny() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { DateTime = x.Dates.Any() });

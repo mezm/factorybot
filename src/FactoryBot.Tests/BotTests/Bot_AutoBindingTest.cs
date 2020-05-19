@@ -39,6 +39,9 @@ namespace FactoryBot.Tests.BotTests
         public void AutoBinding_DateTime_ShouldBindDefaultValue() => AutoBindingTestDefaultValue(x => x.DateTime);
 
         [Test]
+        public void AutoBinding_TimeSpan_ShouldBindDefaultValue() => AutoBindingTestDefaultValue(x => x.TimeSpan);
+
+        [Test]
         public void AutoBinding_Boolean_ShouldBindDefaultValue()
         {
             Bot.DefineAuto<AllTypesModel>();

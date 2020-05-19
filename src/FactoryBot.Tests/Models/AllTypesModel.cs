@@ -18,5 +18,6 @@ namespace FactoryBot.Tests.Models
         public string String { get; set; }
 
         public DateTime DateTime { get; set; }
+        public TimeSpan TimeSpan { get; set; }
     }
 }
