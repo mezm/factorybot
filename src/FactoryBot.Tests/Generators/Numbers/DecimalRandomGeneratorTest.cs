@@ -1,5 +1,4 @@
 ﻿using FactoryBot.Tests.Models;
-
 using NUnit.Framework;
 
 namespace FactoryBot.Tests.Generators.Numbers
@@ -8,10 +7,10 @@ namespace FactoryBot.Tests.Generators.Numbers
     public class DecimalRandomGeneratorTest : GeneratorTestKit
     {
         [Test]
-        public void GetRandom() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { Decimal = x.Decimal.Any() });
+        public void Any_NoCondition_ReturnsDecimal() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { Decimal = x.Decimal.Any() });
 
         [Test]
-        public void GetRandomWithThreshfold()
+        public void Any_InRange_ReturnsDecimal()
         {
             AssertGeneratorValue(
                 x => new AllTypesModel { Decimal = x.Decimal.Any(-1.2m, 5.4457m) },
@@ -19,7 +18,7 @@ namespace FactoryBot.Tests.Generators.Numbers
         }
 
         [Test]
-        public void GetRandomWithThreshfoldSingleValue()
+        public void Any_SingleValue_ReturnsTheValue()
         {
             AssertGeneratorValue(
                 x => new AllTypesModel { Decimal = x.Decimal.Any(-1.2m, -1.2m) },
@@ -28,6 +27,6 @@ namespace FactoryBot.Tests.Generators.Numbers
         }
 
         [Test]
-        public void CreateWithWrongRange() => ExpectArgumentOutOfRangeInitException(x => new AllTypesModel { Decimal = x.Decimal.Any(10m, -1.005m) });
+        public void Any_WrongRange_ThrowsError() => ExpectArgumentOutOfRangeInitException(x => new AllTypesModel { Decimal = x.Decimal.Any(10m, -1.005m) });
     }
 }

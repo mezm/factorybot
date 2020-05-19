@@ -8,31 +8,31 @@ namespace FactoryBot.Tests.Generators.Strings
     // [Timeout(10000)] // todo: Not currently available in the .NET Standard builds of the framework.
     public class SequenceStringFromFileGeneratorTest : GeneratorTestKit
     {
-        private const string Filename = "text.txt";
+        private const string FILENAME = "text.txt";
 
         [Test]
-        public void GetNextLine()
+        public void SequenceFromFile_FileHasFewLines_ReturnsLinesInOrder()
         {
             var contents = new[] { "this", "is", "the test", "file " };
-            File.WriteAllLines(Filename, contents);
+            File.WriteAllLines(FILENAME, contents);
 
             FileUtils.WithFileDisposal(
-                Filename,
-                () => AssertGeneratorValue(x => new AllTypesModel { String = x.Strings.SequenceFromFile(Filename) },
+                FILENAME,
+                () => AssertGeneratorValue(x => new AllTypesModel { String = x.Strings.SequenceFromFile(FILENAME) },
                     Is.EqualTo("this"),
                     Is.EqualTo("is"),
                     Is.EqualTo("the test")));
         }
 
         [Test]
-        public void LoopValues()
+        public void SequenceFromFile_RequestValuesMoreThenInSequence_ReturnsLinesInLoop()
         {
             var contents = new[] { "this", "is", "the test", "file " };
-            File.WriteAllLines(Filename, contents);
+            File.WriteAllLines(FILENAME, contents);
 
             FileUtils.WithFileDisposal(
-                Filename,
-                () => AssertGeneratorValue(x => new AllTypesModel { String = x.Strings.SequenceFromFile(Filename) },
+                FILENAME,
+                () => AssertGeneratorValue(x => new AllTypesModel { String = x.Strings.SequenceFromFile(FILENAME) },
                     Is.EqualTo("this"),
                     Is.EqualTo("is"),
                     Is.EqualTo("the test"),
@@ -41,28 +41,28 @@ namespace FactoryBot.Tests.Generators.Strings
         }
 
         [Test]
-        public void GenerateFromFileWithSingleLine()
+        public void SequenceFromFile_FileHasSingleLine_ReturnsTheLine()
         {
-            File.WriteAllLines(Filename, new[] { "foo" });
+            File.WriteAllLines(FILENAME, new[] { "foo" });
 
             FileUtils.WithFileDisposal(
-                Filename,
-                () => AssertGeneratorValue(x => new AllTypesModel { String = x.Strings.SequenceFromFile(Filename) },
+                FILENAME,
+                () => AssertGeneratorValue(x => new AllTypesModel { String = x.Strings.SequenceFromFile(FILENAME) },
                     Is.EqualTo("foo"),
                     Is.EqualTo("foo")));
         }
 
         [Test]
-        public void GenerateFromEmptyFile()
+        public void SequenceFromFile_FileIsEmpty_ThrowsError()
         {
-            File.WriteAllLines(Filename, new string[0]);
+            File.WriteAllLines(FILENAME, new string[0]);
 
             FileUtils.WithFileDisposal(
-                Filename,
-                () => ExpectBuildException<IOException>(x => new AllTypesModel { String = x.Strings.SequenceFromFile(Filename) }));
+                FILENAME,
+                () => ExpectBuildException<IOException>(x => new AllTypesModel { String = x.Strings.SequenceFromFile(FILENAME) }));
         }
 
         [Test]
-        public void CreateWithNonExistingFile() => ExpectInitException<IOException>(x => new AllTypesModel { String = x.Strings.SequenceFromFile("some_non_existing.aaa") });
+        public void SequenceFromFile_FileNotExists_ThrowsError() => ExpectInitException<IOException>(x => new AllTypesModel { String = x.Strings.SequenceFromFile("some_non_existing.aaa") });
     }
 }

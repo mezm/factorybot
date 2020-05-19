@@ -8,10 +8,10 @@ namespace FactoryBot.Tests.Generators.Strings
     public class HostnameGeneratorTest : GeneratorTestKit
     {
         [Test]
-        public void AlwaysNewHostname() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Network.Hostname() });
+        public void Hostname_NoCondition_ReturnsNewHostname() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Network.Hostname() });
 
         [Test]
-        public void SingleSubdomain() 
+        public void Hostname_SingleSubdomain_ReturnsHostname() 
         {
             var generator = new HostnameGenerator(1, 1);
 
@@ -21,7 +21,7 @@ namespace FactoryBot.Tests.Generators.Strings
         }
 
         [Test]
-        public void MultipleSubDomains()
+        public void Hostname_MultipleSubDomains_ReturnsHostname()
         {
             var generator = new HostnameGenerator(5, 5);
 

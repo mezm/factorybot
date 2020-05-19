@@ -8,7 +8,7 @@ namespace FactoryBot.Tests.BotTests
     [TestFixture]
     public class Bot_FactoryTest
     {
-        private static int _lastestGeneratedValue = 0;
+        private static int LastestGeneratedValue = 0;
 
         [TearDown]
         public void Terminate() => Bot.ForgetAll();
@@ -41,7 +41,7 @@ namespace FactoryBot.Tests.BotTests
             Assert.Throws<BuildFailedException>(() => Bot.Build<Model1>());
         }
 
-        private static int IntegerFactory() => _lastestGeneratedValue++;
+        private static int IntegerFactory() => LastestGeneratedValue++;
 
         private static int BrokenIntegerFactory() => throw new InvalidOperationException("test");
     }

@@ -8,9 +8,9 @@ namespace FactoryBot.Tests.Generators.Strings
     public class EmailGeneratorTest : GeneratorTestKit
     {
         [Test]
-        public void AlwaysNewEmail() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Network.Email() });
+        public void Email_NoCondition_ReturnsNewEmail() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Network.Email() });
 
         [Test]
-        public void EmailIsValid() => AssertGeneratorValue<string>(x => new AllTypesModel { String = x.Network.Email() }, x => new MailAddress(x));
+        public void Email_NoCondition_ReturnsValidEmail() => AssertGeneratorValue<string>(x => new AllTypesModel { String = x.Network.Email() }, x => new MailAddress(x));
     }
 }

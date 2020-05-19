@@ -10,7 +10,7 @@ namespace FactoryBot.Tests.BotTests
         public void Terminate() => Bot.ForgetAll();
 
         [Test]
-        public void BuildNestedPrimitiveArrayWithGenerator()
+        public void Build_NestedPrimitiveArrayWithGenerator_ReturnsArray()
         {
             Bot.Define(x => new Model4 { SimpleArray = x.Array(1, 5, x.Strings.Words(1, 1)) });
 
@@ -20,7 +20,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildNestedPrimitiveConstantArray()
+        public void Build_NestedPrimitiveConstantArray_ReturnsConstantArray()
         {
             Bot.Define(x => new Model4 { SimpleArray = new[] { "a", "b", "c" } });
 
@@ -30,7 +30,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildNestedPrimitiveArrayOfConstants()
+        public void Build_NestedPrimitiveArrayOfConstants_ReturnsArray()
         {
             Bot.Define(x => new Model4 { SimpleArray = x.Array(3, 3, "abc") });
 
@@ -40,7 +40,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildNestedComplexArrayUsingKnownConfig()
+        public void Build_NestedComplexArrayUsingKnownConfig_ReturnsArray()
         {
             Bot.Define(x => new Model1(x.Integer.Any(100, 150), "the test"));
             Bot.Define(x => new Model3 { Number = 7, Nested = x.Use<Model1>() });
@@ -57,7 +57,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildNestedComplexArrayUsingKnownConfigSimplifiedSytax()
+        public void Build_NestedComplexArrayUsingKnownConfigSimplifiedSytax_ReturnsArray()
         {
             Bot.Define(x => new Model1(x.Integer.Any(100, 150), "the test"));
             Bot.Define(x => new Model3 { Number = 7, Nested = x.Use<Model1>() });
@@ -74,7 +74,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildNestedComplexArrayUsingUnknownConfigSimplifiedSytax()
+        public void Build_NestedComplexArrayUsingUnknownConfigSimplifiedSytax_ThrowsError()
         {
             Bot.Define(x => new Model4 { ComplexArray = x.Array<Model3>(1, 3) });
 
@@ -82,7 +82,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildNestedComplexArrayUsingNestedConfig()
+        public void Build_NestedComplexArrayUsingNestedConfig_ReturnsArray()
         {
             Bot.Define(
                 x =>

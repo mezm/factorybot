@@ -8,43 +8,43 @@ namespace FactoryBot.Tests.Generators.Strings
     // [Timeout(10000)] // todo: Not currently available in the .NET Standard builds of the framework.
     public class RandomLineFromFileGeneratorTest : GeneratorTestKit
     {
-        private const string Filename = "text.txt";
+        private const string FILENAME = "text.txt";
 
         [Test]
-        public void GetRandomLine()
+        public void RandomFromFile_FileHasMultipleLines_ReturnsLineFromFile()
         {
             var content = new[] { "this", "is", "the test", "file " };
-            File.WriteAllLines(Filename, content);
+            File.WriteAllLines(FILENAME, content);
 
             FileUtils.WithFileDisposal(
-                Filename,
-                () => AssertGeneratorValue<string>(x => new AllTypesModel { String = x.Strings.RandomFromFile(Filename) },
+                FILENAME,
+                () => AssertGeneratorValue<string>(x => new AllTypesModel { String = x.Strings.RandomFromFile(FILENAME) },
                     x => Assert.That(content, Does.Contain(x))));
         }
 
         [Test]
-        public void GenerateFromFileWithSingleLine()
+        public void RandomFromFile_FileHasSingleLine_ReturnsTheLine()
         {
-            File.WriteAllLines(Filename, new[] { "the single line test." });
+            File.WriteAllLines(FILENAME, new[] { "the single line test." });
 
             FileUtils.WithFileDisposal(
-                Filename,
-                () => AssertGeneratorValue(x => new AllTypesModel { String = x.Strings.RandomFromFile(Filename) },
+                FILENAME,
+                () => AssertGeneratorValue(x => new AllTypesModel { String = x.Strings.RandomFromFile(FILENAME) },
                     Is.EqualTo("the single line test."), 
                     Is.EqualTo("the single line test.")));
         }
 
         [Test]
-        public void GenerateFromEmptyFile()
+        public void RandomFromFile_FileIsEmpty_ThrowsError()
         {
-            File.WriteAllLines(Filename, new string[0]);
+            File.WriteAllLines(FILENAME, new string[0]);
 
             FileUtils.WithFileDisposal(
-                Filename,
-                () => ExpectBuildException<IOException>(x => new AllTypesModel { String = x.Strings.RandomFromFile(Filename) }));
+                FILENAME,
+                () => ExpectBuildException<IOException>(x => new AllTypesModel { String = x.Strings.RandomFromFile(FILENAME) }));
         }
 
         [Test]
-        public void CreateWithNonExistingFile() => ExpectInitException<IOException>(x => new AllTypesModel { String = x.Strings.RandomFromFile("some_non_existing.aaa") });
+        public void RandomFromFile_FileNotExists_ThrowsError() => ExpectInitException<IOException>(x => new AllTypesModel { String = x.Strings.RandomFromFile("some_non_existing.aaa") });
     }
 }

@@ -9,10 +9,10 @@ namespace FactoryBot.Tests.Generators.Strings
     public class TopLevelDomainGeneratorTest : GeneratorTestKit
     {
         [Test]
-        public void AlwaysNewDomain() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Network.TopLevelDomain() });
+        public void TopLevelDomain_NoCondition_ReturnsNewDomain() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Network.TopLevelDomain() });
 
         [Test]
-        public void GenerateDomain()
+        public void TopLevelDomain_NoCondition_ReturnsDomainFromTheSource()
         {
             var source = FileUtils.GetResourceContentWithoutLineBreaks(SourceNames.TOP_LEVEL_DOMAINS);
             AssertGeneratorValue<string>(

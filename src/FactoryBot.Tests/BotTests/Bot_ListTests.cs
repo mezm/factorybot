@@ -10,7 +10,7 @@ namespace FactoryBot.Tests.BotTests
         public void Terminate() => Bot.ForgetAll();
 
         [Test]
-        public void BuildNestedPrimitiveListWithGenerator()
+        public void Build_NestedPrimitiveListWithGenerator_ReturnsList()
         {
             Bot.Define(x => new Model4 { SimpleList = x.List(1, 5, x.Integer.Any(100, 200)) });
 
@@ -20,7 +20,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildNestedPrimitiveConstantList()
+        public void Build_NestedPrimitiveConstantList_ReturnsList()
         {
             Bot.Define(x => new Model4 { SimpleList = { 1, 2, 100, -12 } });
 
@@ -30,7 +30,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildNestedPrimitiveListOfConstant()
+        public void Build_NestedPrimitiveListOfConstant_ReturnsList()
         {
             Bot.Define(x => new Model4 { SimpleList = x.List(3, 3, 54670) });
 
@@ -40,7 +40,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildNestedComplexListUsingKnownConfig()
+        public void Build_NestedComplexListUsingKnownConfig_ReturnsList()
         {
             Bot.Define(x => new Model1(x.Integer.Any(100, 150), "the test"));
             Bot.Define(x => new Model4 { ComplexList = x.List(1, 3, x.Use<Model1>()) });
@@ -56,7 +56,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildNestedComplexListUsingKnownConfigSimplyfiedSyntax()
+        public void Build_NestedComplexListUsingKnownConfigSimplyfiedSyntax_ReturnsList()
         {
             Bot.Define(x => new Model1(x.Integer.Any(100, 150), "the test"));
             Bot.Define(x => new Model4 { ComplexList = x.List<Model1>(1, 3) });
@@ -72,7 +72,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildNestedComplexListUsingUnknownConfigSimplyfiedSyntax()
+        public void Build_NestedComplexListUsingUnknownConfigSimplyfiedSyntax_ThrowsError()
         {
             Bot.Define(x => new Model4 { ComplexList = x.List<Model1>(1, 3) });
 
@@ -80,7 +80,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildNestedComplexListUsingNestedConfig()
+        public void Build_NestedComplexListUsingNestedConfig_ReturnsList()
         {
             Bot.Define(
                 x => new Model4 { ComplexList = x.List(1, 3, new Model1(x.Integer.Any(100, 150), "the test")) });

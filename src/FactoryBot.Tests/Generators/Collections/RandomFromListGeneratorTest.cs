@@ -1,5 +1,4 @@
 ﻿using FactoryBot.Tests.Models;
-
 using NUnit.Framework;
 
 namespace FactoryBot.Tests.Generators.Collections
@@ -8,7 +7,7 @@ namespace FactoryBot.Tests.Generators.Collections
     public class RandomFromListGeneratorTest : GeneratorTestKit
     {
         [Test]
-        public void Generate()
+        public void RandomFromList_NonEmptyList_ReturnsValueFromList()
         {
             var list = new[] { "a", "ab", "bc", "def" };
             Bot.Define(x => new AllTypesModel { String = x.Strings.RandomFromList(list) });
@@ -18,6 +17,6 @@ namespace FactoryBot.Tests.Generators.Collections
         }
 
         [Test]
-        public void CreateWithEmptyList() => ExpectArgumentInitException(x => new AllTypesModel { Decimal = x.Decimal.RandomFromList() });
+        public void RandomFromList_EmptyList_ThrowsError() => ExpectArgumentInitException(x => new AllTypesModel { Decimal = x.Decimal.RandomFromList() });
     }
 }

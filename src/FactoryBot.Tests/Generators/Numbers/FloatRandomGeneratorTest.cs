@@ -1,5 +1,4 @@
 ﻿using FactoryBot.Tests.Models;
-
 using NUnit.Framework;
 
 namespace FactoryBot.Tests.Generators.Numbers
@@ -8,16 +7,16 @@ namespace FactoryBot.Tests.Generators.Numbers
     public class FloatRandomGeneratorTest : GeneratorTestKit
     {
         [Test]
-        public void GetRandom() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { Float = x.Float.Any() });
+        public void Any_NoCondition_ReturnsFloat() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { Float = x.Float.Any() });
 
         [Test]
-        public void GetRandomWithThreshfold()
+        public void Any_InRange_ReturnsFloat()
         {
             AssertGeneratorValue(x => new AllTypesModel { Float = x.Float.Any(-1.2f, 5.4457f) }, Is.InRange(-1.2f, 5.4457f));
         }
 
         [Test]
-        public void GetRandomWithThreshfoldSingleValue()
+        public void Any_SingleValue_ReturnsTheValue()
         {
             AssertGeneratorValue(
                 x => new AllTypesModel { Float = x.Float.Any(-1.2f, -1.2f) },
@@ -26,6 +25,6 @@ namespace FactoryBot.Tests.Generators.Numbers
         }
 
         [Test]
-        public void CreateWithWrongRange() => ExpectArgumentOutOfRangeInitException(x => new AllTypesModel { Float = x.Float.Any(10f, -1.005f) });
+        public void Any_WrongRange_ThrowsError() => ExpectArgumentOutOfRangeInitException(x => new AllTypesModel { Float = x.Float.Any(10f, -1.005f) });
     }
 }

@@ -11,7 +11,7 @@ namespace FactoryBot.Tests.BotTests
         public void Terminate() => Bot.ForgetAll();
 
         [Test]
-        public void BuildAlwaysCreatesNewInstance()
+        public void Build_NoCondition_ReturnsNewInstance()
         {
             Bot.Define(x => new Model1(10, "text"));
 
@@ -22,7 +22,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildConstructorArgumentsOnly()
+        public void Build_ConstructorArgumentsOnly_ReturnsObject()
         {
             Bot.Define(x => new Model1(10, "text"));
 
@@ -35,7 +35,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildPropertiesOnly()
+        public void Build_PropertiesOnly_ReturnsObject()
         {
             Bot.Define(x => new Model1 { Number = 13, Text = "some text" });
 
@@ -48,7 +48,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildConstructorArgumentAndProperty()
+        public void Build_ConstructorArgumentAndProperty_ReturnsObject()
         {
             Bot.Define(x => new Model1(10) { Text = "some text" });
 
@@ -61,7 +61,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildWithGenerators()
+        public void Build_WithGenerators_ReturnsObject()
         {
             Bot.Define(x => new Model1(x.Integer.Any(10, 25)) { Text = x.Strings.Any() });
 
@@ -74,7 +74,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildWithLocalVariables()
+        public void Build_WithLocalVariables_ReturnsObject()
         {
             var number = 889;
             var text = "some t";
@@ -89,7 +89,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildWithOtherClassProperty()
+        public void Build_WithOtherClassProperty_ReturnsObject()
         {
             var data = new { Number = 101, Text = "abc" };
             Bot.Define(x => new Model1(data.Number, data.Text));
@@ -103,7 +103,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildWithOtherClassMethod()
+        public void Build_WithOtherClassMethod_ReturnsObject()
         {
             var data = new DataHolder1();
             Bot.Define(x => new Model1(data.GetNumber(), data.GetText()));
@@ -117,7 +117,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildWithOtherClassPropertyAndMethod()
+        public void Build_WithOtherClassPropertyAndMethod_ReturnsObject()
         {
             var data = new DataHolder2();
             Bot.Define(x => new Model1(data.Other.GetNumber(), data.Other.GetText()));
@@ -131,7 +131,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildWithMethodCall()
+        public void Build_WithMethodCall_ReturnsObject()
         {
             Bot.Define(x => new Model1(GetNumberInternal()) { Text = GetTextInternal() });
 
@@ -144,7 +144,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildWithConstantValueOnlyAndWithNested()
+        public void Build_WithConstantValueOnlyAndWithNested_ReturnsObject()
         {
             Bot.Define(x => new Model2(136) { Date = new DateTime(2016, 1, 22) });
 
@@ -158,7 +158,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildWithSingleModifier()
+        public void Build_WithSingleModifier_ReturnsObject()
         {
             Bot.Define(x => new Model1(x.Integer.Any(10, 20)));
 
@@ -167,7 +167,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildWithMultipleModifier()
+        public void Build_WithMultipleModifier_ReturnsObject()
         {
             Bot.Define(x => new Model1(x.Integer.Any(10, 20), "t1"));
 
@@ -178,7 +178,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildWithConstructorModifier()
+        public void Build_WithConstructorModifier_ReturnsObject()
         {
             Bot.Define(x => new Model1(x.Integer.Any(10, 20), ""));
 
@@ -189,7 +189,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildWithConstructorModifierWithKeep()
+        public void Build_WithConstructorModifierWithKeep_ReturnsObject()
         {
             Bot.Define(x => new Model1(x.Integer.Any(10, 20), "the text"));
 
@@ -202,7 +202,7 @@ namespace FactoryBot.Tests.BotTests
 
 
         [Test]
-        public void BuildWithConstructorModifierAndPostConstructModifiers()
+        public void Build_WithConstructorModifierAndPostConstructModifiers_ReturnsObject()
         {
             Bot.Define(x => new Model1(x.Integer.Any(10, 20)));
 
@@ -215,7 +215,7 @@ namespace FactoryBot.Tests.BotTests
 
 
         [Test]
-        public void BuildWithUsingNestedConfigurations()
+        public void Build_WithUsingNestedConfigurations_ReturnsObject()
         {
             Bot.Define(x => new Model1(x.Integer.Any(100, 150), "the test"));
             Bot.Define(x => new Model3 { Number = 7, Nested = x.Use<Model1>() });
@@ -228,7 +228,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildWithNestedComplexObject()
+        public void Build_WithNestedComplexObject_ReturnsObject()
         {
             Bot.Define(
                 x =>
@@ -246,7 +246,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildWithNestedComplexObjectWithMemberInit()
+        public void Build_WithNestedComplexObjectWithMemberInit_ReturnsObject()
         {
             Bot.Define(
                 x =>

@@ -1,5 +1,4 @@
 ﻿using FactoryBot.Tests.Models;
-
 using NUnit.Framework;
 
 namespace FactoryBot.Tests.Generators.Collections
@@ -8,7 +7,7 @@ namespace FactoryBot.Tests.Generators.Collections
     public class SequenceFromListGeneratorTest : GeneratorTestKit
     {
         [Test]
-        public void Generate()
+        public void SequenceFromList_NonEmptySequence_ReturnsValuesInOrder()
         {
             AssertGeneratorValue(
                 x => new AllTypesModel { String = x.Strings.SequenceFromList("a", "ab", "bc", "def") },
@@ -17,7 +16,7 @@ namespace FactoryBot.Tests.Generators.Collections
         }
 
         [Test]
-        public void GenerateLoop()
+        public void SequenceFromList_BuildMoreThenSequenceLength_ReturnsSequenceInLoop()
         {
             AssertGeneratorValue(
                 x => new AllTypesModel { Double = x.Double.SequenceFromList(1.1, -14, 0.4457) },
@@ -28,6 +27,6 @@ namespace FactoryBot.Tests.Generators.Collections
         }
 
         [Test]
-        public void CreateWithEmptyList() => ExpectArgumentInitException(x => new AllTypesModel { Integer = x.Integer.SequenceFromList() });
+        public void SequenceFromList_EmptyList_ThrowsError() => ExpectArgumentInitException(x => new AllTypesModel { Integer = x.Integer.SequenceFromList() });
     }
 }

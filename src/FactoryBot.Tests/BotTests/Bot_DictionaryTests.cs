@@ -11,7 +11,7 @@ namespace FactoryBot.Tests.BotTests
         public void Terminate() => Bot.ForgetAll();
 
         [Test]
-        public void BuildNestedPrimitiveDictionaryWithGenerators()
+        public void Build_NestedPrimitiveDictionaryWithGenerators_ReturnsDictionary()
         {
             Bot.Define(x => new Model4 { SimpleDictionary = x.Dictionary(2, 5, x.Integer.Any(10, 20), x.Strings.Any()) });
 
@@ -21,7 +21,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildNestedPrimitiveConstantDictionary()
+        public void Build_NestedPrimitiveConstantDictionary_ReturnsDictionary()
         {
             Bot.Define(x => new Model4 { SimpleDictionary = new Dictionary<int, string> { { 1, "test" }, { 3, "test2" } } });
 
@@ -31,7 +31,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildNestedComplexDictionaryUsingKnownConfig()
+        public void Build_NestedComplexDictionaryUsingKnownConfig_ReturnsDictionary()
         {
             Bot.Define(x => new Model1(x.Integer.Any(100, 150), "the test"));
             Bot.Define(x => new Model2(x.Integer.Any(10, 15)));
@@ -49,7 +49,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildNestedComplexDictionaryUsingKnownConfigSimplifiedSyntax()
+        public void Build_NestedComplexDictionaryUsingKnownConfigSimplifiedSyntax_ReturnsDictionary()
         {
             Bot.Define(x => new Model1(x.Integer.Any(100, 150), "the test"));
             Bot.Define(x => new Model2(x.Integer.Any(10, 15)));
@@ -67,7 +67,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildNestedComplexDictionaryUsingUnknownKeyConfigSimplifiedSintax()
+        public void Build_NestedComplexDictionaryUsingUnknownKeyConfigSimplifiedSintax_ThrowsError()
         {
             Bot.Define(x => new Model2(x.Integer.Any(10, 15)));
             Bot.Define(x => new Model4 { ComplexDictionary = x.Dictionary<Model1, Model2>(1, 5) });
@@ -76,7 +76,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildNestedComplexDictionaryUsingUnknownValueConfigSimplifiedSyntax()
+        public void Build_NestedComplexDictionaryUsingUnknownValueConfigSimplifiedSyntax_ThrowsError()
         {
             Bot.Define(x => new Model1(x.Integer.Any(100, 150), "the test"));
             Bot.Define(x => new Model4 { ComplexDictionary = x.Dictionary<Model1, Model2>(1, 5) });
@@ -85,7 +85,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildNestedComplexDictionaryUsingNestedConfig()
+        public void Build_NestedComplexDictionaryUsingNestedConfig_ReturnsDictionary()
         {
             Bot.Define(x => new Model4 { ComplexDictionary = x.Dictionary(2, 5, new Model1(x.Integer.Any(100, 150)), new Model2(x.Integer.Any(1, 5))) });
 
@@ -101,7 +101,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildNestedPrimitiveDictionaryOfConstant()
+        public void Build_NestedPrimitiveDictionaryOfConstant_ReturnsDictionary()
         {
             Bot.Define(x => new Model4 { SimpleDictionary = x.Dictionary(4, 7, x.Integer.SequenceFromList(1, 2, 3, 4, 5, 6, 7), "test") });
 
@@ -112,7 +112,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildWithKeyDuplication()
+        public void Build_WithKeyDuplication_ReturnsDictionary()
         {
             Bot.Define(x => new Model4 { SimpleDictionary = x.Dictionary(5, 5, x.Integer.SequenceFromList(1, 1, 2, 2, 3, 4, 5, 5, 5), x.Strings.Any()) });
 
@@ -122,7 +122,7 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildUnableToDoDueToLackOfUniqueKeys()
+        public void Build_UnableToDoDueToLackOfUniqueKeys_ThrowsError()
         {
             Bot.Define(x => new Model4 { SimpleDictionary = x.Dictionary(5, 5, x.Integer.SequenceFromList(1, 2, 3), x.Strings.Any()) });
 

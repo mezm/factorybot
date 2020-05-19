@@ -8,28 +8,28 @@ namespace FactoryBot.Tests.Generators.Strings
     public class UrlGeneratorTest : GeneratorTestKit
     {
         [Test]
-        public void GenerateAnyUrl()
+        public void Url_Any_ReturnsUrl()
         {
             AssertGeneratorValue<string>(x => new AllTypesModel { String = x.Network.Url(UriKind.RelativeOrAbsolute) },
                 x => Assert.That(Uri.IsWellFormedUriString(x, UriKind.RelativeOrAbsolute)));
         }
 
         [Test]
-        public void GenerateAnyAbsoluteUrl()
+        public void Url_Absolute_ReturnsAbsoluteUrl()
         {
             AssertGeneratorValue<string>(x => new AllTypesModel { String = x.Network.Url(UriKind.Absolute) },
                 x => Assert.That(Uri.IsWellFormedUriString(x, UriKind.Absolute)));
         }
 
         [Test]
-        public void GenerateAnyRelativeUrl()
+        public void Url_Relative_ReturnsRelativeUrl()
         {
             AssertGeneratorValue<string>(x => new AllTypesModel { String = x.Network.Url(UriKind.Relative) },
                 x => Assert.That(Uri.IsWellFormedUriString(x, UriKind.Relative)));
         }
 
         [Test]
-        public void GenerateUrlWithoutPath()
+        public void Url_WithoutPath_ReturnsUrl()
         {
             AssertGeneratorValue<string>(x => new AllTypesModel { String = x.Network.Url(UriKind.Absolute, 0, 0, 0, 0, Uri.UriSchemeHttp, null) },
                 x =>
@@ -40,7 +40,7 @@ namespace FactoryBot.Tests.Generators.Strings
         }
 
         [Test]
-        public void GenerateUrlWithPath()
+        public void Url_WithPath_ReturnsUrl()
         {
             AssertGeneratorValue<string>(
                 x => new AllTypesModel { String = x.Network.Url(UriKind.Absolute, 5, 10, 0, 0, Uri.UriSchemeHttp, null) },
@@ -54,7 +54,7 @@ namespace FactoryBot.Tests.Generators.Strings
         }
 
         [Test]
-        public void GenerateUrlWithQueryParameters()
+        public void Url_WithQueryParameters_ReturnsUrl()
         {
             AssertGeneratorValue<string>(
                 x => new AllTypesModel { String = x.Network.Url(UriKind.Absolute, 0, 0, 5, 10, Uri.UriSchemeHttp, null) },
@@ -69,7 +69,7 @@ namespace FactoryBot.Tests.Generators.Strings
         }
 
         [Test]
-        public void GenerateForConstantSchema()
+        public void Url_ConstantSchema_ReturnsUrl()
         {
             AssertGeneratorValue<string>(
                 x => new AllTypesModel { String = x.Network.Url(UriKind.Absolute, 0, 0, 0, 0, "my", null) },
@@ -81,7 +81,7 @@ namespace FactoryBot.Tests.Generators.Strings
         }
 
         [Test]
-        public void GenerateForConstantHost()
+        public void Url_ConstantHost_ReturnsUrl()
         {
             AssertGeneratorValue<string>(
                 x => new AllTypesModel { String = x.Network.Url(UriKind.Absolute, 0, 0, 0, 0, null, "my.info") },
@@ -93,7 +93,7 @@ namespace FactoryBot.Tests.Generators.Strings
         }
 
         [Test]
-        public void CreateWithInvalidParameters()
+        public void Url_WithInvalidParameters_ThrowsError()
         {
             ExpectArgumentOutOfRangeInitException(
                 x => new AllTypesModel { String = x.Network.Url(UriKind.Absolute, 10, 7, 0, 0, null, null) });

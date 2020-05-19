@@ -14,10 +14,10 @@ namespace FactoryBot.Tests.Generators.Strings
         private readonly string _lastNameSource = FileUtils.GetResourceContentWithoutLineBreaks(SourceNames.LAST_NAMES);
 
         [Test]
-        public void AlwaysNewName() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Names.FullName() });
+        public void FullName_NoCondition_ReturnsNewName() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Names.FullName() });
 
         [Test]
-        public void GenerateFirstLastName()
+        public void FullName_FirstNameFirst_ReturnsName()
         {
             AssertGeneratorValue<string>(
                 x => new AllTypesModel { String = x.Names.FullName() },
@@ -30,7 +30,7 @@ namespace FactoryBot.Tests.Generators.Strings
         }
 
         [Test]
-        public void GenerateLastFirstName()
+        public void FullName_LastNameFirst_ReturnsName()
         {
             AssertGeneratorValue<string>(
                 x => new AllTypesModel { String = x.Names.FullName(FullNameFormat.LastNameFirstName) },

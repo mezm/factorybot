@@ -11,7 +11,7 @@ namespace FactoryBot.Tests.BotTests
         public void Terminate() => Bot.ForgetAll();
 
         [Test]
-        public void BuildSequence()
+        public void BuildSequence_NoCondition_ReturnsSequence()
         {
             Bot.Define(x => new Model1(x.Integer.Any(10, 25)) { Text = x.Strings.Any() });
 
@@ -24,16 +24,31 @@ namespace FactoryBot.Tests.BotTests
         }
 
         [Test]
-        public void BuildFiniteSequenceAndTakeMoreThenLimit()
+        public void BuildSequence_FiniteSequenceTakeLimit_ReturnsSequence()
         {
             Bot.Define(x => new Model1(x.Integer.Any(10, 25)) { Text = x.Strings.Any() });
 
             Assert.That(() => Bot.BuildSequence<Model1>().Take(Bot.SEQUENCE_MAX_LENGTH).ToArray(), Throws.Nothing);
+        }
+
+        [Test]
+        public void BuildSequence_FiniteSequenceTakeLessThenLimit_ReturnsSequence()
+        {
+            Bot.Define(x => new Model1(x.Integer.Any(10, 25)) { Text = x.Strings.Any() });
+
+            Assert.That(() => Bot.BuildSequence<Model1>().Take(Bot.SEQUENCE_MAX_LENGTH - 1).ToArray(), Throws.Nothing);
+        }
+
+        [Test]
+        public void BuildSequence_FiniteSequenceTakeMoreThenLimit_ThrowsError()
+        {
+            Bot.Define(x => new Model1(x.Integer.Any(10, 25)) { Text = x.Strings.Any() });
+
             Assert.That(() => Bot.BuildSequence<Model1>().Take(Bot.SEQUENCE_MAX_LENGTH + 1).ToArray(), Throws.InvalidOperationException);
         }
 
         [Test]
-        public void BuildInfiniteSequence()
+        public void BuildSequence_InfiniteSequence_ReturnAnyLength()
         {
             Bot.Define(x => new Model1(x.Integer.Any(10, 25)) { Text = x.Strings.Any() });
 

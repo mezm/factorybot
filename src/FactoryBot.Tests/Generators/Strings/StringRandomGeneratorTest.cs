@@ -10,13 +10,16 @@ namespace FactoryBot.Tests.Generators.Strings
         private readonly string _fileContent = FileUtils.GetResourceContentWithoutLineBreaks(SourceNames.RANDOM_TEXT);
 
         [Test]
-        public void AlwaysNewValue() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Strings.Any() });
+        public void Any_NoCondition_RetrnsNewString() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Strings.Any() });
 
         [Test]
-        public void GenerateNextWithoutThreshold() => AssertGeneratorValue<string>(x => new AllTypesModel { String = x.Strings.Any() }, x => Assert.That(_fileContent, Does.Contain(x)));
+        public void Any_NoCondition_ReturnsStringFromTheSource()
+        {
+            AssertGeneratorValue<string>(x => new AllTypesModel { String = x.Strings.Any() }, x => Assert.That(_fileContent, Does.Contain(x)));
+        }
 
         [Test]
-        public void GenerateNextWithThreshold()
+        public void Any_WithLengthRange_ReturnsString()
         {
             AssertGeneratorValue<string>(x => new AllTypesModel { String = x.Strings.Any(3, 15) }, x =>
             {
@@ -26,7 +29,7 @@ namespace FactoryBot.Tests.Generators.Strings
         }
 
         [Test]
-        public void GenerateNextWithConstantThreshold()
+        public void Any_WithConstLength_ReturnsString()
         {
             AssertGeneratorValue(x => new AllTypesModel { String = x.Strings.Any(10, 10) }, 
                 Has.Length.EqualTo(10),
@@ -38,6 +41,6 @@ namespace FactoryBot.Tests.Generators.Strings
         [TestCase(10, -40)]
         [TestCase(40, 10)]
         [TestCase(0, 0)]
-        public void CreateWithInvalidThreshold(int min, int max) => ExpectArgumentOutOfRangeInitException(x => new AllTypesModel { String = x.Strings.Any(min, max) });
+        public void Any_WrongLengthRange_ThrowsError(int min, int max) => ExpectArgumentOutOfRangeInitException(x => new AllTypesModel { String = x.Strings.Any(min, max) });
     }
 }

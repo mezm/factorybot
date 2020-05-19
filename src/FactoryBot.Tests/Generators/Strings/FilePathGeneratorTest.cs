@@ -1,9 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-
 using FactoryBot.Tests.Models;
-
 using NUnit.Framework;
 
 namespace FactoryBot.Tests.Generators.Strings
@@ -23,10 +21,10 @@ namespace FactoryBot.Tests.Generators.Strings
         }
 
         [Test]
-        public void GetAlwaysNewRandomFilename() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Strings.Filename() });
+        public void Filename_NoCondition_ReturnsNewFilename() => AssertGeneratorValuesAreNotTheSame(x => new AllTypesModel { String = x.Strings.Filename() });
 
         [Test]
-        public void GetNotExistingFileFromEverywhere()
+        public void Filename_NoCondition_ReturnsNotExistingFileFromEverywhere()
         {
             AssertGeneratorValue<string>(
                 x => new AllTypesModel { String = x.Strings.Filename() },
@@ -34,7 +32,7 @@ namespace FactoryBot.Tests.Generators.Strings
         }
 
         [Test]
-        public void GetNotExistingFileFromFolder()
+        public void Filename_NotExistingFileFromFolder_ReturnsFilename()
         {
             var folder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             AssertGeneratorValue<string>(
@@ -47,7 +45,7 @@ namespace FactoryBot.Tests.Generators.Strings
         }
 
         [Test]
-        public void GetExistingFileFromEverywhere()
+        public void Filename_ExistingFileFromEverywhere_ReturnsFilename()
         {
             AssertGeneratorValue<string>(
                 x => new AllTypesModel { String = x.Strings.Filename(null, true) },
@@ -55,7 +53,7 @@ namespace FactoryBot.Tests.Generators.Strings
         }
 
         [Test]
-        public void GetExistingFileFromFolder()
+        public void Filename_ExistingFileFromFolder_ReturnsFilename()
         {
             var folder = Directory.GetCurrentDirectory();
             AssertGeneratorValue<string>(
@@ -68,7 +66,7 @@ namespace FactoryBot.Tests.Generators.Strings
         }
 
         [Test]
-        public void GetExistingFileFromNotExistingFolder()
+        public void Filename_ExistingFileFromNotExistingFolder_ThrowsError()
         {
             var folder = Directory.GetCurrentDirectory();
             while (Directory.Exists(folder))
@@ -80,7 +78,7 @@ namespace FactoryBot.Tests.Generators.Strings
         }
 
         [Test]
-        public void GetExistingFileFromEmptyFolder()
+        public void Filename_ExistingFileFromEmptyFolder_ThrowsError()
         {
             var directory = new DirectoryInfo(new Guid().ToString("D"));
             directory.Create();

@@ -1,24 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
 using FactoryBot.DSL.Attributes;
 using FactoryBot.Generators;
-
 using NUnit.Framework;
 
 namespace FactoryBot.Tests.DSL
 {
     [TestFixture]
-    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
     public class GeneratorAttributeTest
     {
         [Test]
-        public void CreateAttributeWithNonGeneratorClass() => Assert.That(() => new GeneratorAttribute(typeof(string)), Throws.ArgumentException);
+        public void Constructor_WithNonGeneratorClass_ThrowsError() => Assert.That(() => new GeneratorAttribute(typeof(string)), Throws.ArgumentException);
 
         [Test]
-        public void CreateGeneratorWithoutParameters()
+        public void CreateGenerator_GeneratorWithoutParameters_ReturnsGenerator()
         {
             var attr = new GeneratorAttribute(typeof(TestGenerator));
 
@@ -30,7 +27,7 @@ namespace FactoryBot.Tests.DSL
         }
 
         [Test]
-        public void CreateGeneratorWithParameters()
+        public void CreateGenerator_GeneratorWithParameters_ReturnsGenerator()
         {
             var attr = new GeneratorAttribute(typeof(TestGenerator));
 
@@ -44,7 +41,7 @@ namespace FactoryBot.Tests.DSL
         }
 
         [Test]
-        public void CreateGeneratorWithIncorrectParameters()
+        public void CreateGenerator_IncorrectParameters_ThrowsError()
         {
             var attr = new GeneratorAttribute(typeof(TestGenerator));
 
@@ -56,7 +53,7 @@ namespace FactoryBot.Tests.DSL
         }
 
         [Test]
-        public void CreateNonGenericGeneratorFromGenericMethod()
+        public void CreateGenerator_NonGenericGeneratorFromGenericMethod_ReturnsGenerator()
         {
             var attr = new GeneratorAttribute(typeof(TestGenerator));
 
@@ -68,7 +65,7 @@ namespace FactoryBot.Tests.DSL
         }
 
         [Test]
-        public void CreateGenericGenerator()
+        public void CreateGenerator_GenericGenerator_ReturnsGenerator()
         {
             var attr = new GeneratorAttribute(typeof(TestGenericGenerator<,>));
 
@@ -82,7 +79,7 @@ namespace FactoryBot.Tests.DSL
         }
 
         [Test]
-        public void CreateGenericGeneratorWithNoTypeArguments()
+        public void CreateGenerator_GenericGeneratorWithNoTypeArguments_ThrowsError()
         {
             var attr = new GeneratorAttribute(typeof(TestGenericGenerator<,>));
 
@@ -92,7 +89,7 @@ namespace FactoryBot.Tests.DSL
         }
 
         [Test]
-        public void CreateGeneratorWithDefaultParameters()
+        public void CreateGenerator_WithDefaultParameters_ReturnsGenerator()
         {
             var attr = new GeneratorAttribute(typeof(TestGeneratorWithDefaultParameters));
 
