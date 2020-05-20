@@ -9,8 +9,6 @@ namespace FactoryBot.ExpressionParser
     {
         public ConstructorDefinition Parse<T>(Expression<Func<CustomConstructBuilder, T>> constructor)
         {
-            Check.NotNull(constructor, nameof(constructor));
-
             if (constructor.Body is NewExpression newExpr)
             {
                 return ExpressionParserHelper.CreateConstructorGenerator(newExpr);

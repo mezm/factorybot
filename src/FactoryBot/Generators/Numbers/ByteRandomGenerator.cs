@@ -8,7 +8,10 @@ namespace FactoryBot.Generators.Numbers
 
         public ByteRandomGenerator(byte from = byte.MinValue, byte to = byte.MaxValue)
         {
-            Check.MinMax(from, to, nameof(from));
+            if (from > to)
+            {
+                throw new ArgumentOutOfRangeException("Minimum should not be greater than maximum.");
+            }
 
             _integerRandomGenerator = new IntegerRandomGenerator(from, to);
         }

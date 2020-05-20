@@ -10,7 +10,6 @@ namespace FactoryBot.DSL.Attributes
     {
         public GeneratorAttribute(Type generatorType)
         {
-            Check.NotNull(generatorType, nameof(generatorType));
             if (generatorType.GetInterfaces().All(x => x != typeof(IGenerator)))
             {
                 throw new ArgumentException($"Type {generatorType} should implement IGenerator.");
@@ -23,9 +22,6 @@ namespace FactoryBot.DSL.Attributes
 
         public override IGenerator CreateGenerator(MethodInfo method, IDictionary<string, object> parameters)
         {
-            Check.NotNull(method, nameof(method));
-            Check.NotNull(parameters, nameof(parameters));
-
             if (!GeneratorType.IsGenericType || !GeneratorType.IsGenericTypeDefinition)
             {
                 return CreateGenerator(GeneratorType, parameters);

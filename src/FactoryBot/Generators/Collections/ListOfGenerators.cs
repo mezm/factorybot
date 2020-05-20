@@ -11,9 +11,6 @@ namespace FactoryBot.Generators.Collections
 
         public ListOfGenerators(Type elementType, IGenerator[] generators)
         {
-            Check.NotNull(elementType, nameof(elementType));
-            Check.NotNull(generators, nameof(generators));
-
             _generators = generators;
             _listType = typeof(List<>).MakeGenericType(elementType);
         }

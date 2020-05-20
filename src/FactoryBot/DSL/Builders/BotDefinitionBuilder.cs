@@ -11,16 +11,12 @@ namespace FactoryBot.DSL.Builders
 
         public BotDefinitionBuilder<T> BeforePropertyBinding(Action<T> action)
         {
-            Check.NotNull(action, nameof(action));
-
             _config.BeforeBindingHook = x => action((T)x);
             return this;
         }
 
         public BotDefinitionBuilder<T> AfterPropertyBinding(Action<T> action)
         {
-            Check.NotNull(action, nameof(action));
-
             _config.AfterBindingHook = x => action((T)x);
             return this;
         }

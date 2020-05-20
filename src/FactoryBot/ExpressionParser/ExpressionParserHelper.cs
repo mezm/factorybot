@@ -15,8 +15,6 @@ namespace FactoryBot.ExpressionParser
     {
         public static ConstructorDefinition CreateConstructorGenerator(NewExpression newExpr)
         {
-            Check.NotNull(newExpr, nameof(newExpr));
-
             return new ConstructorDefinition(
                 newExpr.Constructor,
                 newExpr.Arguments.Select(ParseGeneratorVariable).ToArray());
@@ -24,16 +22,11 @@ namespace FactoryBot.ExpressionParser
 
         public static IGenerator ParseGeneratorVariable(Expression expr)
         {
-            Check.NotNull(expr, nameof(expr));
-
             var methodCallExpr = expr as MethodCallExpression;
             var generatorAttr = methodCallExpr?.Method.GetCustomAttribute<GeneratorAttributeBase>();
             if (generatorAttr != null)
             {
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-                var methodParameters = methodCallExpr.Method.GetParameters();
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
-
+                var methodParameters = methodCallExpr!.Method.GetParameters(); // methodCallExpr can't be null
                 var generatorParamenters = new Dictionary<string, object>(methodParameters.Length);
 
                 var defaultItemGenerators = methodCallExpr.Method.GetCustomAttributes<UseDefaultItemGeneratorAttribute>();
@@ -78,12 +71,7 @@ namespace FactoryBot.ExpressionParser
             return new ConstantGenerator(EvaluateExpression(expr));
         }
 
-        public static object EvaluateExpression(Expression expr)
-        {
-            Check.NotNull(expr, nameof(expr));
-
-            return Expression.Lambda(expr).Compile().DynamicInvoke();
-        }
+        public static object EvaluateExpression(Expression expr) => Expression.Lambda(expr).Compile().DynamicInvoke();
 
         public static BotConfiguration ParseConstructor(NewExpression newExpr)
         {

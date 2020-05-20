@@ -16,8 +16,6 @@ namespace FactoryBot
 
         public static BotDefinitionBuilder<T> Define<T>(Expression<Func<BotConfigurationBuilder, T>> factory)
         {
-            Check.NotNull(factory, nameof(factory));
-
             var parser = new FactoryExpressionParser();
             var configuration = parser.Parse(factory);
             CheckNestedAndCircularDependencies(configuration);
@@ -48,15 +46,11 @@ namespace FactoryBot
 
         public static void SetDefaultAutoGenerator<T>(Expression<Func<BotConfigurationBuilder, T>> generator)
         {
-            Check.NotNull(generator, nameof(generator));
-
             AutoBindingParser.DefaultGenerators[typeof(T)] = ExpressionParserHelper.ParseGeneratorVariable(generator.Body);
         }
 
         public static T Build<T>(params Action<T>[] modifiers)
         {
-            Check.NotNull(modifiers, nameof(modifiers));
-
             var result = (T)GetConfiguration(typeof(T)).CreateNewObject();
             foreach (var modifier in modifiers)
             {
@@ -70,9 +64,6 @@ namespace FactoryBot
             Expression<Func<CustomConstructBuilder, T>> constructorModifier,
             params Action<T>[] afterConstructModifiers)
         {
-            Check.NotNull(constructorModifier, nameof(constructorModifier));
-            Check.NotNull(afterConstructModifiers, nameof(afterConstructModifiers));
-
             var parser = new ConstructorParser();
             var constructor = parser.Parse(constructorModifier);
 

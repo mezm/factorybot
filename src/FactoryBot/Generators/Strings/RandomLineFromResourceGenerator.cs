@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using FactoryBot.Utils;
 
 namespace FactoryBot.Generators.Strings
@@ -9,7 +10,10 @@ namespace FactoryBot.Generators.Strings
 
         public RandomLineFromResourceGenerator(string resource)
         {
-            Check.NotNullOrWhiteSpace(resource, nameof(resource));
+            if (string.IsNullOrWhiteSpace(resource))
+            {
+                throw new ArgumentException("String should not be null or empty.", nameof(resource));
+            }
 
             _resource = resource;
         }

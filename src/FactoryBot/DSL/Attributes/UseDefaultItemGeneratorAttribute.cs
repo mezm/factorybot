@@ -9,7 +9,10 @@ namespace FactoryBot.DSL.Attributes
     {
         public UseDefaultItemGeneratorAttribute(string parameterName, int genericParameterIndex = 0)
         {
-            Check.NotNullOrWhiteSpace(parameterName, nameof(parameterName));
+            if (string.IsNullOrWhiteSpace(parameterName))
+            {
+                throw new ArgumentException("String should not be null or empty.", nameof(parameterName));
+            }
 
             ParameterName = parameterName;
             GenericParameterIndex = genericParameterIndex;
@@ -21,8 +24,6 @@ namespace FactoryBot.DSL.Attributes
 
         public IGenerator CreateGenerator(MethodInfo method)
         {
-            Check.NotNull(method, nameof(method));
-
             if (!method.IsGenericMethod)
             {
                 throw new ArgumentException("Only generic methods are allowed for generic generators.", nameof(method));

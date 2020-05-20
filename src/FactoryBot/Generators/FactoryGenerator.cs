@@ -7,12 +7,7 @@ namespace FactoryBot.Generators
     {
         private readonly Func<T> _nextItem;
 
-        public FactoryGenerator(Func<T> nextItem)
-        {
-            Check.NotNull(nextItem, nameof(nextItem));
-
-            _nextItem = nextItem;
-        }
+        public FactoryGenerator(Func<T> nextItem) => _nextItem = nextItem;
 
         public object Next()
         {

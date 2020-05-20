@@ -7,17 +7,10 @@ namespace FactoryBot.Extensions
     {
         public static bool IsUsingDecorator(this IGenerator generator)
         {
-            Check.NotNull(generator, nameof(generator));
-
             var type = generator.GetType();
             return type.IsGenericType && type.GetGenericTypeDefinition() == typeof (UsingGenerator<>);
         }
 
-        public static Type GetDependencyType(this IGenerator generator)
-        {
-            Check.NotNull(generator, nameof(generator));
-
-            return generator.GetType().GetGenericArguments()[0];
-        }
+        public static Type GetDependencyType(this IGenerator generator) => generator.GetType().GetGenericArguments()[0];
     }
 }

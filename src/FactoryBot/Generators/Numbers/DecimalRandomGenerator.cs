@@ -1,4 +1,6 @@
-﻿namespace FactoryBot.Generators.Numbers
+﻿using System;
+
+namespace FactoryBot.Generators.Numbers
 {
     public class DecimalRandomGenerator : TypedGenerator<decimal>
     {
@@ -6,7 +8,10 @@
 
         public DecimalRandomGenerator(decimal from = decimal.MinValue, decimal to = decimal.MaxValue)
         {
-            Check.MinMax(from, to, nameof(from));
+            if (from > to)
+            {
+                throw new ArgumentOutOfRangeException("Minimum should not be greater than maximum.");
+            }
 
             _doubleRandomGenerator = new DoubleRandomGenerator((double)from, (double)to);
         }

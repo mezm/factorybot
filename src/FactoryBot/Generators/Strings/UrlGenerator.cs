@@ -23,8 +23,14 @@ namespace FactoryBot.Generators.Strings
             string? schema = null,
             string? host = null)
         {
-            Check.MinMax(minPathSegments, maxPathSegments, nameof(minPathSegments));
-            Check.MinMax(minQueryParams, maxQueryParams, nameof(minQueryParams));
+            if (minPathSegments > maxPathSegments)
+            {
+                throw new ArgumentOutOfRangeException("Minimum should not be greater than maximum.");
+            }
+            if (minQueryParams > maxQueryParams)
+            {
+                throw new ArgumentOutOfRangeException("Minimum should not be greater than maximum.");
+            }
             
             _uriKind = uriKind;
             _minPathSegments = minPathSegments;

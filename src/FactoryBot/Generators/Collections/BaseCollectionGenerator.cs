@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace FactoryBot.Generators.Collections
 {
@@ -12,8 +13,10 @@ namespace FactoryBot.Generators.Collections
 
         protected BaseCollectionGenerator(int minElements, int maxElements, IGenerator itemGenerator)
         {
-            Check.MinMax(minElements, maxElements, nameof(minElements));
-            Check.NotNull(itemGenerator, nameof(itemGenerator));
+            if (minElements > maxElements)
+            {
+                throw new ArgumentOutOfRangeException("Minimum should not be greater than maximum.");
+            }
 
             _minElements = minElements;
             _maxElements = maxElements;

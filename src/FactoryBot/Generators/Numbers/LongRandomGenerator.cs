@@ -8,7 +8,10 @@ namespace FactoryBot.Generators.Numbers
 
         public LongRandomGenerator(long from = long.MinValue, long to = int.MaxValue)
         {
-            Check.MinMax(from, to, nameof(from));
+            if (from > to)
+            {
+                throw new ArgumentOutOfRangeException("Minimum should not be greater than maximum.");
+            }
 
             _from = from;
             _to = to;

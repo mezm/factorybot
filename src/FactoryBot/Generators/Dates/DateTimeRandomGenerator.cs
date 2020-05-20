@@ -11,7 +11,10 @@ namespace FactoryBot.Generators.Dates
             from ??= new DateTime(1753, 1, 1);
             to ??= DateTime.MaxValue;
 
-            Check.MinMax(from.Value, to.Value, nameof(from));
+            if (from.Value > to.Value)
+            {
+                throw new ArgumentOutOfRangeException("Minimum should not be greater than maximum.");
+            }
 
             _from = from.Value.Ticks;
             _to = to.Value.Ticks;

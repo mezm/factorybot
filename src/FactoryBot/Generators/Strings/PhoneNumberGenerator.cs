@@ -1,25 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace FactoryBot.Generators.Strings
 {
     public class PhoneNumberGenerator : TypedGenerator<string>
     {
-        private const string DefaultTemplate = "###-###-####";
-        private const char Placeholder = '#';
+        private const string DEFAULT_TEMPLATE = "###-###-####";
+        private const char PLACEHOLDER = '#';
 
         private readonly char[] _template;
         private readonly int[] _placeholderIndexes;
 
-        public PhoneNumberGenerator(string template = DefaultTemplate)
+        public PhoneNumberGenerator(string template = DEFAULT_TEMPLATE)
         {
-            Check.NotNullOrWhiteSpace(template, nameof(template));
+            if (string.IsNullOrWhiteSpace(template))
+            {
+                throw new ArgumentException("String should not be null or empty.", nameof(template));
+            }
 
             _template = template.ToCharArray();
             var placeholders = new List<int>();
 
             for (var i = 0; i < _template.Length; i++)
             {
-                if (_template[i] == Placeholder)
+                if (_template[i] == PLACEHOLDER)
                 {
                     placeholders.Add(i);
                 }

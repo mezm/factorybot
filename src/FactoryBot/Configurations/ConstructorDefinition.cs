@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-
 using FactoryBot.Generators;
 
 namespace FactoryBot.Configurations
@@ -11,9 +10,6 @@ namespace FactoryBot.Configurations
     {
         public ConstructorDefinition(ConstructorInfo constructor, IReadOnlyList<IGenerator> arguments)
         {
-            Check.NotNull(constructor, nameof(constructor));
-            Check.NotNull(arguments, nameof(arguments));
-
             if (constructor.GetParameters().Length != arguments.Count)
             {
                 throw new ArgumentException("Constructor arguments mismatch.");

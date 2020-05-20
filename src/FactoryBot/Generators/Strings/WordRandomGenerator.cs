@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -9,20 +10,29 @@ namespace FactoryBot.Generators.Strings
 {
     public class WordRandomGenerator : TypedGenerator<string>
     {
-        private const double AvarageWordSize = 5.1;
-        private const int MinBufferSize = 30;
+        private const double AVARAGE_WORD_SIZE = 5.1;
+        private const int MIN_BUFFER_SIZE = 30;
 
         private readonly int _approximateWordCountInSource, _minWords, _maxWords;
         
         public WordRandomGenerator(int minWords = 2, int maxWords = 7)
         {
-            Check.GreaterThanZero(minWords, nameof(minWords));
-            Check.GreaterThanZero(maxWords, nameof(maxWords));
-            Check.MinMax(minWords, maxWords, nameof(minWords));
+            if (minWords <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(minWords), minWords, "Should be greater than zero.");
+            }
+            if (maxWords <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maxWords), maxWords, "Should be greater than zero.");
+            }
+            if (minWords > maxWords)
+            {
+                throw new ArgumentOutOfRangeException("Minimum should not be greater than maximum.");
+            }
 
             _minWords = minWords;
             _maxWords = maxWords;
-            _approximateWordCountInSource = (int)(ResourceHelper.GetStreamLength(SourceNames.RANDOM_TEXT)/AvarageWordSize);
+            _approximateWordCountInSource = (int)(ResourceHelper.GetStreamLength(SourceNames.RANDOM_TEXT)/AVARAGE_WORD_SIZE);
         }
 
         protected override string NextInternal() => ResourceHelper.Read(SourceNames.RANDOM_TEXT, Read);
@@ -30,14 +40,14 @@ namespace FactoryBot.Generators.Strings
         private string Read(StreamReader reader)
         {
             var targetWordCount = NextRandomInteger(_minWords, _maxWords);
-            var bufferSize = (int)(targetWordCount * AvarageWordSize);
-            if (bufferSize < MinBufferSize)
+            var bufferSize = (int)(targetWordCount * AVARAGE_WORD_SIZE);
+            if (bufferSize < MIN_BUFFER_SIZE)
             {
-                bufferSize = MinBufferSize;
+                bufferSize = MIN_BUFFER_SIZE;
             }
 
             var buffer = new char[bufferSize];
-            var from = (int)(NextRandomInteger(0, _approximateWordCountInSource - 1) * AvarageWordSize);
+            var from = (int)(NextRandomInteger(0, _approximateWordCountInSource - 1) * AVARAGE_WORD_SIZE);
             reader.BaseStream.Seek(from, SeekOrigin.Begin);
 
             var collectedWords = 0;

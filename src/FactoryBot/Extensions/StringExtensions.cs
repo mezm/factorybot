@@ -7,17 +7,10 @@ namespace FactoryBot.Extensions
     {
         public static string[] Words(this string str)
         {
-            Check.NotNull(str, nameof(str));
-
             return Regex.Matches(str, @"(\w[\w-]*\w)|\w", RegexOptions.Compiled).Cast<Match>().Select(x => x.Value).ToArray();
         }
 
-        public static string RemoveLineBreaks(this string str)
-        {
-            Check.NotNull(str, nameof(str));
-
-            return Regex.Replace(str, @"\r\n?|\n", x => RemoveLineBreakMatchEvaluator(str, x)).Trim();
-        }
+        public static string RemoveLineBreaks(this string str) => Regex.Replace(str, @"\r\n?|\n", x => RemoveLineBreakMatchEvaluator(str, x)).Trim();
 
         private static string RemoveLineBreakMatchEvaluator(string str, Match match)
         {

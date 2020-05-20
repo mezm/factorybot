@@ -7,12 +7,7 @@ namespace FactoryBot.DSL.Attributes
 {
     public sealed class StringGeneratorFromResourceAttribute : GeneratorAttributeBase
     {
-        public StringGeneratorFromResourceAttribute(string resource) 
-        {
-            Check.NotNullOrWhiteSpace(resource, nameof(resource));
-
-            Resource = resource;
-        }
+        public StringGeneratorFromResourceAttribute(string resource) => Resource = resource;
 
         public string Resource { get; }
 

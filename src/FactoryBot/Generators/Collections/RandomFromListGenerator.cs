@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace FactoryBot.Generators.Collections
 {
@@ -9,8 +10,10 @@ namespace FactoryBot.Generators.Collections
 
         public RandomFromListGenerator(IReadOnlyList<T> source)
         {
-            Check.NotNull(source, nameof(source));
-            Check.CollectionNotEmpty(source, nameof(source));
+            if (source.Count == 0)
+            {
+                throw new ArgumentException("Collection should not be empty.", nameof(source));
+            }
 
             _source = source;
         }

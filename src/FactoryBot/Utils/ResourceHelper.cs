@@ -8,7 +8,10 @@ namespace FactoryBot.Utils
     {
         public static Stream OpenStream(string resourceName)
         {
-            Check.NotNullOrWhiteSpace(resourceName, nameof(resourceName));
+            if (string.IsNullOrWhiteSpace(resourceName))
+            {
+                throw new ArgumentException("String should not be null or empty.", nameof(resourceName));
+            }
 
             var assembly = Assembly.GetCallingAssembly();
             var stream = assembly.GetManifestResourceStream(resourceName);
@@ -22,8 +25,10 @@ namespace FactoryBot.Utils
 
         public static TResult Read<TResult>(string resourceName, Func<StreamReader, TResult> read)
         {
-            Check.NotNullOrWhiteSpace(resourceName, nameof(resourceName));
-            Check.NotNull(read, nameof(read));
+            if (string.IsNullOrWhiteSpace(resourceName))
+            {
+                throw new ArgumentException("String should not be null or empty.", nameof(resourceName));
+            }
 
             var stream = OpenStream(resourceName);
             using (var reader = new StreamReader(stream))
@@ -34,17 +39,18 @@ namespace FactoryBot.Utils
 
         public static long GetStreamLength(string resourceName)
         {
-            Check.NotNullOrWhiteSpace(resourceName, nameof(resourceName));
-
-            using (var stream = Assembly.GetCallingAssembly().GetManifestResourceStream(resourceName))
+            if (string.IsNullOrWhiteSpace(resourceName))
             {
-                if (stream == null)
-                {
-                    throw new IOException($"Resource {resourceName} has not been found.");
-                }
-
-                return stream.Length;
+                throw new ArgumentException("String should not be null or empty.", nameof(resourceName));
             }
+
+            using var stream = Assembly.GetCallingAssembly().GetManifestResourceStream(resourceName);
+            if (stream == null)
+            {
+                throw new IOException($"Resource {resourceName} has not been found.");
+            }
+
+            return stream.Length;
         }
     }
 }

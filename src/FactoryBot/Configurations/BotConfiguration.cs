@@ -10,9 +10,6 @@ namespace FactoryBot.Configurations
     {
         public BotConfiguration(Type constructingType, ConstructorDefinition constructor)
         {
-            Check.NotNull(constructingType, nameof(constructingType));
-            Check.NotNull(constructor, nameof(constructor));
-
             ConstructingType = constructingType;
             Constructor = constructor;
         }
@@ -31,8 +28,6 @@ namespace FactoryBot.Configurations
 
         public object CreateNewObjectWithModification(ConstructorDefinition modification)
         {
-            Check.NotNull(modification, nameof(modification));
-
             if (Constructor.Constructor != modification.Constructor)
             {
                 var constructor = new ConstructorDefinition(modification.Constructor, modification.Arguments);
@@ -52,8 +47,6 @@ namespace FactoryBot.Configurations
 
         public void MergeProperties(BotConfiguration configuration)
         {
-            Check.NotNull(configuration, nameof(configuration));
-
             var existingProperties = Properties.Select(x => x.Property).ToArray();
             var propertiesToAdd = configuration.Properties.Where(x => !existingProperties.Contains(x.Property));
             Properties.AddRange(propertiesToAdd);

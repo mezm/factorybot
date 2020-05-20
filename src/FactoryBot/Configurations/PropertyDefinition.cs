@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-
 using FactoryBot.Generators;
 
 namespace FactoryBot.Configurations
@@ -9,9 +8,6 @@ namespace FactoryBot.Configurations
     {
         public PropertyDefinition(PropertyInfo property, IGenerator generator)
         {
-            Check.NotNull(property, nameof(property));
-            Check.NotNull(generator, nameof(generator));
-
             Property = property;
             Generator = generator;
         }
@@ -22,8 +18,6 @@ namespace FactoryBot.Configurations
 
         public void Apply(object obj, bool overrideNotDefault = false)
         {
-            Check.NotNull(obj, nameof(obj));
-
             if (!overrideNotDefault && !PropertyHasDefaultValue(obj))
             {
                 return;
