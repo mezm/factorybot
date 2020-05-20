@@ -6,6 +6,6 @@ namespace FactoryBot.DSL.Builders
     public class CustomConstructBuilder : BotConfigurationBuilder
     {
         [Generator(typeof(KeepGenerator))]
-        public T Keep<T>() => default;
+        public T Keep<T>() => default!;
     }
 }

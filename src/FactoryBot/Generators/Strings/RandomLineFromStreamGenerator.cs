@@ -6,11 +6,9 @@ namespace FactoryBot.Generators.Strings
     {
         protected override string NextInternal()
         {
-            using (var stream = OpenStream())
-            using (var reader = new StreamReader(stream))
-            {
-                return Read(reader);
-            }
+            using var stream = OpenStream();
+            using var reader = new StreamReader(stream);
+            return Read(reader);
         }
 
         protected abstract Stream OpenStream();
@@ -23,7 +21,7 @@ namespace FactoryBot.Generators.Strings
                 throw new IOException("Source is empty.");
             }
 
-            string result = null;
+            string? result = null;
             while (result == null)
             {
                 var from = NextRandomInteger(0, (int)streamLength);
@@ -44,7 +42,7 @@ namespace FactoryBot.Generators.Strings
                     return reader.ReadLine();
                 }
 
-                result = reader.ReadLine(); // skipping the first readed line because it could be incomplete
+                result = reader.ReadLine(); // skipping the first read line because it could be incomplete
             }
 
             return result;

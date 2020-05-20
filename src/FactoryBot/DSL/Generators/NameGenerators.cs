@@ -9,16 +9,16 @@ namespace FactoryBot.DSL.Generators
 #pragma warning disable IDE0060 // Remove unused parameter
 
         [StringGeneratorFromResource(SourceNames.FIRST_NAMES)]
-        public string FirstName() => default;
+        public string FirstName() => default!;
 
         [StringGeneratorFromResource(SourceNames.LAST_NAMES)]
-        public string LastName() => default;
+        public string LastName() => default!;
 
         [Generator(typeof(FullNameGenerator))]
-        public string FullName() => default;
+        public string FullName() => default!;
 
         [Generator(typeof(FullNameGenerator))]
-        public string FullName(FullNameFormat format) => default;
+        public string FullName(FullNameFormat format) => default!;
 
 #pragma warning restore IDE0060 // Remove unused parameter
     }

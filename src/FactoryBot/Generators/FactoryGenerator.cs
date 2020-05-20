@@ -3,6 +3,7 @@
 namespace FactoryBot.Generators
 {
     internal class FactoryGenerator<T> : IGenerator
+        where T : notnull
     {
         private readonly Func<T> _nextItem;
 

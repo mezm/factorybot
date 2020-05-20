@@ -13,7 +13,7 @@ namespace FactoryBot.Generators.Strings
 
         protected override string Read(StreamReader reader)
         {
-            string line = null;
+            string? line = null;
             while (line == null)
             {
                 if (reader.BaseStream.Length == 0)

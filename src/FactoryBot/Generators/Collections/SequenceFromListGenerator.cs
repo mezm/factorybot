@@ -3,6 +3,7 @@
 namespace FactoryBot.Generators.Collections
 {
     public class SequenceFromListGenerator<T> : TypedGenerator<T>
+        where T : notnull
     {
         private readonly IReadOnlyList<T> _source;
         private int _index;

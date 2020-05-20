@@ -8,25 +8,25 @@ namespace FactoryBot.DSL.Generators
     {
 #pragma warning disable IDE0060 // Remove unused parameter
         [StringGeneratorFromResource(SourceNames.COUNTRIES)]
-        public string Country() => default;
+        public string Country() => default!;
 
         [StringGeneratorFromResource(SourceNames.CITIES)]
-        public string City() => default;
+        public string City() => default!;
 
         [StringGeneratorFromResource(SourceNames.STATES)]
-        public string State() => default;
+        public string State() => default!;
 
         [Generator(typeof(PostalCodeGenerator))]
-        public string PostalCode(PostalCodeFormat format) => default;
+        public string PostalCode(PostalCodeFormat format) => default!;
 
         [Generator(typeof(StreetAddressGenerator))]
-        public string StreetAndBuilding() => default; // todo should support formats as well
+        public string StreetAndBuilding() => default!; // todo should support formats as well
 
         [Generator(typeof(PhoneNumberGenerator))]
-        public string PhoneNumber() => default;
+        public string PhoneNumber() => default!;
 
         [Generator(typeof(PhoneNumberGenerator))]
-        public string PhoneNumber(string template) => default;
+        public string PhoneNumber(string template) => default!;
 
 #pragma warning restore IDE0060 // Remove unused parameter
     }

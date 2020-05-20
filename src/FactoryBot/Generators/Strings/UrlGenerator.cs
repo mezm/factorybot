@@ -12,7 +12,7 @@ namespace FactoryBot.Generators.Strings
         private readonly IGenerator _hostGenerator = new HostnameGenerator();
         private readonly UriKind _uriKind;
         private readonly int _minPathSegments, _maxPathSegments, _minQueryParams, _maxQueryParams;
-        private readonly string _schema, _host;
+        private readonly string? _schema, _host;
 
         public UrlGenerator(
             UriKind uriKind = UriKind.Absolute,
@@ -20,8 +20,8 @@ namespace FactoryBot.Generators.Strings
             int maxPathSegments = 5,
             int minQueryParams = 0,
             int maxQueryParams = 0,
-            string schema = null,
-            string host = null)
+            string? schema = null,
+            string? host = null)
         {
             Check.MinMax(minPathSegments, maxPathSegments, nameof(minPathSegments));
             Check.MinMax(minQueryParams, maxQueryParams, nameof(minQueryParams));

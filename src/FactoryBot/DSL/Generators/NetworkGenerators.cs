@@ -10,16 +10,16 @@ namespace FactoryBot.DSL.Generators
 #pragma warning disable IDE0060 // Remove unused parameter
 
         [Generator(typeof(EmailGenerator))]
-        public string Email() => default;
+        public string Email() => default!;
 
         [Generator(typeof(UrlGenerator))]
-        public string Url() => default;
+        public string Url() => default!;
 
         [Generator(typeof(UrlGenerator))]
-        public string Url(UriKind uriKind) => default;
+        public string Url(UriKind uriKind) => default!;
 
         [Generator(typeof(UrlGenerator))]
-        public string Url(string schema, string host) => default;
+        public string Url(string schema, string host) => default!;
 
         [Generator(typeof(UrlGenerator))]
         public string Url(
@@ -29,16 +29,16 @@ namespace FactoryBot.DSL.Generators
             int minQueryParams,
             int maxQueryParams,
             string schema,
-            string host) => default;
+            string host) => default!;
 
         [Generator(typeof(HostnameGenerator))]
-        public string Hostname() => default;
+        public string Hostname() => default!;
 
         [Generator(typeof(HostnameGenerator))]
-        public string Hostname(int minSubdomains, int maxSubdomains) => default;
+        public string Hostname(int minSubdomains, int maxSubdomains) => default!;
 
         [StringGeneratorFromResource(SourceNames.TOP_LEVEL_DOMAINS)]
-        public string TopLevelDomain() => default;
+        public string TopLevelDomain() => default!;
 
 #pragma warning restore IDE0060 // Remove unused parameter
     }
