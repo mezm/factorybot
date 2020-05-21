@@ -15,7 +15,7 @@ namespace FactoryBot.Generators
 
         protected double NextRandomDouble() => _random.NextDouble();
 
-        protected bool NextRandomBool() => _random.Next(0, 1) == 1;
+        protected bool NextRandomBool() => _random.NextDouble() >= 0.5;
 
         protected byte[] NextBytesRandom(int length)
         {
