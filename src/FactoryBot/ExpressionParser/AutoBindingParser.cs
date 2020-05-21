@@ -29,8 +29,8 @@ namespace FactoryBot.ExpressionParser
                 [typeof(float)] = new FloatRandomGenerator(),
                 [typeof(decimal)] = new DecimalRandomGenerator(),
                 [typeof(string)] = new StringRandomGenerator(),
-                [typeof(DateTime)] = new DateTimeRandomGenerator(),
-                [typeof(TimeSpan)] = new TimeSpanRandomGenerator(),
+                [typeof(DateTime)] = new DateTimeRandomGenerator(DateTime.UtcNow.AddYears(-10), DateTime.UtcNow.AddYears(10)),
+                [typeof(TimeSpan)] = new TimeSpanRandomGenerator(to: TimeSpan.FromHours(12)),
                 [typeof(bool)] = new BooleanRandomGenerator()
             };
         }
