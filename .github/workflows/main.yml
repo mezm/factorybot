@@ -22,12 +22,8 @@ jobs:
         
     - name: Build code
       run: dotnet build --configuration Release 
-      working-directory: ./src/FactoryBot
-      
-    - name: Build tests
-      run: dotnet build --configuration Release
-      working-directory: ./src/FactoryBot.Tests
-      
+      working-directory: ./src
+        
     - name: Run tests
       run: dotnet test --no-build -v n --configuration Release
-      working-directory: ./src/FactoryBot.Tests
+      working-directory: ./src
