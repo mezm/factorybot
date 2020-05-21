@@ -5,15 +5,32 @@ on:
     types: [published]
     
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
     
     steps:
+    - name: Get version
+      run: version=$(echo "$GITHUB_REF" | sed 's/^refs\/tags\/v//g');echo "::set-env name=VERSION::$version"
+      env:
+        GITHUB_REF: ${{ github.ref }}
+
     - name: Checkout code
       uses: actions/checkout@v1
     
-    - name: Get version
-      env:
-        VERSION: ${{ github.ref }}
-      run: echo "$VERSION"
-      
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.100'
+        
+    - name: Build code
+      run: dotnet build --configuration Release 
+      working-directory: ./src
+        
+    - name: Run tests
+      run: dotnet test --no-build -v n --configuration Release
+      working-directory: ./src
+
+    - name: Pack NuGet
+      run: dotnet pack -p:PackageVersion=$VERSION --configuration Release --no-build
+      working-directory: ./src/FactoryBot
