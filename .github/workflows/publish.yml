@@ -1,6 +1,7 @@
 name: Publish Release to NuGet
 
 on:
+  push:
   release:
     types: [published]
     
