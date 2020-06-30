@@ -32,7 +32,6 @@ namespace FactoryBot
         {
             var parser = new AutoBindingParser();
             var configuration = parser.Parse<T>();
-            CheckNestedAndCircularDependencies(configuration);
 
             if (overrideDefault != null)
             {

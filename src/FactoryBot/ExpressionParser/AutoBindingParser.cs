@@ -79,9 +79,8 @@ namespace FactoryBot.ExpressionParser
                         var paramGenerator = GetPropertyGenerator(param.ParameterType);
                         generators.Add(paramGenerator);
                     }
-                    catch
+                    catch (UnknownTypeException)
                     {
-                        // todo: catch some type
                         break;
                     }
                 }
@@ -138,9 +137,12 @@ namespace FactoryBot.ExpressionParser
 
         private static IGenerator CreateCollectionGenerator(Type generatorType, Type[] itemType, IGenerator[] itemGenerator)
         {
+            var constructorArgTypes = new[] { typeof(int), typeof(int) }.Concat(itemGenerator.Select(_ => typeof(IGenerator))).ToArray();
+            var constructorArgs = (new object[] { COLLECTION_MIN_LENGTH, COLLECTION_MAX_LENGTH }).Concat(itemGenerator).ToArray();
+
             return (IGenerator)generatorType.MakeGenericType(itemType)
-                        .GetConstructor(new[] { typeof(int), typeof(int) }.Concat(itemGenerator.Select(_ => typeof(IGenerator))).ToArray())
-                        .Invoke(new object[] { COLLECTION_MIN_LENGTH, COLLECTION_MAX_LENGTH }.Concat(itemGenerator).ToArray());
+                        .GetConstructor(constructorArgTypes)
+                        .Invoke(constructorArgs);
         }
     }
 }
