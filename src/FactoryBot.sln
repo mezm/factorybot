@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactoryBot", "FactoryBot\FactoryBot.csproj", "{A23F97ED-EA07-4531-BD09-F1866B808BEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FactoryBot", "FactoryBot\FactoryBot.csproj", "{A23F97ED-EA07-4531-BD09-F1866B808BEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactoryBot.Tests", "FactoryBot.Tests\FactoryBot.Tests.csproj", "{0D257DE2-DCDE-4700-A573-752AD3683BA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FactoryBot.Tests", "FactoryBot.Tests\FactoryBot.Tests.csproj", "{0D257DE2-DCDE-4700-A573-752AD3683BA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactoryBot.Benchmark", "FactoryBot.Benchmark\FactoryBot.Benchmark.csproj", "{D658D13D-C2A8-40EC-8AF4-922023C50E7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{0D257DE2-DCDE-4700-A573-752AD3683BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D257DE2-DCDE-4700-A573-752AD3683BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D257DE2-DCDE-4700-A573-752AD3683BA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D658D13D-C2A8-40EC-8AF4-922023C50E7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D658D13D-C2A8-40EC-8AF4-922023C50E7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D658D13D-C2A8-40EC-8AF4-922023C50E7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D658D13D-C2A8-40EC-8AF4-922023C50E7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
