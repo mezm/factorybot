@@ -26,7 +26,6 @@ namespace FactoryBot
         }
 
         public static BotDefinitionBuilder<T> DefineAuto<T>(Expression<Func<BotConfigurationBuilder, T>>? overrideDefault = null)
-            where T : class
         {
             var parser = new AutoBindingParser();
             var configuration = parser.Parse<T>();
