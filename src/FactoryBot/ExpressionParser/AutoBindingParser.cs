@@ -2,6 +2,7 @@
 using FactoryBot.Generators;
 using FactoryBot.Generators.Collections;
 using FactoryBot.Generators.Dates;
+using FactoryBot.Generators.Enums;
 using FactoryBot.Generators.Numbers;
 using FactoryBot.Generators.Strings;
 using System;
@@ -134,6 +135,11 @@ namespace FactoryBot.ExpressionParser
                 var itemGenerator = GetPropertyGenerator(itemType, parents);
                 
                 return CreateCollectionGenerator(typeof(ListGenerator<>), new[] { itemType }, new[] { itemGenerator });
+            }
+
+            if (type.IsEnum)
+            {
+                return (IGenerator)Activator.CreateInstance(typeof(EnumRandomGenerator<>).MakeGenericType(type));
             }
 
             if (!type.IsPrimitive)

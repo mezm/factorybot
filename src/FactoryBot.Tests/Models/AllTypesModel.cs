@@ -19,5 +19,7 @@ namespace FactoryBot.Tests.Models
 
         public DateTime DateTime { get; set; }
         public TimeSpan TimeSpan { get; set; }
+
+        public EnumModel Enum { get; set; }
     }
 }

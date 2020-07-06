@@ -33,13 +33,16 @@ namespace FactoryBot.Tests.BotTests
         public void AutoBinding_Decimal_ShouldBindDefaultValue() => AutoBindingTestDefaultValue(x => x.Decimal);
 
         [Test]
-        public void AutoBinding_String_ShouldBindDefaultValue() => AutoBindingTestDefaultValue(x => x.String);
+        public void AutoBinding_String_ShouldBindDefaultValue() => AutoBindingTestDefaultValue(x => x.String, false);
 
         [Test]
         public void AutoBinding_DateTime_ShouldBindDefaultValue() => AutoBindingTestDefaultValue(x => x.DateTime);
 
         [Test]
         public void AutoBinding_TimeSpan_ShouldBindDefaultValue() => AutoBindingTestDefaultValue(x => x.TimeSpan);
+
+        [Test]
+        public void AutoBinding_Enum_ShouldBindDefaultValue() => AutoBindingTestDefaultValue(x => x.Enum);
 
         [Test]
         public void AutoBinding_Boolean_ShouldBindDefaultValue()
@@ -178,12 +181,23 @@ namespace FactoryBot.Tests.BotTests
             Assert.That(model.Text, Is.EqualTo("test"));
         }
 
-        private void AutoBindingTestDefaultValue<T>(Func<AllTypesModel, T> getActual)
+        private void AutoBindingTestDefaultValue<T>(Func<AllTypesModel, T> getActual, bool primitive = true)
         {
             Bot.DefineAuto<AllTypesModel>();
+            
+            T actualValue = default;
+            for (var i = 0; i < 3; i++)
+            {
+                var model = Bot.Build<AllTypesModel>();
+                actualValue = getActual(model);
 
-            var model = Bot.Build<AllTypesModel>();
-            var actualValue = getActual(model);
+                if (primitive && actualValue.Equals(default))
+                {
+                    continue;
+                }
+
+                break;
+            }
 
             Assert.That(actualValue, Is.Not.EqualTo(default(T)));
         }
