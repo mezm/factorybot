@@ -42,6 +42,9 @@ namespace FactoryBot.Tests.BotTests
         public void AutoBinding_TimeSpan_ShouldBindDefaultValue() => AutoBindingTestDefaultValue(x => x.TimeSpan);
 
         [Test]
+        public void AutoBinding_Enum_ShouldBindDefaultValue() => AutoBindingTestDefaultValue(x => x.Enum);
+
+        [Test]
         public void AutoBinding_Boolean_ShouldBindDefaultValue()
         {
             Bot.DefineAuto<AllTypesModel>();

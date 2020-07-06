@@ -79,6 +79,11 @@ namespace FactoryBot.DSL.Builders
         /// </summary>
         public NetworkGenerators Network { get; } = new NetworkGenerators();
 
+        /// <summary>
+        /// Enums generators
+        /// </summary>
+        public EnumGenerators Enums { get; } = new EnumGenerators();
+
         [Generator(typeof(UsingGenerator<>))]
         public T Use<T>() => default!;
 
