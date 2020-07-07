@@ -21,5 +21,7 @@ namespace FactoryBot.Tests.Models
         public TimeSpan TimeSpan { get; set; }
 
         public EnumModel Enum { get; set; }
+
+        public Guid Guid { get; set; }
     }
 }

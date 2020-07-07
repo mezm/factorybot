@@ -33,6 +33,8 @@ namespace FactoryBot.Samples.Models
         [JsonConverter(typeof(EnumConverter))]
         public EnumModel Enum { get; set; }
 
+        public Guid Guid { get; set; }
+
         public override string ToString() => JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
     }
 }

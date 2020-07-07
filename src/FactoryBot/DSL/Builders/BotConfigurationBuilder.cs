@@ -88,6 +88,11 @@ namespace FactoryBot.DSL.Builders
         public EnumGenerators Enums { get; } = new EnumGenerators();
 
         /// <summary>
+        /// GUID generators
+        /// </summary>
+        public GuidGenerators Guid { get; } = new GuidGenerators();
+
+        /// <summary>
         /// Use previously defined generator
         /// </summary>
         /// <typeparam name="T">Type of generating value</typeparam>
