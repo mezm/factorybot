@@ -23,6 +23,7 @@ Now **FactoryBot** supports generators for following types:
 * `string`
 * `DateTime`
 * `TimeSpan`
+* `Guid`
 * and any enum type
 
 # Install
