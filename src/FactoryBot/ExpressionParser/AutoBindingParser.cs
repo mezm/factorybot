@@ -3,6 +3,7 @@ using FactoryBot.Generators;
 using FactoryBot.Generators.Collections;
 using FactoryBot.Generators.Dates;
 using FactoryBot.Generators.Enums;
+using FactoryBot.Generators.Guids;
 using FactoryBot.Generators.Numbers;
 using FactoryBot.Generators.Strings;
 using System;
@@ -32,7 +33,8 @@ namespace FactoryBot.ExpressionParser
                 [typeof(string)] = new StringRandomGenerator(),
                 [typeof(DateTime)] = new DateTimeRandomGenerator(DateTime.UtcNow.AddYears(-10), DateTime.UtcNow.AddYears(10)),
                 [typeof(TimeSpan)] = new TimeSpanRandomGenerator(to: TimeSpan.FromHours(12)),
-                [typeof(bool)] = new BooleanRandomGenerator()
+                [typeof(bool)] = new BooleanRandomGenerator(),
+                [typeof(Guid)] = new GuidRandomGenerator()
             };
         }
 

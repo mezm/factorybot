@@ -111,7 +111,7 @@ namespace FactoryBot.DSL.Generators
         /// Generates random string representation of GUID
         /// </summary>
         /// <returns>String value</returns>
-        [Generator(typeof(GuidGenerator))]
+        [Generator(typeof(StringGuidRandomGenerator))]
         public string Guid() => default!;
 
 #pragma warning restore IDE0060 // Remove unused parameter
