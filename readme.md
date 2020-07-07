@@ -25,6 +25,12 @@ Now **FactoryBot** supports generators for following types:
 * `TimeSpan`
 * and any enum type
 
+# Install
+To install **FactoryBot** run:
+```
+Install-Package FactoryBot
+```
+
 # Define Model Generators
 **FactoryBot** support two models on defining model generation: manual and auto.
 
