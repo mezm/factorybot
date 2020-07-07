@@ -16,7 +16,7 @@ namespace FactoryBot.Tests.BotTests
 
             var model = Bot.Build<Model4>();
 
-            Assert.That(model.SimpleArray, Is.Not.Null.And.Length.InRange(1, 5).And.All.Match(@"^\w+$"));
+            Assert.That(model.SimpleArray, Is.Not.Null.And.Length.InRange(1, 5).And.All.Match(@"^[\w\-]+$"));
         }
 
         [Test]
