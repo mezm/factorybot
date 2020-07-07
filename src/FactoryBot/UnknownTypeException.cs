@@ -12,7 +12,7 @@ namespace FactoryBot
         /// </summary>
         /// <param name="unknownType">Type of model that was not defined</param>
         public UnknownTypeException(Type unknownType)
-            : base($"FactoryBot does know nothing about type {unknownType}. Call Bot.Define<{unknownType.Name}>(...) first.")
+            : base($"FactoryBot does know nothing about type {unknownType}. Call BotConfigurator.Configure<{unknownType.Name}>(...) first.")
         {   
         }
     }

@@ -10,7 +10,7 @@ namespace FactoryBot.Tests.Generators.Numbers
         [Test]
         public void Any_NoCondition_ReturnsBoolean()
         {
-            Bot.Define(x => new AllTypesModel { Boolean = x.Boolean.Any() });
+            BotConfigurator.Configure(x => new AllTypesModel { Boolean = x.Boolean.Any() });
 
             var actual = Enumerable.Range(0, 10).Select(_ => Bot.Build<AllTypesModel>()).Select(x => x.Boolean).ToArray();
 

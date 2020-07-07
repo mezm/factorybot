@@ -10,7 +10,7 @@ namespace FactoryBot.Tests.Generators.Collections
         public void RandomFromList_NonEmptyList_ReturnsValueFromList()
         {
             var list = new[] { "a", "ab", "bc", "def" };
-            Bot.Define(x => new AllTypesModel { String = x.Strings.RandomFromList(list) });
+            BotConfigurator.Configure(x => new AllTypesModel { String = x.Strings.RandomFromList(list) });
 
             var model = Bot.Build<AllTypesModel>();
             Assert.That(list, Does.Contain(model.String));

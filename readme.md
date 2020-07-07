@@ -7,7 +7,7 @@ Sometimes it may be really helpful for unit tests, performance test, any kind of
 
 For example:
 ```csharp
-Bot.Define(x => new Model({ Text = x.Strings.Any() });
+BotConfigurator.Configure(x => new Model({ Text = x.Strings.Any() });
 var model = Bot.Build<Model>();
 ```
 
@@ -25,20 +25,20 @@ Now **FactoryBot** supports generators for following types:
 * `TimeSpan`
 * and any enum type
 
-# Define Model Generators
-**FactoryBot** support two models on defining model generation: manual and auto.
+# Configure Model Generators
+**FactoryBot** support two configuration models: manual and auto.
 
 ## Auto mode
 In auto mode **FactoryBot** goes over all public properties with public setters and binds predefined generators to it. Here is how you can use it:
 ```csharp
-Bot.DefineAuto<AllTypesModel>();
+BotConfigurator.ConfigureAuto<AllTypesModel>();
 var model = Bot.Build<AllTypesModel>();
 ```
 
 ## Manual Mode
 In manual mode you should specify a generator per each property you want to be set:
 ```csharp
-Bot.Define(x => new AllTypesModel
+BotConfigurator.Configure(x => new AllTypesModel
 {
     Boolean = x.Boolean.Any(),
     Byte = x.Byte.RandomFromList(3, 4, 5, 10, 12, 100),

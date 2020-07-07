@@ -11,12 +11,12 @@ namespace FactoryBot.Tests.BotTests
         private static int LastestGeneratedValue = 0;
 
         [TearDown]
-        public void Terminate() => Bot.ForgetAll();
+        public void Terminate() => BotConfigurator.ForgetAll();
 
         [Test]
         public void Build_FactoryReturnConstant_AllGeneratedValueAreEqual()
         {
-            Bot.Define(x => new Model1 { Text = x.Factory(() => "abc") });
+            BotConfigurator.Configure(x => new Model1 { Text = x.Factory(() => "abc") });
 
             var models = Bot.BuildSequence<Model1>().Take(100);
 
@@ -26,7 +26,7 @@ namespace FactoryBot.Tests.BotTests
         [Test]
         public void Build_FactoryReturnUniqueValue_AllGeneratedValueAreDifferent()
         {
-            Bot.Define(x => new Model1 { Number = x.Factory(IntegerFactory) });
+            BotConfigurator.Configure(x => new Model1 { Number = x.Factory(IntegerFactory) });
 
             var models = Bot.BuildSequence<Model1>().Take(100);
 
@@ -36,7 +36,7 @@ namespace FactoryBot.Tests.BotTests
         [Test]
         public void Build_FactoryThrowsException_ExceptionPassed()
         {
-            Bot.Define(x => new Model1 { Number = x.Factory(BrokenIntegerFactory) });
+            BotConfigurator.Configure(x => new Model1 { Number = x.Factory(BrokenIntegerFactory) });
 
             Assert.Throws<BuildFailedException>(() => Bot.Build<Model1>());
         }

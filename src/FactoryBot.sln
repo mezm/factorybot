@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FactoryBot", "FactoryBot\Fa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FactoryBot.Tests", "FactoryBot.Tests\FactoryBot.Tests.csproj", "{0D257DE2-DCDE-4700-A573-752AD3683BA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactoryBot.Samples", "FactoryBot.Samples\FactoryBot.Samples.csproj", "{3F92F011-3818-45A3-B78B-AF56269E56F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FactoryBot.Samples", "FactoryBot.Samples\FactoryBot.Samples.csproj", "{3F92F011-3818-45A3-B78B-AF56269E56F8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DC8198D4-79CA-4F2C-99DE-EDB16731E216}"
+	ProjectSection(SolutionItems) = preProject
+		..\readme.md = ..\readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

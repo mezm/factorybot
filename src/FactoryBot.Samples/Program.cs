@@ -17,13 +17,13 @@ namespace FactoryBot.Samples
             AutoDefine(count);
 
             Console.WriteLine();
-            Bot.ForgetAll();
+            BotConfigurator.ForgetAll();
             ManualDefine(count);
         }
 
         private static void AutoDefine(int count)
         {
-            Bot.DefineAuto<AllTypesModel>();
+            BotConfigurator.ConfigureAuto<AllTypesModel>();
             var model = Bot.Build<AllTypesModel>();
             Console.WriteLine("Auto Define:");
             Bot.BuildSequence<AllTypesModel>().Take(count).ToList().ForEach(x => Console.WriteLine(x));
@@ -31,7 +31,7 @@ namespace FactoryBot.Samples
 
         private static void ManualDefine(int count)
         {
-            Bot.Define(x => new AllTypesModel
+            BotConfigurator.Configure(x => new AllTypesModel
             {
                 Boolean = x.Boolean.Any(),
                 Byte = x.Byte.RandomFromList(3, 4, 5, 10, 12, 100),
