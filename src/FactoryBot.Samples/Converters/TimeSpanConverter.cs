@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace FactoryBot.Samples
+namespace FactoryBot.Samples.Converters
 {
     public class TimeSpanConverter : JsonConverter<TimeSpan>
     {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FactoryBot.Samples.Converters;
+using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -29,8 +30,9 @@ namespace FactoryBot.Samples.Models
         [JsonConverter(typeof(TimeSpanConverter))]
         public TimeSpan TimeSpan { get; set; }
 
+        [JsonConverter(typeof(EnumConverter))]
         public EnumModel Enum { get; set; }
 
-        public override string ToString() => JsonSerializer.Serialize(this);
+        public override string ToString() => JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true });
     }
 }
