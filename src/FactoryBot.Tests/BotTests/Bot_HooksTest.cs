@@ -8,12 +8,12 @@ namespace FactoryBot.Tests.BotTests
     public class Bot_HooksTest
     {
         [TearDown]
-        public void Terminate() => Bot.ForgetAll();
+        public void Terminate() => BotConfigurator.ForgetAll();
 
         [Test]
         public void Build_WithBeforeBindingHook_PropertySetInHookIsSkipped()
         {
-            Bot.Define(x => new Model1 { Number = x.Integer.Any(5, 100), Text = x.Strings.Any(10, 15) })
+            BotConfigurator.Configure(x => new Model1 { Number = x.Integer.Any(5, 100), Text = x.Strings.Any(10, 15) })
                 .BeforePropertyBinding(x =>
                 {
                     x.Number = -126;
@@ -29,7 +29,7 @@ namespace FactoryBot.Tests.BotTests
         [Test]
         public void Build_WithBeforeBindingHookAndOnlyPropertyBinding_PropertiesAreEmptyInHook()
         {
-            Bot.Define(x => new Model1 { Number = x.Integer.Any(5, 100), Text = x.Strings.Any(10, 15) })
+            BotConfigurator.Configure(x => new Model1 { Number = x.Integer.Any(5, 100), Text = x.Strings.Any(10, 15) })
                 .BeforePropertyBinding(x =>
                 {
                     Assert.That(x.Number, Is.EqualTo(0));
@@ -42,7 +42,7 @@ namespace FactoryBot.Tests.BotTests
         [Test]
         public void Build_WithBeforeBindingHookAndOnlyConstructorBinding_PropertiesAreBind()
         {
-            Bot.Define(x => new Model1(x.Integer.Any(5, 100), x.Strings.Any(10, 15)))
+            BotConfigurator.Configure(x => new Model1(x.Integer.Any(5, 100), x.Strings.Any(10, 15)))
                 .BeforePropertyBinding(x =>
                 {
                     Assert.That(x.Number, Is.InRange(5, 100));
@@ -55,7 +55,7 @@ namespace FactoryBot.Tests.BotTests
         [Test]
         public void Build_WithBeforeBindingHookAndThrows_ExceptionPassed()
         {
-            Bot.Define(x => new Model1 { Number = x.Integer.Any(5, 100), Text = x.Strings.Any(10, 15) })
+            BotConfigurator.Configure(x => new Model1 { Number = x.Integer.Any(5, 100), Text = x.Strings.Any(10, 15) })
                 .BeforePropertyBinding(x => throw new NotSupportedException("test"));
 
             Assert.Throws<BuildFailedException>(() => Bot.Build<Model1>());
@@ -64,7 +64,7 @@ namespace FactoryBot.Tests.BotTests
         [Test]
         public void Build_WithAfterBindingHook_PropertyFromHookIsNotOverriden()
         {
-            Bot.Define(x => new Model1 { Number = x.Integer.Any(-100, -10), Text = x.Strings.Any(10, 15) })
+            BotConfigurator.Configure(x => new Model1 { Number = x.Integer.Any(-100, -10), Text = x.Strings.Any(10, 15) })
                 .AfterPropertyBinding(x => x.Number = x.Text.Length);
 
             var model = Bot.Build<Model1>();
@@ -75,7 +75,7 @@ namespace FactoryBot.Tests.BotTests
         [Test]
         public void Build_WithAfterBindingHookAndThrows_ExceptionPassed()
         {
-            Bot.Define(x => new Model1 { Number = x.Integer.Any(5, 100), Text = x.Strings.Any(10, 15) })
+            BotConfigurator.Configure(x => new Model1 { Number = x.Integer.Any(5, 100), Text = x.Strings.Any(10, 15) })
                 .AfterPropertyBinding(x => throw new NotSupportedException("test"));
 
             Assert.Throws<BuildFailedException>(() => Bot.Build<Model1>());

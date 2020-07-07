@@ -10,7 +10,7 @@ namespace FactoryBot.Tests.Generators.Enums
         [Test]
         public void Any_NoCondition_ReturnsEnum()
         {
-            Bot.Define(x => new AllTypesModel { Enum = x.Enums.Any<EnumModel>() });
+            BotConfigurator.Configure(x => new AllTypesModel { Enum = x.Enums.Any<EnumModel>() });
 
             var actual = Enumerable.Range(0, 10).Select(_ => Bot.Build<AllTypesModel>()).Select(x => x.Enum).ToArray();
 

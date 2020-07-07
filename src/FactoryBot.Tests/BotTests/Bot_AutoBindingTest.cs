@@ -9,7 +9,7 @@ namespace FactoryBot.Tests.BotTests
     public class Bot_AutoBindingTest
     {
         [TearDown]
-        public void Terminate() => Bot.ForgetAll();
+        public void Terminate() => BotConfigurator.ForgetAll();
 
         [Test]
         public void AutoBinding_Integer_ShouldBindDefaultValue() => AutoBindingTestDefaultValue(x => x.Integer);
@@ -47,21 +47,21 @@ namespace FactoryBot.Tests.BotTests
         [Test]
         public void AutoBinding_Boolean_ShouldBindDefaultValue()
         {
-            Bot.DefineAuto<AllTypesModel>();
+            BotConfigurator.ConfigureAuto<AllTypesModel>();
 
             Assert.That(() => Bot.Build<AllTypesModel>(), Throws.Nothing);
         }
 
         [Test]
-        public void AutoBinding_NoPublicConstructor_ShouldThrowException() => Assert.Throws(typeof(BuildFailedException), () => Bot.DefineAuto<NoPublicConstructorModel>());
+        public void AutoBinding_NoPublicConstructor_ShouldThrowException() => Assert.Throws(typeof(BuildFailedException), () => BotConfigurator.ConfigureAuto<NoPublicConstructorModel>());
 
         [Test]
-        public void AutoBinding_AbstractClass_ShouldThrowException() => Assert.Throws(typeof(BuildFailedException), () => Bot.DefineAuto<AbstractModel>());
+        public void AutoBinding_AbstractClass_ShouldThrowException() => Assert.Throws(typeof(BuildFailedException), () => BotConfigurator.ConfigureAuto<AbstractModel>());
 
         [Test]
         public void AutoBinding_NonDefaultConstructor_ShouldBindCorrectly()
         {
-            Bot.DefineAuto<Model2>();
+            BotConfigurator.ConfigureAuto<Model2>();
 
             var model = Bot.Build<Model2>();
 
@@ -72,7 +72,7 @@ namespace FactoryBot.Tests.BotTests
         [Test]
         public void AutoBinding_DefaultSettingsAndFlatHierarchy_ShouldBindAllProperties()
         {
-            Bot.DefineAuto<Model1>();
+            BotConfigurator.ConfigureAuto<Model1>();
 
             var model = Bot.Build<Model1>();
 
@@ -83,7 +83,7 @@ namespace FactoryBot.Tests.BotTests
         [Test]
         public void AutoBinding_DefaultSettingsAndNestedHierarchy_ShouldBindAllProperties()
         {
-            Bot.DefineAuto<Model3>();
+            BotConfigurator.ConfigureAuto<Model3>();
 
             var model = Bot.Build<Model3>();
 
@@ -96,7 +96,7 @@ namespace FactoryBot.Tests.BotTests
         [Test]
         public void AutoBinding_DefaultSettingsAndCollections_ShouldBindArray()
         {
-            Bot.DefineAuto<Model4>();
+            BotConfigurator.ConfigureAuto<Model4>();
 
             var model = Bot.Build<Model4>();
 
@@ -110,7 +110,7 @@ namespace FactoryBot.Tests.BotTests
         [Test]
         public void AutoBinding_DefaultSettingsAndCollections_ShouldBindList()
         {
-            Bot.DefineAuto<Model4>();
+            BotConfigurator.ConfigureAuto<Model4>();
 
             var model = Bot.Build<Model4>();
 
@@ -124,7 +124,7 @@ namespace FactoryBot.Tests.BotTests
         [Test]
         public void AutoBinding_DefaultSettingsAndCollections_ShouldBindDictionary()
         {
-            Bot.DefineAuto<Model4>();
+            BotConfigurator.ConfigureAuto<Model4>();
 
             var model = Bot.Build<Model4>();
 
@@ -139,7 +139,7 @@ namespace FactoryBot.Tests.BotTests
         [Test]
         public void AutoBinding_OverrideDefinition_ShouldBindAllPropertiesWithOverride()
         {
-            Bot.DefineAuto(x => new Model1() { Number = x.Integer.Any(1, 10) });
+            BotConfigurator.ConfigureAuto(x => new Model1() { Number = x.Integer.Any(1, 10) });
 
             var model = Bot.Build<Model1>();
 
@@ -150,8 +150,8 @@ namespace FactoryBot.Tests.BotTests
         [Test]
         public void AutoBinding_OverrideDefaultGenerators_ShouldBindAllPropertiesWithOverride()
         {
-            Bot.SetDefaultAutoGenerator(x => x.Strings.Guid());
-            Bot.DefineAuto<Model1>();
+            BotConfigurator.SetDefaultAutoGenerator(x => x.Strings.Guid());
+            BotConfigurator.ConfigureAuto<Model1>();
 
             var model = Bot.Build<Model1>();
 
@@ -162,7 +162,7 @@ namespace FactoryBot.Tests.BotTests
         [Test]
         public void AutoBinding_BuildOverrides_ShouldBindAllPropertiesWithOverride()
         {
-            Bot.DefineAuto<Model1>();
+            BotConfigurator.ConfigureAuto<Model1>();
             
             var model = Bot.Build<Model1>(x => x.Number = 10);
 
@@ -173,7 +173,7 @@ namespace FactoryBot.Tests.BotTests
         [Test]
         public void AutoBinding_BuildCustom_ShouldBindAllPropertiesWithOverride()
         {
-            Bot.DefineAuto<Model1>();
+            BotConfigurator.ConfigureAuto<Model1>();
 
             var model = Bot.BuildCustom(x => new Model1(x.Integer.Any(1, 15), "test"));
 
@@ -183,23 +183,23 @@ namespace FactoryBot.Tests.BotTests
 
         private void AutoBindingTestDefaultValue<T>(Func<AllTypesModel, T> getActual, bool primitive = true)
         {
-            Bot.DefineAuto<AllTypesModel>();
+            BotConfigurator.ConfigureAuto<AllTypesModel>();
             
-            T actualValue = default;
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < 10; i++)
             {
                 var model = Bot.Build<AllTypesModel>();
-                actualValue = getActual(model);
+                var actualValue = getActual(model);
 
                 if (primitive && actualValue.Equals(default))
                 {
                     continue;
                 }
 
-                break;
+                Assert.That(actualValue, Is.Not.EqualTo(default(T)));
+                return;
             }
 
-            Assert.That(actualValue, Is.Not.EqualTo(default(T)));
+            Assert.Fail($"Tried to generate value of type {typeof(T)} 10 times and always got default value");
         }
     }
 }

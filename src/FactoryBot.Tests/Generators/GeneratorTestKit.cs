@@ -45,7 +45,7 @@ namespace FactoryBot.Tests.Generators
             var memberInitExpr = (MemberInitExpression)factory.Body;
             var property = (PropertyInfo)memberInitExpr.Bindings[0].Member;
 
-            Bot.Define(factory);
+            BotConfigurator.Configure(factory);
 
             var values =
                 Enumerable.Range(0, count)
@@ -59,7 +59,7 @@ namespace FactoryBot.Tests.Generators
             where T : Exception
         {   
             Assert.That(
-                () => Bot.Define(factory),
+                () => BotConfigurator.Configure(factory),
                 Throws.InstanceOf<GeneratorInitializationException>().And.InnerException.InstanceOf<T>());
         }
 
@@ -74,7 +74,7 @@ namespace FactoryBot.Tests.Generators
         protected void ExpectBuildException<T>(Expression<Func<BotConfigurationBuilder, AllTypesModel>> factory)
             where T : Exception
         {
-            Bot.Define(factory);
+            BotConfigurator.Configure(factory);
             Assert.That(() => Bot.Build<AllTypesModel>(), Throws.InstanceOf<T>());
         }
 
@@ -83,7 +83,7 @@ namespace FactoryBot.Tests.Generators
             var memberInitExpr = (MemberInitExpression)factory.Body;
             var property = (PropertyInfo)memberInitExpr.Bindings[0].Member;
 
-            Bot.Define(factory);
+            BotConfigurator.Configure(factory);
 
             foreach (var assert in asserts)
             {
