@@ -12,9 +12,9 @@ namespace FactoryBot.Tests.Generators.Numbers
         {
             Bot.Define(x => new AllTypesModel { Boolean = x.Boolean.Any() });
 
-            var actual = Enumerable.Range(0, 5).Select(_ => Bot.Build<AllTypesModel>()).Select(x => x.Boolean).ToArray();
+            var actual = Enumerable.Range(0, 10).Select(_ => Bot.Build<AllTypesModel>()).Select(x => x.Boolean).ToArray();
 
-            Assert.That(actual, Does.Contain(false).And.Contain(false));
+            Assert.That(actual, Does.Contain(true).And.Contain(false));
         }
     }
 }
