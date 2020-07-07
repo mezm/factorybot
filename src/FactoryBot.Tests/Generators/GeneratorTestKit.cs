@@ -52,7 +52,7 @@ namespace FactoryBot.Tests.Generators
                     .Select(x => Bot.Build<AllTypesModel>())
                     .Select(x => property.GetValue(x))
                     .ToArray();
-            Assert.That(values, Is.Unique);
+            Assert.That(values.Distinct().ToList(), Has.Count.GreaterThan(1), "All object are the same");
         }
 
         protected void ExpectInitException<T>(Expression<Func<BotConfigurationBuilder, AllTypesModel>> factory)
