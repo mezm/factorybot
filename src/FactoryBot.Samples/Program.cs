@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FactoryBot.Samples.Models;
+using System;
 using System.Linq;
 
 namespace FactoryBot.Samples

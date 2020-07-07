@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace FactoryBot.Samples
+namespace FactoryBot.Samples.Models
 {
     public class AllTypesModel
     {
@@ -28,6 +28,8 @@ namespace FactoryBot.Samples
 
         [JsonConverter(typeof(TimeSpanConverter))]
         public TimeSpan TimeSpan { get; set; }
+
+        public EnumModel Enum { get; set; }
 
         public override string ToString() => JsonSerializer.Serialize(this);
     }
