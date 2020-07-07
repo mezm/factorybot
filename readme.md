@@ -1,6 +1,7 @@
+# FactoryBot 
 ![Build and Run Tests](https://github.com/mezm/factorybot/workflows/Build%20and%20Run%20Tests/badge.svg?branch=master)
+[![NuGet](https://img.shields.io/nuget/v/FactoryBot.svg)](https://www.nuget.org/packages/FactoryBot/) 
 
-# FactoryBot
 **FactoryBot** is a tool to generate test objects with random data. Inspired by factory_girl. 
 
 Sometimes it may be really helpful for unit tests, performance test, any kind of proof of concept to generate random data.
