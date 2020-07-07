@@ -6,7 +6,7 @@ namespace FactoryBot.Generators.Numbers
     {
         private readonly int _from, _to;
 
-        public IntegerRandomGenerator(int from = int.MinValue, int to = int.MaxValue)
+        public IntegerRandomGenerator(int from = int.MinValue, int to = int.MaxValue - 1)
         {
             if (from > to)
             {

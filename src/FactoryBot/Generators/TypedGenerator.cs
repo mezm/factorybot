@@ -11,7 +11,7 @@ namespace FactoryBot.Generators
 
         protected abstract T NextInternal();
 
-        protected int NextRandomInteger(int from, int to) => _random.Next(from, to);
+        protected int NextRandomInteger(int from, int to) => _random.Next(from, to + 1);
 
         protected double NextRandomDouble() => _random.NextDouble();
 
@@ -24,6 +24,6 @@ namespace FactoryBot.Generators
             return result;
         }
 
-        protected TItem NextRandomFromArray<TItem>(TItem[] array) => array[NextRandomInteger(0, array.Length)];
+        protected TItem NextRandomFromArray<TItem>(TItem[] array) => array[NextRandomInteger(0, array.Length - 1)];
     }
 }

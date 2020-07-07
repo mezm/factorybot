@@ -12,16 +12,16 @@ namespace FactoryBot.DSL.Generators
         [Generator(typeof(EnumRandomGenerator<>))]
         public T Any<T>() where T : notnull, Enum => default!;
 
-        [Generator(typeof(RandomFromListGenerator<Enum>))]
+        [Generator(typeof(RandomFromListGenerator<>))]
         public T RandomFromList<T>(IReadOnlyList<T> source) where T : notnull, Enum => default!;
 
-        [Generator(typeof(RandomFromListGenerator<Enum>))]
+        [Generator(typeof(RandomFromListGenerator<>))]
         public T RandomFromList<T>(params T[] source) where T : notnull, Enum => default!;
 
-        [Generator(typeof(SequenceFromListGenerator<Enum>))]
+        [Generator(typeof(SequenceFromListGenerator<>))]
         public T SequenceFromList<T>(IReadOnlyList<T> source) where T : notnull, Enum => default!;
 
-        [Generator(typeof(SequenceFromListGenerator<Enum>))]
+        [Generator(typeof(SequenceFromListGenerator<>))]
         public T SequenceFromList<T>(params T[] source) where T : notnull, Enum => default!;
 #pragma warning restore IDE0060 // Remove unused parameter
     }
