@@ -42,5 +42,11 @@ namespace FactoryBot.Tests.Generators.Strings
         [TestCase(40, 10)]
         [TestCase(0, 0)]
         public void Any_WrongLengthRange_ThrowsError(int min, int max) => ExpectArgumentOutOfRangeInitException(x => new AllTypesModel { String = x.Strings.Any(min, max) });
+
+        [Test]
+        public void Any_NonAnsciiChar_ShouldNotExists()
+        {
+            AssertGeneratorValue(x => new AllTypesModel { String = x.Strings.Any(1_000, 1_000) }, Does.Not.Match("[^\x00-\x7F]+"));
+        }
     }
 }
