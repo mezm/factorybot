@@ -9,7 +9,7 @@ namespace FactoryBot
     /// <summary>
     /// Bot that can help you with auto generating you models
     /// </summary>
-    public class Bot
+    public partial class Bot
     {
         /// <summary>
         /// Maximum number of item to generate by <see cref="BuildSequence{T}(bool)" /> before it throws an exception

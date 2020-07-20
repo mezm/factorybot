@@ -50,7 +50,7 @@ namespace FactoryBot.Tests.BotTests
         public void Define_UnsupportedSytax_ThrowsException()
         {
             Assert.That(
-                () => Bot.Define(x => new Model1 { Text = "PRE: " + x.Strings.Words() }), 
+                () => BotConfigurator.Configure(x => new Model1 { Text = "PRE: " + x.Strings.Words() }), 
                 Throws.InstanceOf<WrongSyntaxException>().And.Message.Contains("\"PRE: \" + x.Strings.Words()"));
         }
     }
