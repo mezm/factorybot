@@ -45,5 +45,13 @@ namespace FactoryBot.Tests.BotTests
         {
             Assert.That(() => Bot.DefineAuto<ModelWithCircularDependency3>(), Throws.InstanceOf<CircularDependencyDetectedException>());
         }
+
+        [Test]
+        public void Define_UnsupportedSytax_ThrowsException()
+        {
+            Assert.That(
+                () => Bot.Define(x => new Model1 { Text = "PRE: " + x.Strings.Words() }), 
+                Throws.InstanceOf<WrongSyntaxException>().And.Message.Contains("\"PRE: \" + x.Strings.Words()"));
+        }
     }
 }
