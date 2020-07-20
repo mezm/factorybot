@@ -3,6 +3,7 @@ using FactoryBot.Generators;
 using FactoryBot.Generators.Collections;
 using FactoryBot.Generators.Dates;
 using FactoryBot.Generators.Enums;
+using FactoryBot.Generators.Guids;
 using FactoryBot.Generators.Numbers;
 using FactoryBot.Generators.Strings;
 using System;
@@ -22,17 +23,18 @@ namespace FactoryBot.ExpressionParser
         {
             DefaultGenerators = new Dictionary<Type, IGenerator>
             {
-                [typeof(int)] = new IntegerRandomGenerator(),
-                [typeof(long)] = new LongRandomGenerator(),
-                [typeof(short)] = new ShortRandomGenerator(),
+                [typeof(int)] = new IntegerRandomGenerator(-1_000, 1_000),
+                [typeof(long)] = new LongRandomGenerator(-1_000_000, 1_000_000),
+                [typeof(short)] = new ShortRandomGenerator(-100, 100),
                 [typeof(byte)] = new ByteRandomGenerator(),
-                [typeof(double)] = new DoubleRandomGenerator(),
-                [typeof(float)] = new FloatRandomGenerator(),
-                [typeof(decimal)] = new DecimalRandomGenerator(),
+                [typeof(double)] = new DoubleRandomGenerator(-10_000, 10_000),
+                [typeof(float)] = new FloatRandomGenerator(-1_000, 1_000),
+                [typeof(decimal)] = new DecimalRandomGenerator(-1_000_000, 1_000_000),
                 [typeof(string)] = new StringRandomGenerator(),
                 [typeof(DateTime)] = new DateTimeRandomGenerator(DateTime.UtcNow.AddYears(-10), DateTime.UtcNow.AddYears(10)),
                 [typeof(TimeSpan)] = new TimeSpanRandomGenerator(to: TimeSpan.FromHours(12)),
-                [typeof(bool)] = new BooleanRandomGenerator()
+                [typeof(bool)] = new BooleanRandomGenerator(),
+                [typeof(Guid)] = new GuidRandomGenerator()
             };
         }
 

@@ -44,7 +44,8 @@ namespace FactoryBot.Samples
                 Long = x.Long.Any(),
                 Short = x.Short.Any(-100, 100),
                 String = x.Address.Country(),
-                TimeSpan = x.Time.Any()
+                TimeSpan = x.Time.Any(),
+                Guid = x.Guid.Any()
             });
 
             var model = Bot.Build<AllTypesModel>();

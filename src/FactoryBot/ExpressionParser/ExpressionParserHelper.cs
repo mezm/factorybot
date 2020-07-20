@@ -71,7 +71,17 @@ namespace FactoryBot.ExpressionParser
             return new ConstantGenerator(EvaluateExpression(expr));
         }
 
-        public static object EvaluateExpression(Expression expr) => Expression.Lambda(expr).Compile().DynamicInvoke();
+        public static object EvaluateExpression(Expression expr)
+        {
+            try 
+            {
+                return Expression.Lambda(expr).Compile().DynamicInvoke();
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new WrongSyntaxException(expr, ex);
+            }
+        }
 
         public static BotConfiguration ParseConstructor(NewExpression newExpr)
         {

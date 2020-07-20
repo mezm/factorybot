@@ -41,8 +41,11 @@ namespace FactoryBot.Tests.BotTests
         [Test]
         public void AutoBinding_TimeSpan_ShouldBindDefaultValue() => AutoBindingTestDefaultValue(x => x.TimeSpan);
 
-        [Test]
+        [Test, Ignore("Flickering test")]
         public void AutoBinding_Enum_ShouldBindDefaultValue() => AutoBindingTestDefaultValue(x => x.Enum);
+
+        [Test]
+        public void AutoBinding_Guid_ShouldBindDefaultValue() => AutoBindingTestDefaultValue(x => x.Guid);
 
         [Test]
         public void AutoBinding_Boolean_ShouldBindDefaultValue()
